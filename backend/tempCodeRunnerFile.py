@@ -132,9 +132,7 @@ async def send_task_reminder_email(user_email: str, task_title: str, task_descri
     return await send_email(user_email, f"⏰ Reminder: {task_title}", html_content)
 
 
-# 🔧 Test functiON
+# 🔧 Test function
 async def test_email():
     print("🧪 Testing all email functions...")
     test_email = "abhidynamite6.gmail.com"
-    
-    await send_task_created_email(test_email, "Test Task", "This is a test task description.", "2024-12-31")
