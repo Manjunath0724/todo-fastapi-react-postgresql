@@ -263,6 +263,16 @@ async def update_profile(
     }
 
 
+# ✅ New GET endpoint for fetching profile
+@app.get("/api/auth/profile", response_model=dict)
+async def get_profile(current_user: dict = Depends(get_current_user)):
+    return {
+        "user": {
+            "id": current_user["id"],
+            "email": current_user["sub"],
+            "full_name": current_user.get("full_name", "")
+        }
+    }
 # ==================== TASK ENDPOINTS ====================
 
 
