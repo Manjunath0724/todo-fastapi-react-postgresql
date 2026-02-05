@@ -4,7 +4,8 @@ psycopg2-binary==2.9.9
 python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
 python-dotenv==1.0.0
-pydantic[email]==2.6.4   # ✅ single correct line
+pydantic[email]==2.6.4
+pydantic-core==2.16.3# ✅ single correct line
 python-multipart==0.0.9
 aiosmtplib==3.0.1
 apscheduler==3.10.4
