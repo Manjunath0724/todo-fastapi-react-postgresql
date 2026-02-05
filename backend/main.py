@@ -27,10 +27,23 @@ app = FastAPI(title="TaskFlow Pro API", version="1.0.0")
 
 
 # CORS configuration
+cors_origins_env = os.getenv("CORS_ORIGINS", "").strip()
+allow_origins = (
+    [o.strip() for o in cors_origins_env.split(",") if o.strip()]
+    if cors_origins_env
+    else ["http://localhost:3000", "http://127.0.0.1:3000"]
+)
+
+# Allow all Vercel preview + production domains by default.
+# You can override with CORS_ORIGIN_REGEX (e.g. https://(www\\.)?yourdomain\\.com)
+allow_origin_regex = os.getenv("CORS_ORIGIN_REGEX", r"https://.*\.vercel\.app")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000","https://todo-fastapi-react-postgresql.onrender.com"],
-    allow_credentials=True,
+    allow_origins=allow_origins,
+    allow_origin_regex=allow_origin_regex,
+    # You're using JWT in Authorization header (not cookies), so credentials are not required.
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )

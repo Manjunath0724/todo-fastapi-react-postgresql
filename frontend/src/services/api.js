@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-// Use Render backend URL in production
+// Use environment variable if set, otherwise fall back to Render API URL
+// IMPORTANT: This URL must include the `/api` prefix to match FastAPI routes like `/api/auth/login`
 const API_URL =
   process.env.REACT_APP_API_URL ||
-  'https://todo-fastapi-react-postgresql.onrender.com';
+  'https://todo-fastapi-react-postgresql.onrender.com/api';
 
 const api = axios.create({
   baseURL: API_URL,
