@@ -5,7 +5,6 @@ python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
 python-dotenv==1.0.0
 pydantic[email]>=2.8.0
-# Remove pydantic-core line - let pydantic manage it
 python-multipart==0.0.9
 aiosmtplib==3.0.1
 apscheduler==3.10.4
