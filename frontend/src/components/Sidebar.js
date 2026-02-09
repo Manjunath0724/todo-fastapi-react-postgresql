@@ -71,18 +71,18 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-screen bg-white dark:bg-slate-800 shadow-md z-50 transition-all duration-200 ${
+        className={`fixed top-0 left-0 h-screen bg-white dark:bg-slate-800 shadow-md z-50 sidebar-transition ${
           isOpen ? 'w-56 sm:w-60' : 'w-14'
         }`}
       >
         {/* Header */}
         <div className="p-3 border-b border-gray-200 dark:border-slate-700">
           <div className="flex items-center justify-between">
-            {isOpen && (
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-md flex items-center justify-center">
-                  <CheckSquare className="w-5 h-5 text-white" />
-                </div>
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-md flex items-center justify-center">
+                <CheckSquare className="w-5 h-5 text-white" />
+              </div>
+              {isOpen && (
                 <div>
                   <h1 className="text-base font-bold text-gray-900 dark:text-white">
                     TaskFlow
@@ -94,8 +94,8 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                     </span>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
 
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -128,7 +128,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
         {/* User + Logout */}
         <div className="absolute bottom-4 left-0 right-0 px-4 space-y-2">
-          {isOpen && (
+          {isOpen ? (
             <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-700/50 rounded-md">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
                 <User className="w-4 h-4 text-white" />
@@ -140,6 +140,12 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   Premium Member
                 </p>
+              </div>
+            </div>
+          ) : (
+            <div className="flex justify-center">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
+                <User className="w-4 h-4 text-white" />
               </div>
             </div>
           )}

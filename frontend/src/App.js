@@ -71,7 +71,11 @@ function App() {
             setIsOpen={setIsSidebarOpen}
             onLogout={handleLogout}
           />
-          <main className={`flex-1 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-16'}`}>
+          <main
+            className={`flex-1 transition-all duration-300 min-h-screen ${
+              isSidebarOpen ? 'ml-56 sm:ml-60' : 'ml-14'
+            }`}
+          >
             <Routes>
               <Route path="/" element={<Dashboard isDarkMode={isDarkMode} />} />
               <Route path="/dashboard" element={<Dashboard isDarkMode={isDarkMode} />} />

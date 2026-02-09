@@ -13,10 +13,15 @@ from email_service import (
     send_task_created_email,
     send_task_completed_email, 
     send_task_deleted_email,
-    send_task_reminder_email
+    send_task_reminder_email,
+    send_account_created_email,
+    send_login_notification_email,
+    send_signup_otp_email,
+    send_login_otp_email,
 )
 import os
 import asyncio
+import random
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 
@@ -107,22 +112,50 @@ class TaskResponse(BaseModel):
     user_id: int
 
 
-# ==================== AUTH ENDPOINTS ====================
+class OTPRequestSignup(BaseModel):
+    full_name: str
+    email: EmailStr
+    password: str
+
+
+class OTPRequestLogin(BaseModel):
+    email: EmailStr
+    password: str
+
+
+class OTPVerifySignup(BaseModel):
+    otp_id: int
+    code: str
+    full_name: str
+    email: EmailStr
+    password: str
+
+
+class OTPVerifyLogin(BaseModel):
+    otp_id: int
+    code: str
+
+
+class OTPResend(BaseModel):
+    otp_id: int
+
+
+ # ==================== AUTH ENDPOINTS ====================
 
 
 @app.post("/api/auth/register", response_model=dict)
 async def register(user: UserCreate, background_tasks: BackgroundTasks):
-    """Register a new user"""
+    """Register a new user (no OTP, classic flow)"""
     conn = get_db_connection()
     cur = conn.cursor(cursor_factory=RealDictCursor)
-    
+
     # Check if user exists
     cur.execute("SELECT id FROM users WHERE email = %s", (user.email,))
     if cur.fetchone():
         cur.close()
         conn.close()
         raise HTTPException(status_code=400, detail="Email already registered")
-    
+
     # Create user
     hashed_password = get_password_hash(user.password)
     cur.execute(
@@ -133,10 +166,15 @@ async def register(user: UserCreate, background_tasks: BackgroundTasks):
     conn.commit()
     cur.close()
     conn.close()
-    
+
     # Create access token
     access_token = create_access_token(data={"user_id": new_user["id"]})
-    
+
+    # Send account-created notification
+    background_tasks.add_task(
+        send_account_created_email, new_user["email"], new_user["full_name"]
+    )
+
     return {
         "access_token": access_token,
         "token_type": "bearer",
@@ -149,23 +187,26 @@ async def register(user: UserCreate, background_tasks: BackgroundTasks):
 
 
 @app.post("/api/auth/login", response_model=dict)
-async def login(credentials: dict):
-    """Login user"""
+async def login(credentials: dict, background_tasks: BackgroundTasks):
+    """Login user (no OTP, classic flow)"""
     email = credentials.get("email")
     password = credentials.get("password")
-    
+
     conn = get_db_connection()
     cur = conn.cursor(cursor_factory=RealDictCursor)
     cur.execute("SELECT * FROM users WHERE email = %s", (email,))
     user = cur.fetchone()
     cur.close()
     conn.close()
-    
+
     if not user or not verify_password(password, user['hashed_password']):
         raise HTTPException(status_code=400, detail="Incorrect email or password")
-    
+
     access_token = create_access_token(data={"user_id": user['id']})
-    
+
+    # Send login notification
+    background_tasks.add_task(send_login_notification_email, user["email"])
+
     return {
         "access_token": access_token,
         "token_type": "bearer",
@@ -174,6 +215,256 @@ async def login(credentials: dict):
             "email": user['email'],
             "fullName": user.get('full_name', user.get('name', 'User'))
         }
+    }
+
+
+@app.post("/api/auth/request-signup-otp", response_model=dict)
+async def request_signup_otp(payload: OTPRequestSignup, background_tasks: BackgroundTasks):
+    """Start signup flow: create OTP and email it (10 min validity)"""
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+
+    # Check if user already exists
+    cur.execute("SELECT id FROM users WHERE email = %s", (payload.email,))
+    if cur.fetchone():
+        cur.close()
+        conn.close()
+        raise HTTPException(status_code=400, detail="Email already registered")
+
+    code = f"{random.randint(100000, 999999)}"
+    expires_at = datetime.now() + timedelta(minutes=10)
+
+    cur.execute(
+        """
+        INSERT INTO otps (email, code, purpose, expires_at)
+        VALUES (%s, %s, %s, %s)
+        RETURNING id, expires_at
+        """,
+        (payload.email, code, "signup", expires_at),
+    )
+    otp_row = cur.fetchone()
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    background_tasks.add_task(send_signup_otp_email, payload.email, code)
+
+    return {
+        "otpId": otp_row["id"],
+        "expiresAt": otp_row["expires_at"].isoformat(),
+        "message": "OTP sent to your email for signup verification",
+    }
+
+
+@app.post("/api/auth/verify-signup-otp", response_model=dict)
+async def verify_signup_otp(payload: OTPVerifySignup, background_tasks: BackgroundTasks):
+    """Verify signup OTP and create account if valid"""
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+
+    cur.execute(
+        """
+        SELECT id, email, code, purpose, expires_at, used
+        FROM otps
+        WHERE id = %s AND email = %s AND purpose = 'signup'
+        """,
+        (payload.otp_id, payload.email),
+    )
+    otp = cur.fetchone()
+
+    now = datetime.now()
+    if (
+        not otp
+        or otp["used"]
+        or otp["code"] != payload.code
+        or otp["expires_at"] < now
+    ):
+        cur.close()
+        conn.close()
+        raise HTTPException(status_code=400, detail="Invalid or expired OTP")
+
+    # Mark OTP as used
+    cur.execute("UPDATE otps SET used = TRUE WHERE id = %s", (payload.otp_id,))
+
+    # Ensure user does not already exist
+    cur.execute("SELECT id FROM users WHERE email = %s", (payload.email,))
+    if cur.fetchone():
+        conn.commit()
+        cur.close()
+        conn.close()
+        raise HTTPException(status_code=400, detail="Email already registered")
+
+    # Create user
+    hashed_password = get_password_hash(payload.password)
+    cur.execute(
+        """
+        INSERT INTO users (email, hashed_password, full_name)
+        VALUES (%s, %s, %s)
+        RETURNING id, email, full_name
+        """,
+        (payload.email, hashed_password, payload.full_name),
+    )
+    new_user = cur.fetchone()
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    access_token = create_access_token(data={"user_id": new_user["id"]})
+
+    # Send account-created notification
+    background_tasks.add_task(
+        send_account_created_email, new_user["email"], new_user["full_name"]
+    )
+
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "user": {
+            "id": new_user["id"],
+            "email": new_user["email"],
+            "fullName": new_user["full_name"],
+        },
+    }
+
+
+@app.post("/api/auth/request-login-otp", response_model=dict)
+async def request_login_otp(payload: OTPRequestLogin, background_tasks: BackgroundTasks):
+    """Start login flow: verify password, then email OTP (10 min validity)"""
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+
+    cur.execute("SELECT * FROM users WHERE email = %s", (payload.email,))
+    user = cur.fetchone()
+
+    if not user or not verify_password(payload.password, user["hashed_password"]):
+        cur.close()
+        conn.close()
+        raise HTTPException(status_code=400, detail="Incorrect email or password")
+
+    code = f"{random.randint(100000, 999999)}"
+    expires_at = datetime.now() + timedelta(minutes=10)
+
+    cur.execute(
+        """
+        INSERT INTO otps (email, code, purpose, expires_at)
+        VALUES (%s, %s, %s, %s)
+        RETURNING id, expires_at
+        """,
+        (payload.email, code, "login", expires_at),
+    )
+    otp_row = cur.fetchone()
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    background_tasks.add_task(send_login_otp_email, payload.email, code)
+
+    return {
+        "otpId": otp_row["id"],
+        "expiresAt": otp_row["expires_at"].isoformat(),
+        "message": "OTP sent to your email for login verification",
+    }
+
+
+@app.post("/api/auth/verify-login-otp", response_model=dict)
+async def verify_login_otp(payload: OTPVerifyLogin, background_tasks: BackgroundTasks):
+    """Verify login OTP and issue JWT token if valid"""
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+
+    cur.execute(
+        """
+        SELECT id, email, code, purpose, expires_at, used
+        FROM otps
+        WHERE id = %s AND purpose = 'login'
+        """,
+        (payload.otp_id,),
+    )
+    otp = cur.fetchone()
+
+    now = datetime.now()
+    if (
+        not otp
+        or otp["used"]
+        or otp["code"] != payload.code
+        or otp["expires_at"] < now
+    ):
+        cur.close()
+        conn.close()
+        raise HTTPException(status_code=400, detail="Invalid or expired OTP")
+
+    # Mark OTP as used
+    cur.execute("UPDATE otps SET used = TRUE WHERE id = %s", (payload.otp_id,))
+
+    # Fetch user
+    cur.execute("SELECT id, email, full_name FROM users WHERE email = %s", (otp["email"],))
+    user = cur.fetchone()
+    if not user:
+        conn.commit()
+        cur.close()
+        conn.close()
+        raise HTTPException(status_code=404, detail="User not found")
+
+    access_token = create_access_token(data={"user_id": user["id"]})
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    # Send login notification email
+    background_tasks.add_task(send_login_notification_email, user["email"])
+
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "user": {
+            "id": user["id"],
+            "email": user["email"],
+            "fullName": user.get("full_name", "User"),
+        },
+    }
+
+
+@app.post("/api/auth/resend-otp", response_model=dict)
+async def resend_otp(payload: OTPResend, background_tasks: BackgroundTasks):
+    """Resend an existing (still-valid) OTP and extend expiry by 10 minutes"""
+    conn = get_db_connection()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+
+    cur.execute(
+        """
+        SELECT id, email, purpose, expires_at, used
+        FROM otps
+        WHERE id = %s
+        """,
+        (payload.otp_id,),
+    )
+    otp = cur.fetchone()
+
+    now = datetime.now()
+    if not otp or otp["used"] or otp["expires_at"] < now:
+        cur.close()
+        conn.close()
+        raise HTTPException(status_code=400, detail="OTP expired. Please start again.")
+
+    new_code = f"{random.randint(100000, 999999)}"
+    new_expires = datetime.now() + timedelta(minutes=10)
+
+    cur.execute(
+        "UPDATE otps SET code = %s, expires_at = %s WHERE id = %s",
+        (new_code, new_expires, payload.otp_id),
+    )
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    if otp["purpose"] == "signup":
+        background_tasks.add_task(send_signup_otp_email, otp["email"], new_code)
+    else:
+        background_tasks.add_task(send_login_otp_email, otp["email"], new_code)
+
+    return {
+        "message": "OTP resent to your email",
+        "expiresAt": new_expires.isoformat(),
     }
 
 
@@ -514,6 +805,19 @@ async def startup_event():
             user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+
+    # Create OTP table for auth flows
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS otps (
+            id SERIAL PRIMARY KEY,
+            email VARCHAR(255) NOT NULL,
+            code VARCHAR(10) NOT NULL,
+            purpose VARCHAR(20) NOT NULL,
+            expires_at TIMESTAMP NOT NULL,
+            used BOOLEAN DEFAULT FALSE,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
     

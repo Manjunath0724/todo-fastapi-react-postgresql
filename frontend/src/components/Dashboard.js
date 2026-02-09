@@ -60,8 +60,6 @@ const Dashboard = ({ isDarkMode }) => {
 
   useEffect(() => {
     fetchTasks();
-    const interval = setInterval(fetchTasks, 5000);
-    return () => clearInterval(interval);
   }, [fetchTasks]);
 
   const handleAddTask = async (e) => {
@@ -167,7 +165,7 @@ const Dashboard = ({ isDarkMode }) => {
               Dashboard Overview
             </h1>
             <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
-              Live analytics • Auto-refreshes every 5 seconds
+              Live analytics • Refreshes when you create or update tasks
             </p>
           </div>
           <button
@@ -235,7 +233,7 @@ const Dashboard = ({ isDarkMode }) => {
             <h2 className="text-lg sm:text-xl font-bold">Recent Tasks ({filteredTasks.length})</h2>
             <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
               <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-400 rounded-full animate-pulse" />
-              Live • Updates every 5s
+              Live • Latest data loaded
             </div>
           </div>
 

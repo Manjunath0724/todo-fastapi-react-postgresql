@@ -23,8 +23,8 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
     try {
       setLoading(true);
       const response = await api.put('/auth/profile', {
-        full_name: profile.fullName,
-        email: profile.email
+        // 🔒 Email is now immutable – only update full name
+        full_name: profile.fullName
       });
       const user = JSON.parse(localStorage.getItem('user') || '{}');
       const updatedUser = { 
@@ -138,8 +138,7 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
                   <input
                     type="email"
                     value={profile.email}
-                    onChange={(e) => setProfile({ ...profile, email: e.target.value })}
-                    disabled={loading}
+                    readOnly
                     className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg transition-all focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 disabled:opacity-50 ${
                       isDarkMode
                         ? 'bg-gray-700/80 border-gray-600 text-white placeholder-gray-400 focus:bg-gray-600/80'
@@ -147,6 +146,9 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
                     }`}
                   />
                 </div>
+                <p className="mt-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                  Email is linked to your login and cannot be changed here.
+                </p>
               </div>
 
               <button

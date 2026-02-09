@@ -132,6 +132,103 @@ async def send_task_reminder_email(user_email: str, task_title: str, task_descri
     return await send_email(user_email, f"⏰ Reminder: {task_title}", html_content)
 
 
+# ==================== AUTH EMAILS ====================
+
+
+async def send_account_created_email(user_email: str, full_name: str):
+    html_content = f"""
+    <html><body style="font-family: Arial, sans-serif;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #f8fafc;">
+            <div style="background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%); padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
+                <h1 style="color: white; margin: 0;">Welcome to TaskFlow Pro</h1>
+                <p style="color: #DBEAFE;">Your account has been created ✅</p>
+            </div>
+            <div style="background: white; padding: 30px; border-radius: 0 0 10px 10px;">
+                <p style="color: #1E293B;">Hi {full_name or 'there'},</p>
+                <p style="color: #64748B;">
+                    Thanks for signing up for <strong>TaskFlow Pro</strong>. Your workspace is ready –
+                    you can start creating tasks, tracking progress, and staying organized.
+                </p>
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="http://localhost:3000/dashboard" style="background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%); color: white; padding: 15px 35px; text-decoration: none; border-radius: 8px; font-weight: bold;">
+                        Open Dashboard →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </body></html>
+    """
+    return await send_email(user_email, "🎉 Your TaskFlow Pro account is ready", html_content)
+
+
+async def send_login_notification_email(user_email: str):
+    html_content = f"""
+    <html><body style="font-family: Arial, sans-serif;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #f8fafc;">
+            <div style="background: linear-gradient(135deg, #0EA5E9 0%, #0369A1 100%); padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
+                <h1 style="color: white; margin: 0;">New Login to TaskFlow Pro</h1>
+            </div>
+            <div style="background: white; padding: 30px; border-radius: 0 0 10px 10px;">
+                <p style="color: #64748B;">
+                    Your TaskFlow Pro account was just used to sign in.
+                    If this was you, you can safely ignore this email.
+                </p>
+                <p style="color: #64748B;">
+                    If you don't recognize this activity, we recommend you reset your password immediately.
+                </p>
+            </div>
+        </div>
+    </body></html>
+    """
+    return await send_email(user_email, "🔐 New login to your TaskFlow Pro account", html_content)
+
+
+async def send_signup_otp_email(user_email: str, code: str):
+    html_content = f"""
+    <html><body style="font-family: Arial, sans-serif;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #f8fafc;">
+            <div style="background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%); padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
+                <h1 style="color: white; margin: 0;">Verify your email</h1>
+                <p style="color: #DBEAFE;">Complete your TaskFlow Pro signup</p>
+            </div>
+            <div style="background: white; padding: 30px; border-radius: 0 0 10px 10px; text-align: center;">
+                <p style="color: #64748B;">Use the following one-time password (OTP) to finish creating your account:</p>
+                <p style="font-size: 28px; letter-spacing: 6px; font-weight: bold; color: #1D4ED8; margin: 20px 0;">
+                    {code}
+                </p>
+                <p style="color: #64748B; font-size: 14px;">
+                    This code is valid for <strong>10 minutes</strong>. Do not share it with anyone.
+                </p>
+            </div>
+        </div>
+    </body></html>
+    """
+    return await send_email(user_email, "🔐 Your TaskFlow Pro signup code", html_content)
+
+
+async def send_login_otp_email(user_email: str, code: str):
+    html_content = f"""
+    <html><body style="font-family: Arial, sans-serif;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #f8fafc;">
+            <div style="background: linear-gradient(135deg, #0EA5E9 0%, #0369A1 100%); padding: 30px; border-radius: 10px 10px 0 0; text-align: center;">
+                <h1 style="color: white; margin: 0;">Login verification</h1>
+                <p style="color: #E0F2FE;">Enter this code to sign in</p>
+            </div>
+            <div style="background: white; padding: 30px; border-radius: 0 0 10px 10px; text-align: center;">
+                <p style="color: #64748B;">Use the following one-time password (OTP) to complete your login:</p>
+                <p style="font-size: 28px; letter-spacing: 6px; font-weight: bold; color: #0369A1; margin: 20px 0;">
+                    {code}
+                </p>
+                <p style="color: #64748B; font-size: 14px;">
+                    This code is valid for <strong>10 minutes</strong>. If you did not attempt to log in, you can ignore this email.
+                </p>
+            </div>
+        </div>
+    </body></html>
+    """
+    return await send_email(user_email, "🔑 Your TaskFlow Pro login code", html_content)
+
+
 # 🔧 Test functiON
 async def test_email():
     print("🧪 Testing all email functions...")

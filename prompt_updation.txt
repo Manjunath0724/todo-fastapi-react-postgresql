@@ -1,0 +1,7 @@
+i want you to add something in this project  
+1.make this project best responsive for the many devies like tablet and all the sizes of screeen
+2.i have added the constraint of the mail in the login page so the email in the setting page should not be able to edit please and next is 
+3.remove the 5s refresh from thr main dashabord page please
+4.and after slding the sidebar the sidebar elements are not visible so ix that size also means the setting image and all thhe sidebar iamge after making it disppear the logo also should be there i will share the picture of it 
+5.also add an email notification whrn the account is  created ffirst time and for every login fromm thhat emaill please
+6.and if possible can we add the otp thing during login and  signup to for  10 min durationn the valdity and if correct the login orr signup if  not then re-ennter or resent otpp like many proofessional website  has  
