@@ -159,21 +159,21 @@ const Dashboard = ({ isDarkMode }) => {
     <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
       <div className="max-w-7xl mx-auto p-4 sm:p-6">
         {/* Header */}
-        <div className="flex justify-between items-center mb-6 sm:mb-8">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-1 sm:mb-2">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8">
+          <div className="flex-1 min-w-0">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-1 sm:mb-2">
               Dashboard Overview
             </h1>
-            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
+            <p className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-300">
               Live analytics • Refreshes when you create or update tasks
             </p>
           </div>
           <button
             onClick={() => setShowAddModal(true)}
-            className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center gap-2 text-sm sm:text-base"
+            className="w-full sm:w-auto bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2 text-sm sm:text-base"
           >
-            <Plus size={16} className="sm:w-5 sm:h-5" />
-            Add Task
+            <Plus size={18} className="sm:w-5 sm:h-5" />
+            <span>Add Task</span>
           </button>
         </div>
 
@@ -216,13 +216,13 @@ const Dashboard = ({ isDarkMode }) => {
             <button
               key={status}
               onClick={() => setFilter(status)}
-              className={`px-4 sm:px-5 py-1.5 sm:py-2 rounded-full font-medium text-sm sm:text-base transition-all duration-200 ${filter === status
+              className={`px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 rounded-full font-medium text-xs sm:text-sm md:text-base transition-all duration-200 whitespace-nowrap ${filter === status
                 ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/25'
                 : 'bg-white/50 dark:bg-gray-800/50 hover:bg-white/70 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 hover:shadow-md'
                 }`}
             >
               {status === 'all' ? 'All Tasks' : status.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
-              {status !== 'all' && ` (${stats[status === 'overdue' ? 'overdue' : status.replace('in_progress', 'inProgress')] || 0})`}
+              {status !== 'all' && <span className="hidden sm:inline"> ({stats[status === 'overdue' ? 'overdue' : status.replace('in_progress', 'inProgress')] || 0})</span>}
             </button>
           ))}
         </div>

@@ -11,7 +11,7 @@ import Signup from './components/Signup';
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Start closed on mobile
 
   useEffect(() => {
     // Check authentication
@@ -27,6 +27,19 @@ function App() {
       setIsDarkMode(false);
       document.documentElement.classList.remove('dark');
     }
+
+    // Set sidebar open by default on desktop, closed on mobile
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setIsSidebarOpen(true);
+      } else {
+        setIsSidebarOpen(false);
+      }
+    };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const toggleTheme = () => {
@@ -73,9 +86,23 @@ function App() {
           />
           <main
             className={`flex-1 transition-all duration-300 min-h-screen ${
-              isSidebarOpen ? 'ml-56 sm:ml-60' : 'ml-14'
+              isSidebarOpen 
+                ? 'lg:ml-56 lg:ml-60 ml-0' 
+                : 'lg:ml-14 ml-0'
             }`}
           >
+            {/* Mobile Menu Button */}
+            {!isSidebarOpen && (
+              <button
+                onClick={() => setIsSidebarOpen(true)}
+                className="fixed top-4 left-4 z-40 lg:hidden p-2 bg-white dark:bg-slate-800 rounded-lg shadow-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
+                aria-label="Open menu"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+            )}
             <Routes>
               <Route path="/" element={<Dashboard isDarkMode={isDarkMode} />} />
               <Route path="/dashboard" element={<Dashboard isDarkMode={isDarkMode} />} />

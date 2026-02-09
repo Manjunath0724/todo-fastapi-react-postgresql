@@ -95,28 +95,28 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700 flex items-center justify-center p-4 sm:p-6">
       <div className="max-w-md w-full">
 
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-2xl shadow-lg mb-4">
-            <CheckSquare className="w-10 h-10 text-blue-600" />
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-2xl shadow-lg mb-3 sm:mb-4">
+            <CheckSquare className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600" />
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2">
             TaskFlow Pro
           </h1>
           <div className="flex items-center justify-center gap-2">
-            <Sparkles className="w-4 h-4 text-yellow-300" />
-            <p className="text-blue-100">
+            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-300" />
+            <p className="text-sm sm:text-base text-blue-100">
               Manage your tasks like a pro
             </p>
           </div>
         </div>
 
         {/* Signup Card */}
-        <div className="bg-white rounded-2xl shadow-2xl p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">
+        <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
             Create your account
           </h2>
 
