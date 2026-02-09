@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  CheckSquare, 
-  BarChart3, 
-  Settings, 
+import { NavLink, useNavigate } from 'react-router-dom';
+import {
+  LayoutDashboard,
+  CheckSquare,
+  BarChart3,
+  Settings,
   Menu,
   X,
   LogOut,
@@ -13,9 +13,10 @@ import {
 } from 'lucide-react';
 import api from '../services/api';
 
-const Sidebar = ({ isOpen, setIsOpen, onLogout }) => {
+const Sidebar = ({ isOpen, setIsOpen }) => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('User');
-  
+
   const navItems = [
     { path: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
     { path: '/tasks', icon: CheckSquare, label: 'All Tasks' },
@@ -23,123 +24,134 @@ const Sidebar = ({ isOpen, setIsOpen, onLogout }) => {
     { path: '/settings', icon: Settings, label: 'Settings' },
   ];
 
-  // Fetch username from database
+  // ✅ Fetch username ONLY if user exists
   useEffect(() => {
-    const fetchUserProfile = async () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (!user) {
+      setUsername('User');
+      return;
+    }
+
+    if (user.full_name || user.fullName) {
+      const name = user.full_name || user.fullName;
+      setUsername(name.split(' ')[0]);
+      return;
+    }
+
+    // Optional API fallback
+    const fetchProfile = async () => {
       try {
-        const user = JSON.parse(localStorage.getItem('user') || '{}');
-        if (user.fullName) {
-          setUsername(user.fullName.split(' ')[0]); // First name only
-        }
-        // Also try to fetch from API if localStorage is empty
         const response = await api.get('/auth/profile');
-        setUsername(response.data.user.full_name?.split(' ')[0] || 'User');
-      } catch (error) {
-        console.error('Error fetching user profile:', error);
-        const user = JSON.parse(localStorage.getItem('user') || '{}');
-        setUsername(user.fullName?.split(' ')[0] || 'User');
+        setUsername(response.data.user.full_name.split(' ')[0]);
+      } catch {
+        setUsername('User');
       }
     };
 
-    fetchUserProfile();
+    fetchProfile();
   }, []);
+
+  // ✅ Proper logout handler
+  const handleLogout = () => {
+    localStorage.clear();          // 🔥 clears token + user
+    setUsername('User');           // 🔥 reset UI state
+    navigate('/login');            // 🔥 redirect
+  };
 
   return (
     <>
       {/* Mobile overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 z-40 lg:hidden"
           onClick={() => setIsOpen(false)}
         />
       )}
 
       {/* Sidebar */}
-      <aside 
+      <aside
         className={`fixed top-0 left-0 h-screen bg-white dark:bg-slate-800 shadow-md z-50 transition-all duration-200 ${
           isOpen ? 'w-56 sm:w-60' : 'w-14'
         }`}
       >
         {/* Header */}
-        <div className="p-2.5 sm:p-3 border-b border-gray-200 dark:border-slate-700">
+        <div className="p-3 border-b border-gray-200 dark:border-slate-700">
           <div className="flex items-center justify-between">
             {isOpen && (
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-md flex items-center justify-center shadow-md">
-                  <CheckSquare className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-md flex items-center justify-center">
+                  <CheckSquare className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-sm sm:text-base font-bold text-gray-900 dark:text-white">TaskFlow</h1>
-                  <div className="flex items-center gap-0.5 mt-0.5">
-                    <Sparkles className="w-2.5 h-2.5 text-blue-500" />
-                    <span className="text-xs font-semibold bg-gradient-to-r from-blue-500 to-blue-700 text-transparent bg-clip-text">
+                  <h1 className="text-base font-bold text-gray-900 dark:text-white">
+                    TaskFlow
+                  </h1>
+                  <div className="flex items-center gap-1">
+                    <Sparkles className="w-3 h-3 text-blue-500" />
+                    <span className="text-xs font-semibold text-blue-600">
                       PRO
                     </span>
                   </div>
                 </div>
               </div>
             )}
+
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-1.5 sm:p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-md transition-colors"
+              className="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-md"
             >
-              {isOpen ? (
-                <X className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-300" />
-              ) : (
-                <Menu className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-300" />
-              )}
+              {isOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
         </div>
 
         {/* Navigation */}
-        <nav className="p-2.5  sm:p-4 space-y-1.5 sm:space-y-2">
+        <nav className="p-4 space-y-2">
           {navItems.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center gap-2 sm:gap-3 px-2.5 py-2 sm:py-2.5 rounded-md transition-all duration-200 text-sm ${
+                `flex items-center gap-3 px-3 py-2.5 rounded-md text-sm transition-all ${
                   isActive
-                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md'
+                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white'
                     : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700'
-                } ${!isOpen && 'justify-center py-2.5'}`  
+                } ${!isOpen && 'justify-center'}`
               }
             >
-              <item.icon className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
-              {isOpen && <span className="font-medium">{item.label}</span>}
+              <item.icon className="w-5 h-5" />
+              {isOpen && item.label}
             </NavLink>
           ))}
         </nav>
 
-        {/* Username + Logout Section */}
-        <div className="absolute bottom-3 sm:bottom-4 left-0 right-0 px-2.5  sm:px-4 space-y-2">
-          {/* 🔥 USERNAME FROM DATABASE */}
+        {/* User + Logout */}
+        <div className="absolute bottom-4 left-0 right-0 px-4 space-y-2">
           {isOpen && (
-            <div className="flex items-center gap-2 p-2.5 rounded-md bg-gray-50 dark:bg-slate-700/50 border border-gray-200/50 dark:border-slate-600/50">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-sm">
+            <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-700/50 rounded-md">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
                 <User className="w-4 h-4 text-white" />
               </div>
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold text-gray-900 dark:text-white truncate">
+              <div>
+                <p className="text-sm font-semibold text-gray-900 dark:text-white">
                   {username}
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                <p className="text-xs text-gray-500 dark:text-gray-400">
                   Premium Member
                 </p>
               </div>
             </div>
           )}
 
-          {/* Logout Button */}
           <button
-            onClick={onLogout}
-            className={`w-full flex items-center gap-2 px-2.5 py-2 sm:py-2.5 rounded-md text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all text-xs sm:text-sm ${
-              !isOpen && 'justify-center py-2.5'
+            onClick={handleLogout}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 ${
+              !isOpen && 'justify-center'
             }`}
           >
-            <LogOut className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
-            {isOpen && <span className="font-medium">Logout</span>}
+            <LogOut className="w-5 h-5" />
+            {isOpen && 'Logout'}
           </button>
         </div>
       </aside>
