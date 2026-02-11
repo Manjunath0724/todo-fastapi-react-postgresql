@@ -351,3 +351,4 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
         </div>
   );
 };
+export default Settings;
