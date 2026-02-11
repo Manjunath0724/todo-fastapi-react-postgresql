@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { CheckCircle2, Clock, AlertCircle, ListTodo, Plus, TrendingUp, Activity, Trash2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import api from '../services/api';
 
 const Dashboard = ({ isDarkMode }) => {
+  const { t } = useTranslation();
   const [tasks, setTasks] = useState([]);
   const [stats, setStats] = useState({  // ✅ Fixed: Now using setStats
     total: 0,
@@ -105,7 +107,7 @@ const Dashboard = ({ isDarkMode }) => {
 
   const statCards = [
     {
-      title: 'Total Tasks',
+      title: t('dashboard.total_tasks'),
       value: stats.total,
       icon: ListTodo,
       color: 'from-blue-500 to-blue-600',
@@ -113,7 +115,7 @@ const Dashboard = ({ isDarkMode }) => {
       textColor: 'text-blue-600 dark:text-blue-400'
     },
     {
-      title: 'In Progress',
+      title: t('dashboard.in_progress'),
       value: stats.inProgress,
       icon: Clock,
       color: 'from-yellow-500 to-yellow-600',
@@ -121,7 +123,7 @@ const Dashboard = ({ isDarkMode }) => {
       textColor: 'text-yellow-600 dark:text-yellow-400'
     },
     {
-      title: 'Completed',
+      title: t('dashboard.completed'),
       value: stats.completed,
       icon: CheckCircle2,
       color: 'from-green-500 to-green-600',
@@ -129,7 +131,7 @@ const Dashboard = ({ isDarkMode }) => {
       textColor: 'text-green-600 dark:text-green-400'
     },
     {
-      title: 'Overdue',
+      title: t('dashboard.overdue'),
       value: stats.overdue,
       icon: AlertCircle,
       color: 'from-red-500 to-red-600',
@@ -140,15 +142,15 @@ const Dashboard = ({ isDarkMode }) => {
 
   const analyticsCards = [
     {
-      title: 'Completion Rate',
+      title: t('dashboard.completion_rate'),
       value: `${stats.completionRate}%`,
       icon: TrendingUp,
       trend: stats.completionRate > 70 ? 'Excellent' : stats.completionRate > 50 ? 'Good' : 'Needs Improvement',
       color: stats.completionRate > 70 ? 'from-emerald-500/20' : stats.completionRate > 50 ? 'from-yellow-500/20' : 'from-red-500/20'
     },
     {
-      title: 'Avg Completion',
-      value: `${stats.avgCompletionDays} days`,
+      title: t('dashboard.avg_completion'),
+      value: `${stats.avgCompletionDays} ${t('dashboard.days')}`,
       icon: Activity,
       trend: stats.avgCompletionDays < 3 ? 'Fast' : stats.avgCompletionDays < 7 ? 'Normal' : 'Slow',
       color: stats.avgCompletionDays < 3 ? 'from-emerald-500/20' : stats.avgCompletionDays < 7 ? 'from-blue-500/20' : 'from-orange-500/20'
@@ -156,16 +158,16 @@ const Dashboard = ({ isDarkMode }) => {
   ];
 
   return (
-    <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
+    <div className="min-h-screen bg-[var(--bg-main)] text-[var(--text-main)]">
       <div className="max-w-7xl mx-auto p-4 sm:p-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8">
           <div className="flex-1 min-w-0">
             <h1 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-1 sm:mb-2">
-              Dashboard Overview
+              {t('dashboard.title')}
             </h1>
             <p className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-300">
-              Live analytics • Refreshes when you create or update tasks
+              {t('dashboard.subtitle')}
             </p>
           </div>
           <button
@@ -173,7 +175,7 @@ const Dashboard = ({ isDarkMode }) => {
             className="w-full sm:w-auto bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2 text-sm sm:text-base"
           >
             <Plus size={18} className="sm:w-5 sm:h-5" />
-            <span>Add Task</span>
+            <span>{t('dashboard.add_task')}</span>
           </button>
         </div>
 
@@ -221,7 +223,7 @@ const Dashboard = ({ isDarkMode }) => {
                 : 'bg-white/50 dark:bg-gray-800/50 hover:bg-white/70 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 hover:shadow-md'
                 }`}
             >
-              {status === 'all' ? 'All Tasks' : status.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+              {status === 'all' ? t('dashboard.all') : t(`dashboard.filter.${status}`)}
               {status !== 'all' && <span className="hidden sm:inline"> ({stats[status === 'overdue' ? 'overdue' : status.replace('in_progress', 'inProgress')] || 0})</span>}
             </button>
           ))}
@@ -230,7 +232,9 @@ const Dashboard = ({ isDarkMode }) => {
         {/* Tasks List */}
         <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-8 border border-white/20 dark:border-gray-700 shadow-xl sm:shadow-2xl">
           <div className="flex items-center justify-between mb-4 sm:mb-6">
-            <h2 className="text-lg sm:text-xl font-bold">Recent Tasks ({filteredTasks.length})</h2>
+            <h2 className="text-lg sm:text-xl font-bold">
+              {t('dashboard.recent_tasks')} ({filteredTasks.length})
+            </h2>
             <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
               <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-400 rounded-full animate-pulse" />
               Live • Latest data loaded
@@ -240,25 +244,26 @@ const Dashboard = ({ isDarkMode }) => {
           {loading ? (
             <div className="flex flex-col items-center justify-center py-12 sm:py-16 text-center">
               <div className="w-12 h-12 sm:w-14 sm:h-14 border-4 border-indigo-200 dark:border-indigo-800 border-t-indigo-500 rounded-full animate-spin mb-3 sm:mb-4" />
-              <p className="text-base sm:text-lg font-semibold text-gray-600 dark:text-gray-300">Loading tasks...</p>
+              <p className="text-base sm:text-lg font-semibold text-gray-600 dark:text-gray-300">
+                {t('dashboard.loading')}
+              </p>
             </div>
           ) : filteredTasks.length === 0 ? (
             <div className="text-center py-12 sm:py-16">
               <ListTodo className="w-16 h-16 sm:w-18 sm:h-18 text-gray-300 mx-auto mb-4 sm:mb-6 opacity-50" />
               <h3 className="text-lg sm:text-xl font-bold text-gray-500 dark:text-gray-400 mb-2">
-                {filter === 'all' ? 'No tasks yet' : 'No tasks match this filter'}
+                {filter === 'all' ? t('dashboard.no_tasks') : t('dashboard.no_match')}
               </h3>
               <p className="text-gray-500 dark:text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base">
                 {filter === 'all'
-                  ? 'Get started by creating your first task above!'
-                  : 'Try adjusting your filters or create new tasks'
-                }
+                  ? t('dashboard.create_first')
+                  : t('dashboard.try_filters')}
               </p>
               <button
                 onClick={() => setShowAddModal(true)}
                 className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg sm:rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-200 text-sm sm:text-base"
               >
-                Create First Task
+                {t('dashboard.create_task')}
               </button>
             </div>
           ) : (

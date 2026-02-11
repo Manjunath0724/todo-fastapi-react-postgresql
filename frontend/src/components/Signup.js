@@ -9,6 +9,7 @@ import {
   Eye,
   EyeOff
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import api from '../services/api';
 
 // ✅ Allowed email domains
@@ -25,6 +26,7 @@ const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 const Signup = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -54,23 +56,19 @@ const Signup = () => {
       emailParts.length !== 2 ||
       !allowedDomains.includes(emailParts[1].toLowerCase())
     ) {
-      setError(
-        'Please use a valid email (Gmail, Yahoo, Outlook, Hotmail)'
-      );
+      setError(t('auth.email_constraint'));
       return;
     }
 
     // 🔴 Password match check
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+      setError(t('auth.password_mismatch'));
       return;
     }
 
     // 🔴 Password strength validation
     if (!passwordRegex.test(formData.password)) {
-      setError(
-        'Password must be at least 8 characters and include uppercase, lowercase, number, and special character'
-      );
+      setError(t('auth.password_rules'));
       return;
     }
 
@@ -95,7 +93,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700 flex items-center justify-center p-4 sm:p-6">
+    <div className="min-h-screen bg-[var(--bg-main)] flex items-center justify-center p-4 sm:p-6">
       <div className="max-w-md w-full">
 
         {/* Logo */}
@@ -103,21 +101,21 @@ const Signup = () => {
           <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-2xl shadow-lg mb-3 sm:mb-4">
             <CheckSquare className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600" />
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[var(--text-main)] mb-2">
             TaskFlow Pro
           </h1>
           <div className="flex items-center justify-center gap-2">
             <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-300" />
-            <p className="text-sm sm:text-base text-blue-100">
-              Manage your tasks like a pro
+            <p className="text-sm sm:text-base text-[var(--text-muted)]">
+              {t('auth.signup_subtitle')}
             </p>
           </div>
         </div>
 
         {/* Signup Card */}
-        <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8">
+        <div className="bg-[var(--bg-card)] text-[var(--text-main)] rounded-2xl shadow-2xl p-6 sm:p-8 border border-[var(--border-color)]">
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
-            Create your account
+            {t('auth.signup_title')}
           </h2>
 
           {error && (
@@ -131,7 +129,7 @@ const Signup = () => {
             {/* Full Name */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Full Name
+                {t('settings.full_name')}
               </label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -151,7 +149,7 @@ const Signup = () => {
             {/* Email */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address
+                {t('auth.email')}
               </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -167,14 +165,14 @@ const Signup = () => {
                 />
               </div>
               <p className="text-xs text-gray-500 mt-1">
-                Only Gmail, Yahoo, Outlook, Hotmail allowed
+                {t('auth.email_hint')}
               </p>
             </div>
 
             {/* Password */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Password
+                {t('auth.password')}
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -201,7 +199,7 @@ const Signup = () => {
             {/* Confirm Password */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Confirm Password
+                {t('auth.confirm_password')}
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -236,18 +234,18 @@ const Signup = () => {
               disabled={loading}
               className="w-full py-3 gradient-primary text-white rounded-lg font-medium disabled:opacity-50"
             >
-              {loading ? 'Creating account...' : 'Sign Up'}
+              {loading ? t('auth.creating_account') : t('auth.signup')}
             </button>
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-gray-600">
-              Already have an account?{' '}
+              <p className="text-gray-600">
+                {t('auth.have_account')}{' '}
               <Link
                 to="/login"
                 className="text-blue-600 hover:text-blue-700 font-medium"
               >
-                Sign in
+                  {t('auth.signin')}
               </Link>
             </p>
           </div>

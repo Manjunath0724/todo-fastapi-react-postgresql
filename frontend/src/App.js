@@ -7,6 +7,7 @@ import Analytics from './components/Analytics';
 import Settings from './components/Settings';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import Navbar from './components/Navbar';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -103,6 +104,7 @@ function App() {
                 </svg>
               </button>
             )}
+            <Navbar onLogout={handleLogout} />
             <Routes>
               <Route path="/" element={<Dashboard isDarkMode={isDarkMode} />} />
               <Route path="/dashboard" element={<Dashboard isDarkMode={isDarkMode} />} />

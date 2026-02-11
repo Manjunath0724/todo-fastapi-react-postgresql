@@ -11,17 +11,19 @@ import {
   Sparkles,
   User
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import api from '../services/api';
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [username, setUsername] = useState('User');
 
   const navItems = [
-    { path: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-    { path: '/tasks', icon: CheckSquare, label: 'All Tasks' },
-    { path: '/analytics', icon: BarChart3, label: 'Analytics' },
-    { path: '/settings', icon: Settings, label: 'Settings' },
+    { path: '/dashboard', icon: LayoutDashboard, labelKey: 'common.dashboard' },
+    { path: '/tasks', icon: CheckSquare, labelKey: 'common.all_tasks' },
+    { path: '/analytics', icon: BarChart3, labelKey: 'common.analytics' },
+    { path: '/settings', icon: Settings, labelKey: 'common.settings' },
   ];
 
   // ✅ Fetch username ONLY if user exists
@@ -92,7 +94,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                   <div className="flex items-center gap-1">
                     <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-blue-500" />
                     <span className="text-xs sm:text-sm font-semibold text-blue-600">
-                      PRO
+                      {t('common.pro')}
                     </span>
                   </div>
                 </div>
@@ -130,7 +132,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               }
             >
               <item.icon className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" />
-              {isOpen && <span className="truncate">{item.label}</span>}
+              {isOpen && <span className="truncate">{t(item.labelKey)}</span>}
             </NavLink>
           ))}
         </nav>
@@ -147,7 +149,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                   {username}
                 </p>
                 <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 truncate">
-                  Premium Member
+                  {t('common.premium_member')}
                 </p>
               </div>
             </div>
@@ -166,7 +168,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             }`}
           >
             <LogOut className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" />
-            {isOpen && <span className="truncate">Logout</span>}
+            {isOpen && <span className="truncate">{t('common.logout')}</span>}
           </button>
         </div>
       </aside>

@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react';
 import {
   User, Mail, Sun, Moon, Download, Save, Check, Loader2
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import api from '../services/api';
 
 const Settings = ({ isDarkMode, toggleTheme }) => {
+  const { t } = useTranslation();
   const [profile, setProfile] = useState({ fullName: '', email: '' });
   const [saved, setSaved] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [themeKey, setThemeKey] = useState(localStorage.getItem('colorTheme') || 'modern-dark');
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -17,6 +20,11 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
       email: user.email || ''
     });
   }, []);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', themeKey);
+    localStorage.setItem('colorTheme', themeKey);
+  }, [themeKey]);
 
   const handleSaveProfile = async (e) => {
     e.preventDefault();
@@ -77,41 +85,49 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
     }
   };
 
+  const themeOptions = [
+    { id: 'modern-dark', label: t('themes.modern_dark') },
+    { id: 'glassy-ocean', label: t('themes.glassy_ocean') },
+    { id: 'sunset-gradient', label: t('themes.sunset_gradient') },
+    { id: 'royal-purple', label: t('themes.royal_purple') },
+    { id: 'soft-minimal', label: t('themes.soft_minimal') }
+  ];
+
   return (
-    <div className={`p-3 sm:p-4 lg:p-6 min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
+    <div className="p-3 sm:p-4 lg:p-6 min-h-screen bg-[var(--bg-main)] text-[var(--text-main)]">
       {/* Header - TINY */}
       <div className="mb-4 sm:mb-6">
         <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-1">
-          Settings
+          {t('settings.title')}
         </h1>
-        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">
-          Manage your account settings
+        <p className="text-xs sm:text-sm text-[var(--text-muted)]">
+          {t('settings.subtitle')}
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Main Settings Column */}
         <div className="lg:col-span-2 space-y-4 sm:space-y-6">
-          {/* Profile Settings - EXTRA SMALL */}
-          <div className={`p-4 sm:p-5 rounded-xl shadow-md border ${isDarkMode ? 'bg-gray-800/90 border-gray-700/50' : 'bg-white/90 border-gray-200/50'}`}>
+          {/* Profile Settings */}
+          <div className="p-4 sm:p-5 rounded-xl shadow-md border border-[var(--border-color)] bg-[var(--bg-card)]">
             <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
               <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md">
                 <User className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
-                  Profile
+                <h2 className="text-lg sm:text-xl font-bold">
+                  {t('settings.profile')}
                 </h2>
-                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">
-                  Saved to database
+                <p className="text-xs sm:text-sm text-[var(--text-muted)]">
+                  {t('settings.profile_desc')}
                 </p>
               </div>
             </div>
 
             <form onSubmit={handleSaveProfile} className="space-y-3 sm:space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1.5 sm:mb-2">
-                  Full Name
+                <label className="block text-sm font-semibold mb-1.5 sm:mb-2">
+                  {t('settings.full_name')}
                 </label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -130,8 +146,8 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-1.5 sm:mb-2">
-                  Email
+                <label className="block text-sm font-semibold mb-1.5 sm:mb-2">
+                  {t('settings.email')}
                 </label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -139,15 +155,11 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
                     type="email"
                     value={profile.email}
                     readOnly
-                    className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg transition-all focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 disabled:opacity-50 ${
-                      isDarkMode
-                        ? 'bg-gray-700/80 border-gray-600 text-white placeholder-gray-400 focus:bg-gray-600/80'
-                        : 'bg-white border-gray-200 text-gray-900 placeholder-gray-500 focus:bg-white'
-                    }`}
+                    className="w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg transition-all focus:ring-2 focus:ring-[var(--accent-primary)] focus:border-[var(--accent-primary)] disabled:opacity-50 bg-[var(--bg-main)] border-[var(--border-color)] text-[var(--text-main)] placeholder-[var(--text-muted)]"
                   />
                 </div>
-                <p className="mt-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                  Email is linked to your login and cannot be changed here.
+                <p className="mt-1 text-xs sm:text-sm text-[var(--text-muted)]">
+                  {t('settings.email_immutable')}
                 </p>
               </div>
 
@@ -168,33 +180,33 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
                 ) : saved ? (
                   <>
                     <Check className="w-4 h-4" />
-                    Saved!
+                    {t('common.saved')}
                   </>
                 ) : (
                   <>
                     <Save className="w-4 h-4" />
-                    Save to DB
+                    {t('settings.save_to_db')}
                   </>
                 )}
               </button>
             </form>
           </div>
 
-          {/* Appearance - EXTRA SMALL */}
-          <div className={`p-4 sm:p-5 rounded-xl shadow-md border ${isDarkMode ? 'bg-gray-800/90 border-gray-700/50' : 'bg-white/90 border-gray-200/50'}`}>
+          {/* Appearance & Theme */}
+          <div className="p-4 sm:p-5 rounded-xl shadow-md border border-[var(--border-color)] bg-[var(--bg-card)]">
             <div className="flex items-center gap-2 sm:gap-3 mb-4">
               <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg shadow-md">
                 {isDarkMode ? <Moon className="w-5 h-5 text-white" /> : <Sun className="w-5 h-5 text-white" />}
               </div>
               <div>
-                <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">Theme</h2>
+                <h2 className="text-lg sm:text-xl font-bold">{t('settings.theme')}</h2>
               </div>
             </div>
 
-            <div className={`flex items-center justify-between p-3 sm:p-4 rounded-lg ${isDarkMode ? 'bg-purple-900/30 border border-purple-800/30' : 'bg-purple-50 border border-purple-200/30'}`}>
+            <div className="flex items-center justify-between p-3 sm:p-4 rounded-lg bg-purple-50/80 dark:bg-purple-900/30 border border-purple-200/40 dark:border-purple-800/40">
               <div>
-                <h3 className="text-sm font-bold text-gray-900 dark:text-white">Dark Mode</h3>
-                <p className="text-xs text-gray-600 dark:text-gray-300">Light/Dark theme</p>
+                <h3 className="text-sm font-bold">Dark Mode</h3>
+                <p className="text-xs text-[var(--text-muted)]">Light/Dark theme</p>
               </div>
               <button
                 onClick={toggleTheme}
@@ -217,21 +229,48 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
                 </span>
               </button>
             </div>
+            </div>
+
+            {/* Color Theme Selector */}
+            <div className="mt-4 border-t border-[var(--border-color)] pt-3 sm:pt-4">
+              <p className="text-xs sm:text-sm font-semibold text-[var(--text-muted)] mb-2">
+                {t('settings.theme')} Palette
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                {themeOptions.map((theme) => (
+                  <button
+                    key={theme.id}
+                    type="button"
+                    onClick={() => setThemeKey(theme.id)}
+                    className={`flex items-center justify-between px-3 py-2 rounded-lg border text-xs sm:text-sm ${
+                      themeKey === theme.id
+                        ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/10 text-[var(--accent-primary)]'
+                        : 'border-[var(--border-color)] bg-[var(--bg-main)]/40 text-[var(--text-main)]'
+                    }`}
+                  >
+                    <span>{theme.label}</span>
+                    {themeKey === theme.id && (
+                      <span className="w-2.5 h-2.5 rounded-full bg-[var(--accent-primary)]" />
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
 
-          {/* Export - EXTRA SMALL */}
-          <div className={`p-4 sm:p-5 rounded-xl shadow-md border ${isDarkMode ? 'bg-gray-800/90 border-gray-700/50' : 'bg-white/90 border-gray-200/50'}`}>
+          {/* Export */}
+          <div className="p-4 sm:p-5 rounded-xl shadow-md border border-[var(--border-color)] bg-[var(--bg-card)]">
             <div className="flex items-center gap-2 sm:gap-3 mb-4">
               <div className="p-2 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg shadow-md">
                 <Download className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">Export</h2>
-                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">Download tasks</p>
+                <h2 className="text-lg sm:text-xl font-bold">{t('common.export')}</h2>
+                <p className="text-xs sm:text-sm text-[var(--text-muted)]">Download tasks</p>
               </div>
             </div>
 
-            <div className={`border rounded-lg p-3 mb-4 ${isDarkMode ? 'bg-emerald-900/30 border-emerald-800' : 'bg-emerald-50 border-emerald-200'}`}>
+            <div className="border rounded-lg p-3 mb-4 bg-emerald-50/80 dark:bg-emerald-900/30 border-emerald-200/60 dark:border-emerald-800">
               <p className="text-xs sm:text-sm text-emerald-800 dark:text-emerald-200">
                 Export all tasks to CSV
               </p>
@@ -248,12 +287,12 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
               {exporting ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  Exporting...
+                  {t('common.exporting')}
                 </>
               ) : (
                 <>
                   <Download className="w-4 h-4" />
-                  Export CSV
+                  {t('common.export_csv')}
                 </>
               )}
             </button>
