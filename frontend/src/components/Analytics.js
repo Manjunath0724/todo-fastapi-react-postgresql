@@ -3,10 +3,7 @@ import { useTranslation } from 'react-i18next';
 import {
   TrendingUp,
   CheckCircle2,
-  Clock,
-  Target,
-  Calendar,
-  Activity
+  Target
 } from 'lucide-react';
 import {
   Chart as ChartJS,
@@ -20,7 +17,7 @@ import {
   Legend,
   ArcElement,
 } from 'chart.js';
-import { Line, Bar, Doughnut } from 'react-chartjs-2';
+import { Line, Doughnut } from 'react-chartjs-2';
 import api from '../services/api';
 
 ChartJS.register(

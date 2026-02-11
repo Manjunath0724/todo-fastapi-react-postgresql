@@ -7,8 +7,6 @@ import {
   Trash2,
   CheckCircle2,
   Calendar,
-  X,
-  Clock
 } from 'lucide-react';
 import api from '../services/api';
 
