@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    @apply font-sans antialiased;
+    @apply font-sans antialiased overflow-x-hidden;
     margin: 0;
     font-family: 'Inter', sans-serif;
   }

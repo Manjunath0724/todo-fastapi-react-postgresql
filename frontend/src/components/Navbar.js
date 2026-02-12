@@ -65,7 +65,7 @@ const Navbar = ({ onLogout, onToggleMenu, isSidebarOpen }) => {
     <nav className={`bg-white dark:bg-slate-900 shadow-md sticky top-0 z-50 border-b border-gray-200 dark:border-slate-800 transition-all duration-300 ${isSidebarOpen ? 'lg:ml-60' : 'lg:ml-20'} ml-0`}>
       <div className="max-w-full mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center h-16 lg:h-20">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             {/* Menu Toggle Button */}
             <button
               onClick={onToggleMenu}
@@ -87,7 +87,7 @@ const Navbar = ({ onLogout, onToggleMenu, isSidebarOpen }) => {
           </div>
 
           {/* Quote + Language + Logout */}
-          <div className="flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-4">
             {/* Animated Quote */}
             <div className="hidden md:block overflow-hidden min-w-[200px] text-right">
               <span className="text-sm lg:text-base font-medium text-gray-600 dark:text-gray-400">
@@ -113,7 +113,7 @@ const Navbar = ({ onLogout, onToggleMenu, isSidebarOpen }) => {
               className="flex items-center gap-2 bg-red-500/10 hover:bg-red-500 text-red-600 hover:text-white px-4 py-2.5 rounded-xl font-bold transition-all active:scale-95 text-sm group"
             >
               <LogOut className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-              <span className="hidden sm:inline">{t('common.logout')}</span>
+              <span className="hidden lg:inline">{t('common.logout')}</span>
             </button>
           </div>
         </div>
