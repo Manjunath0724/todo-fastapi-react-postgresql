@@ -3,7 +3,7 @@ import { CheckCircle2, Clock, AlertCircle, ListTodo, Plus, TrendingUp, Activity,
 import { useTranslation } from 'react-i18next';
 import api from '../services/api';
 
-const Dashboard = ({ isDarkMode }) => {
+const Dashboard = () => {
   const { t } = useTranslation();
   const [tasks, setTasks] = useState([]);
   const [stats, setStats] = useState({  // ✅ Fixed: Now using setStats

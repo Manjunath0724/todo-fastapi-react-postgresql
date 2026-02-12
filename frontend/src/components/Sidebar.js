@@ -53,13 +53,6 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     fetchProfile();
   }, []);
 
-  // ✅ Proper logout handler
-  const handleLogout = () => {
-    localStorage.clear();          // 🔥 clears token + user
-    setUsername('User');           // 🔥 reset UI state
-    navigate('/login');            // 🔥 redirect
-  };
-
   return (
     <>
       {/* Mobile overlay */}

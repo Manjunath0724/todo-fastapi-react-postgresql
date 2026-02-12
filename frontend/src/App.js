@@ -84,7 +84,6 @@ function App() {
           <Sidebar 
             isOpen={isSidebarOpen} 
             setIsOpen={setIsSidebarOpen}
-            onLogout={handleLogout}
           />
           <main
             className={`flex-1 transition-all duration-300 min-h-screen ${
@@ -107,10 +106,10 @@ function App() {
             )}
             <Navbar onLogout={handleLogout} />
             <Routes>
-              <Route path="/" element={<Dashboard isDarkMode={isDarkMode} />} />
-              <Route path="/dashboard" element={<Dashboard isDarkMode={isDarkMode} />} />
-              <Route path="/tasks" element={<AllTasks isDarkMode={isDarkMode} />} />
-              <Route path="/analytics" element={<Analytics isDarkMode={isDarkMode} />} />
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/tasks" element={<AllTasks />} />
+              <Route path="/analytics" element={<Analytics />} />
               <Route 
                 path="/settings" 
                 element={
