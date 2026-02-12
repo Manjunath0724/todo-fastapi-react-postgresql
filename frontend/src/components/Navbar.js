@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { PanelLeft, LogOut, Globe } from "lucide-react";
 
 const quotes = [
   "Do it now. Later becomes never.",
@@ -9,7 +10,7 @@ const quotes = [
   "Progress not perfection."
 ];
 
-const Navbar = ({ onLogout, onToggleMenu }) => {
+const Navbar = ({ onLogout, onToggleMenu, isSidebarOpen }) => {
   const { t, i18n } = useTranslation();
   const [quoteIndex, setQuoteIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
@@ -61,19 +62,17 @@ const Navbar = ({ onLogout, onToggleMenu }) => {
   const currentLang = i18n.language?.split('-')[0] || 'en';
 
   return (
-    <nav className="bg-white dark:bg-slate-900 shadow-md sticky top-0 z-50 border-b border-gray-200 dark:border-slate-800 transition-colors duration-300">
+    <nav className={`bg-white dark:bg-slate-900 shadow-md sticky top-0 z-50 border-b border-gray-200 dark:border-slate-800 transition-all duration-300 ${isSidebarOpen ? 'lg:ml-60' : 'lg:ml-20'} ml-0`}>
       <div className="max-w-full mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center h-16 lg:h-20">
           <div className="flex items-center gap-4">
             {/* Menu Toggle Button */}
             <button
               onClick={onToggleMenu}
-              className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+              className="p-2.5 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition-all active:scale-95 group"
               aria-label="Toggle Menu"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-              </svg>
+              <PanelLeft className="w-6 h-6 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
             </button>
 
             {/* Logo */}
@@ -111,9 +110,10 @@ const Navbar = ({ onLogout, onToggleMenu }) => {
             {/* Logout Button */}
             <button
               onClick={onLogout}
-              className="bg-red-500 hover:bg-red-600 text-white px-5 py-2.5 rounded-xl font-semibold shadow-md hover:shadow-lg transition-all active:scale-95 text-sm"
+              className="flex items-center gap-2 bg-red-500/10 hover:bg-red-500 text-red-600 hover:text-white px-4 py-2.5 rounded-xl font-bold transition-all active:scale-95 text-sm group"
             >
-              {t('common.logout')}
+              <LogOut className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+              <span className="hidden sm:inline">{t('common.logout')}</span>
             </button>
           </div>
         </div>

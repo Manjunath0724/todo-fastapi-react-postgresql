@@ -83,7 +83,11 @@ function App() {
   return (
     <Router>
       <div className={`min-h-screen ${isDarkMode ? 'dark bg-slate-900' : 'bg-gray-50'}`}>
-        <Navbar onLogout={handleLogout} onToggleMenu={() => setIsSidebarOpen(!isSidebarOpen)} />
+        <Navbar 
+          isSidebarOpen={isSidebarOpen}
+          onLogout={handleLogout} 
+          onToggleMenu={() => setIsSidebarOpen(!isSidebarOpen)} 
+        />
         <div className="flex">
           <Sidebar 
             isOpen={isSidebarOpen} 
