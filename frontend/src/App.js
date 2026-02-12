@@ -20,14 +20,15 @@ function App() {
     setIsAuthenticated(!!token);
 
     // Load theme preference
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
+    const savedColorTheme = localStorage.getItem('colorTheme') || 'pro-dark';
+    if (savedColorTheme === 'pro-dark') {
       setIsDarkMode(true);
       document.documentElement.classList.add('dark');
     } else {
       setIsDarkMode(false);
       document.documentElement.classList.remove('dark');
     }
+    document.documentElement.setAttribute('data-theme', savedColorTheme);
 
     // Set sidebar open by default on desktop, closed on mobile
     const handleResize = () => {
@@ -88,8 +89,8 @@ function App() {
           <main
             className={`flex-1 transition-all duration-300 min-h-screen ${
               isSidebarOpen 
-                ? 'lg:ml-56 lg:ml-60 ml-0' 
-                : 'lg:ml-14 ml-0'
+                ? 'lg:ml-60 ml-0' 
+                : 'lg:ml-20 ml-0'
             }`}
           >
             {/* Mobile Menu Button */}

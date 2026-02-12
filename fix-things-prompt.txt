@@ -76,3 +76,36 @@ The selected language should remain saved even after refreshing the page.
 -------------------------------
 4.and also fix the menu button when the sidebar closes for the desktop also for the mobile devvies also 
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+next again to change make changes:-
+and the theme of the login and the signup page should be constant which was earlier
+1.Remove the langaueges things from the login and singup it should alsways be english 
+2.delete all the color theme in the setting and add accordingly to you any two combination like the professional asthetic ones ,also add them for both light and dark theme eventually and make the combination for all over the website means not just the page of dashbaord but the sidebar,navabr etc all things
+3.You have changed the desgin of the all tasks dashbaord page fix that please then button in all taks is like comman.addd_task fix that also please make it Add task make it good one
+4.you have also changed the design of the analytics page totallly the graphs is looking very ugly the title names are not coming corrrectly they are coming like settings.priority_high,medium,low
+5.main thing you have totaly disturbed is the setting page all the things in that are very undefined means all the things boxes are not aligned goof like the export earlier was at end it has been shifted to the side the pro tip and stats abd the   profile logo and card was side it is shifted to down make it look a like best one 
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////
+
+next again to change make changes:-
+and the theme of the login and the signup page should be constant which was earlier
+1.Remove the langaueges things from the login and singup it should alsways be english 
+2.delete all the color theme in the setting and add accordingly to you any two combination like the professional asthetic ones ,also add them for both light and dark theme eventually and make the combination for all over the website means not just the page of dashbaord but the sidebar,navabr etc all things
+3.You have changed the desgin of the all tasks dashbaord page fix that please then button in all taks is like comman.addd_task fix that also please make it Add task make it good one
+4.you have also changed the design of the analytics page totallly the graphs is looking very ugly the title names are not coming corrrectly they are coming like settings.priority_high,medium,low
+5.main thing you have totaly disturbed is the setting page all the things in that are very undefined means all the things boxes are not aligned goof like the export earlier was at end it has been shifted to the side the pro tip and stats abd the   profile logo and card was side it is shifted to down make it look a like best one 
+6.remove the logout button fromm the sidebar 
+7.and make the website more responsive for all the type and sizes of devices with each component in the website should be responsive to the size 
+8.i have provided the image of the sidebar nad the menu i want like that in my webiste when minimized the sidebar
+9.also prvided the theme color use that pleae for all the things in the website apprently

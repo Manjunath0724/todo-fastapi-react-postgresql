@@ -87,14 +87,14 @@ const Analytics = () => {
     labels: getLast7Days(),
     datasets: [
       {
-        label: t('settings.created'),
+        label: 'Created',
         data: [4, 7, 5, 9, 6, 8, 10],
         borderColor: 'rgb(59, 130, 246)',
         backgroundColor: 'rgba(59, 130, 246, 0.1)',
         tension: 0.4,
       },
       {
-        label: t('settings.done'),
+        label: 'Done',
         data: [3, 5, 4, 7, 5, 6, 8],
         borderColor: 'rgb(34, 197, 94)',
         backgroundColor: 'rgba(34, 197, 94, 0.1)',
@@ -118,7 +118,7 @@ const Analytics = () => {
   };
 
   const priorityData = {
-    labels: [t('settings.priority_high') || 'High', t('settings.priority_medium') || 'Medium', t('settings.priority_low') || 'Low'],
+    labels: ['High', 'Medium', 'Low'],
     datasets: [
       {
         data: [
@@ -142,9 +142,9 @@ const Analytics = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         {[
-          { title: t('settings.created'), value: stats.totalCreated, icon: Target, color: 'text-blue-500' },
-          { title: t('settings.done'), value: stats.totalCompleted, icon: CheckCircle2, color: 'text-green-500' },
-          { title: t('settings.rate'), value: `${stats.completionRate}%`, icon: TrendingUp, color: 'text-purple-500' }
+          { title: 'Created', value: stats.totalCreated, icon: Target, color: 'text-blue-500' },
+          { title: 'Done', value: stats.totalCompleted, icon: CheckCircle2, color: 'text-green-500' },
+          { title: 'Completion Rate', value: `${stats.completionRate}%`, icon: TrendingUp, color: 'text-purple-500' }
         ].map((stat, i) => (
           <div key={i} className="p-6 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl shadow-sm">
             <div className="flex items-center justify-between mb-4">
@@ -158,11 +158,11 @@ const Analytics = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="p-6 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl h-80">
-          <h3 className="font-bold mb-4">{t('common.activity_overview') || 'Activity'}</h3>
+          <h3 className="font-bold mb-4">Activity Overview</h3>
           <div className="h-60"><Line data={activityData} options={activityOptions} /></div>
         </div>
         <div className="p-6 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl h-80">
-          <h3 className="font-bold mb-4">{t('settings.theme')}</h3>
+          <h3 className="font-bold mb-4">Priority Distribution</h3>
           <div className="h-60 flex items-center justify-center"><Doughnut data={priorityData} options={{ responsive: true, maintainAspectRatio: false }} /></div>
         </div>
       </div>

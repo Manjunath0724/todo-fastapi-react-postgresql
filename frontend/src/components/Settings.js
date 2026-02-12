@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  User, Mail, Sun, Moon, Download, Save, Check, Loader2
+  User, Mail, Sun, Moon, Download, Save, Check, Loader2, Sparkles, BarChart3
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import api from '../services/api';
@@ -11,7 +11,7 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
   const [saved, setSaved] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [themeKey, setThemeKey] = useState(localStorage.getItem('colorTheme') || 'modern-dark');
+  const [themeKey, setThemeKey] = useState(localStorage.getItem('colorTheme') || 'pro-dark');
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -24,6 +24,13 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', themeKey);
     localStorage.setItem('colorTheme', themeKey);
+    
+    // Sync with Tailwind dark mode class
+    if (themeKey === 'pro-dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   }, [themeKey]);
 
   const handleSaveProfile = async (e) => {
@@ -86,269 +93,218 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
   };
 
   const themeOptions = [
-    { id: 'modern-dark', label: t('themes.modern_dark') },
-    { id: 'glassy-ocean', label: t('themes.glassy_ocean') },
-    { id: 'sunset-gradient', label: t('themes.sunset_gradient') },
-    { id: 'royal-purple', label: t('themes.royal_purple') },
-    { id: 'soft-minimal', label: t('themes.soft_minimal') }
+    { id: 'pro-dark', label: 'Professional Dark' },
+    { id: 'pro-light', label: 'Professional Light' }
   ];
 
   return (
     <div className="p-3 sm:p-4 lg:p-6 min-h-screen bg-[var(--bg-main)] text-[var(--text-main)]">
-      {/* Header - TINY */}
-      <div className="mb-4 sm:mb-6">
-        <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-1">
+      {/* Header */}
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-1">
           {t('settings.title')}
         </h1>
-        <p className="text-xs sm:text-sm text-[var(--text-muted)]">
+        <p className="text-sm sm:text-base text-[var(--text-muted)]">
           {t('settings.subtitle')}
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-        {/* Main Settings Column */}
-        <div className="lg:col-span-2 space-y-4 sm:space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left Column: Profile & Appearance */}
+        <div className="lg:col-span-2 space-y-6">
           {/* Profile Settings */}
-          <div className="p-4 sm:p-5 rounded-xl shadow-md border border-[var(--border-color)] bg-[var(--bg-card)]">
-            <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-              <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-md">
-                <User className="w-5 h-5 text-white" />
+          <div className="p-5 sm:p-6 rounded-2xl shadow-xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-sm transition-all hover:shadow-2xl">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-3 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl shadow-lg">
+                <User className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h2 className="text-lg sm:text-xl font-bold">
+                <h2 className="text-xl font-bold">
                   {t('settings.profile')}
                 </h2>
-                <p className="text-xs sm:text-sm text-[var(--text-muted)]">
+                <p className="text-sm text-[var(--text-muted)]">
                   {t('settings.profile_desc')}
                 </p>
               </div>
             </div>
 
-            <form onSubmit={handleSaveProfile} className="space-y-3 sm:space-y-4">
-              <div>
-                <label className="block text-sm font-semibold mb-1.5 sm:mb-2">
-                  {t('settings.full_name')}
-                </label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    type="text"
-                    value={profile.fullName}
-                    onChange={(e) => setProfile({ ...profile, fullName: e.target.value })}
-                    disabled={loading}
-                    className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg transition-all focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 disabled:opacity-50 ${
-                      isDarkMode
-                        ? 'bg-gray-700/80 border-gray-600 text-white placeholder-gray-400 focus:bg-gray-600/80'
-                        : 'bg-white border-gray-200 text-gray-900 placeholder-gray-500 focus:bg-white'
-                    }`}
-                  />
+            <form onSubmit={handleSaveProfile} className="space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label className="block text-sm font-semibold mb-2">
+                    {t('settings.full_name')}
+                  </label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type="text"
+                      value={profile.fullName}
+                      onChange={(e) => setProfile({ ...profile, fullName: e.target.value })}
+                      disabled={loading}
+                      className="w-full pl-10 pr-4 py-3 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-xl text-[var(--text-main)] outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div>
-                <label className="block text-sm font-semibold mb-1.5 sm:mb-2">
-                  {t('settings.email')}
-                </label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    type="email"
-                    value={profile.email}
-                    readOnly
-                    className="w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg transition-all focus:ring-2 focus:ring-[var(--accent-primary)] focus:border-[var(--accent-primary)] disabled:opacity-50 bg-[var(--bg-main)] border-[var(--border-color)] text-[var(--text-main)] placeholder-[var(--text-muted)]"
-                  />
+                <div>
+                  <label className="block text-sm font-semibold mb-2">
+                    {t('settings.email')}
+                  </label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type="email"
+                      value={profile.email}
+                      readOnly
+                      className="w-full pl-10 pr-4 py-3 bg-[var(--bg-main)]/50 border border-[var(--border-color)] rounded-xl text-[var(--text-main)] opacity-70 cursor-not-allowed"
+                    />
+                  </div>
                 </div>
-                <p className="mt-1 text-xs sm:text-sm text-[var(--text-muted)]">
-                  {t('settings.email_immutable')}
-                </p>
               </div>
 
               <button
                 type="submit"
                 disabled={loading || saved}
-                className={`w-full flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-bold rounded-lg shadow-md transition-all h-11 ${
-                  loading || saved
-                    ? 'bg-gray-400/80 cursor-not-allowed'
-                    : 'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 hover:shadow-lg hover:scale-[1.01]'
-                } text-white`}
+                className="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-bold shadow-lg transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2"
               >
-                {loading ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Saving...
-                  </>
-                ) : saved ? (
-                  <>
-                    <Check className="w-4 h-4" />
-                    {t('common.saved')}
-                  </>
-                ) : (
-                  <>
-                    <Save className="w-4 h-4" />
-                    {t('settings.save_to_db')}
-                  </>
-                )}
+                {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : saved ? <Check className="w-5 h-5" /> : <Save className="w-5 h-5" />}
+                {loading ? 'Saving...' : saved ? t('common.saved') : t('settings.save_to_db')}
               </button>
             </form>
           </div>
 
-          {/* Appearance & Theme */}
-          <div className="p-4 sm:p-5 rounded-xl shadow-md border border-[var(--border-color)] bg-[var(--bg-card)]">
-            <div className="flex items-center gap-2 sm:gap-3 mb-4">
-              <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg shadow-md">
-                {isDarkMode ? <Moon className="w-5 h-5 text-white" /> : <Sun className="w-5 h-5 text-white" />}
+          {/* Appearance & Theme Palette */}
+          <div className="p-5 sm:p-6 rounded-2xl shadow-xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-sm">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-3 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl shadow-lg">
+                {isDarkMode ? <Moon className="w-6 h-6 text-white" /> : <Sun className="w-6 h-6 text-white" />}
               </div>
               <div>
-                <h2 className="text-lg sm:text-xl font-bold">{t('settings.theme')}</h2>
+                <h2 className="text-xl font-bold">{t('settings.theme')}</h2>
+                <p className="text-sm text-[var(--text-muted)]">Customize your experience</p>
               </div>
             </div>
 
-            <div className="flex items-center justify-between p-3 sm:p-4 rounded-lg bg-purple-50/80 dark:bg-purple-900/30 border border-purple-200/40 dark:border-purple-800/40">
-              <div>
-                <h3 className="text-sm font-bold">Dark Mode</h3>
-                <p className="text-xs text-[var(--text-muted)]">Light/Dark theme</p>
-              </div>
-              <button
-                onClick={toggleTheme}
-                className={`relative inline-flex h-10 w-14 rounded-full p-1 transition-all shadow-md ${
-                  isDarkMode 
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 shadow-purple-500/25' 
-                    : 'bg-gradient-to-r from-gray-200 to-gray-300 shadow-gray-400/25'
-                }`}
-              >
-                <span
-                  className={`inline-flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm transition-transform ${
-                    isDarkMode ? 'translate-x-3 rotate-180' : 'translate-x-1'
-                  }`}
+            <div className="space-y-6">
+              <div className="flex items-center justify-between p-4 rounded-xl bg-[var(--bg-main)] border border-[var(--border-color)]">
+                <div>
+                  <h3 className="font-bold">Dark Mode</h3>
+                  <p className="text-sm text-[var(--text-muted)]">Switch between light and dark</p>
+                </div>
+                <button
+                  onClick={toggleTheme}
+                  className={`relative inline-flex h-8 w-14 rounded-full transition-colors ${isDarkMode ? 'bg-blue-600' : 'bg-gray-300'}`}
                 >
-                  {isDarkMode ? (
-                    <Moon className="w-4 h-4 text-purple-600" />
-                  ) : (
-                    <Sun className="w-4 h-4 text-gray-600" />
-                  )}
-                </span>
-              </button>
-            </div>
-            </div>
-
-            {/* Color Theme Selector */}
-            <div className="mt-4 border-t border-[var(--border-color)] pt-3 sm:pt-4">
-              <p className="text-xs sm:text-sm font-semibold text-[var(--text-muted)] mb-2">
-                {t('settings.theme')} Palette
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-                {themeOptions.map((theme) => (
-                  <button
-                    key={theme.id}
-                    type="button"
-                    onClick={() => setThemeKey(theme.id)}
-                    className={`flex items-center justify-between px-3 py-2 rounded-lg border text-xs sm:text-sm ${
-                      themeKey === theme.id
-                        ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/10 text-[var(--accent-primary)]'
-                        : 'border-[var(--border-color)] bg-[var(--bg-main)]/40 text-[var(--text-main)]'
-                    }`}
-                  >
-                    <span>{theme.label}</span>
-                    {themeKey === theme.id && (
-                      <span className="w-2.5 h-2.5 rounded-full bg-[var(--accent-primary)]" />
-                    )}
-                  </button>
-                ))}
+                  <span className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform mt-1 ${isDarkMode ? 'translate-x-7' : 'translate-x-1'}`} />
+                </button>
               </div>
-            </div>
-          </div>
 
-          {/* Export */}
-          <div className="p-4 sm:p-5 rounded-xl shadow-md border border-[var(--border-color)] bg-[var(--bg-card)]">
-            <div className="flex items-center gap-2 sm:gap-3 mb-4">
-              <div className="p-2 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg shadow-md">
-                <Download className="w-5 h-5 text-white" />
-              </div>
               <div>
-                <h2 className="text-lg sm:text-xl font-bold">{t('common.export')}</h2>
-                <p className="text-xs sm:text-sm text-[var(--text-muted)]">Download tasks</p>
+                <h3 className="text-sm font-semibold mb-3 text-[var(--text-muted)] uppercase tracking-wider">Color Palette</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {themeOptions.map((theme) => (
+                    <button
+                      key={theme.id}
+                      onClick={() => setThemeKey(theme.id)}
+                      className={`flex items-center justify-between p-4 rounded-xl border-2 transition-all ${
+                        themeKey === theme.id
+                          ? 'border-blue-500 bg-blue-500/10'
+                          : 'border-[var(--border-color)] bg-[var(--bg-main)] hover:border-gray-400'
+                      }`}
+                    >
+                      <span className="font-medium">{theme.label}</span>
+                      {themeKey === theme.id && <div className="w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]" />}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-
-            <div className="border rounded-lg p-3 mb-4 bg-emerald-50/80 dark:bg-emerald-900/30 border-emerald-200/60 dark:border-emerald-800">
-              <p className="text-xs sm:text-sm text-emerald-800 dark:text-emerald-200">
-                Export all tasks to CSV
-              </p>
-            </div>
-            <button
-              onClick={handleExportCSV}
-              disabled={exporting}
-              className={`w-full flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-bold rounded-lg shadow-md transition-all h-11 ${
-                exporting
-                  ? 'bg-gray-400/80 cursor-not-allowed'
-                  : 'bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 hover:shadow-lg hover:scale-[1.01]'
-              } text-white`}
-            >
-              {exporting ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  {t('common.exporting')}
-                </>
-              ) : (
-                <>
-                  <Download className="w-4 h-4" />
-                  {t('common.export_csv')}
-                </>
-              )}
-            </button>
           </div>
         </div>
 
-        {/* Sidebar - EXTRA SMALL */}
-        <div className="space-y-4 sm:space-y-6">
-          <div className="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl p-4 sm:p-5 text-white shadow-lg">
-            <div className="w-14 sm:w-16 h-14 sm:h-16 bg-white/20 rounded-xl flex items-center justify-center mb-3 mx-auto">
-              <User className="w-7 h-7" />
+        {/* Right Column: Stats & Pro Card */}
+        <div className="space-y-6">
+          {/* User Profile Card */}
+          <div className="relative overflow-hidden bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl p-6 text-white shadow-2xl transition-transform hover:scale-[1.02]">
+            <div className="absolute top-0 right-0 p-4 opacity-10">
+              <Sparkles className="w-24 h-24" />
             </div>
-            <h3 className="text-center font-black text-base sm:text-lg mb-1">
-              {profile.fullName || 'User'}
-            </h3>
-            <p className="text-center text-blue-100 text-xs sm:text-sm mb-3 bg-white/10 rounded-lg p-2">
-              {profile.email || 'user@example.com'}
-            </p>
-            <div className="bg-white/20 rounded-lg p-2 text-center">
-              <div className="text-lg font-black mb-0.5">PRO</div>
-              <div className="text-xs font-semibold text-blue-100">Premium</div>
-            </div>
-          </div>
-
-          <div className={`p-4 sm:p-5 rounded-xl shadow-md border ${isDarkMode ? 'bg-gray-800/90 border-gray-700/50' : 'bg-white/90 border-gray-200/50'}`}>
-            <h3 className="font-black text-base sm:text-lg text-gray-900 dark:text-white mb-3 sm:mb-4">
-              Stats
-            </h3>
-            <div className="space-y-2 text-xs sm:text-sm">
-              <div className="flex justify-between py-1.5 border-b border-gray-200 dark:border-gray-700">
-                <span className="text-gray-600 dark:text-gray-300">Since</span>
-                <span className="font-bold text-gray-900 dark:text-white">Jan 2026</span>
+            <div className="relative z-10 flex flex-col items-center">
+              <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-4 shadow-inner">
+                <User className="w-10 h-10 text-white" />
               </div>
-              <div className="flex justify-between py-1.5 border-b border-gray-200 dark:border-gray-700">
-                <span className="text-gray-600 dark:text-gray-300">Created</span>
-                <span className="font-bold text-gray-900 dark:text-white">156</span>
-              </div>
-              <div className="flex justify-between py-1.5 border-b border-gray-200 dark:border-gray-700">
-                <span className="text-gray-600 dark:text-gray-300">Done</span>
-                <span className="font-bold text-gray-900 dark:text-white">142</span>
-              </div>
-              <div className="flex justify-between py-2 pt-1.5">
-                <span className="text-gray-600 dark:text-gray-300">Rate</span>
-                <span className="font-bold text-green-600 dark:text-green-400 text-sm">91%</span>
+              <h3 className="text-xl font-bold mb-1">{profile.fullName || 'User'}</h3>
+              <p className="text-blue-100 text-sm mb-4 bg-white/10 px-3 py-1 rounded-full">{profile.email || 'user@example.com'}</p>
+              
+              <div className="w-full bg-white/20 backdrop-blur-md rounded-xl p-4 text-center border border-white/10">
+                <div className="text-2xl font-black mb-1">PRO</div>
+                <div className="text-xs font-semibold text-blue-100 uppercase tracking-widest">Premium Member</div>
               </div>
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-amber-400 to-orange-500 rounded-xl p-4 sm:p-5 text-white shadow-lg border border-amber-300/50">
-            <h3 className="font-black text-base sm:text-lg mb-2">💡 Tip</h3>
-            <p className="text-xs sm:text-sm leading-tight">
-              Changes save instantly to PostgreSQL & sync everywhere!
+          {/* Stats Card */}
+          <div className="p-6 rounded-2xl shadow-xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-sm">
+            <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+              <BarChart3 className="w-5 h-5 text-blue-500" />
+              Quick Stats
+            </h3>
+            <div className="space-y-4">
+              <div className="flex justify-between items-center py-2 border-b border-[var(--border-color)]">
+                <span className="text-[var(--text-muted)]">Since</span>
+                <span className="font-bold">Jan 2026</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-[var(--border-color)]">
+                <span className="text-[var(--text-muted)]">Total Tasks</span>
+                <span className="font-bold">156</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-[var(--border-color)]">
+                <span className="text-[var(--text-muted)]">Completed</span>
+                <span className="font-bold text-green-500">142</span>
+              </div>
+              <div className="flex justify-between items-center py-2">
+                <span className="text-[var(--text-muted)]">Efficiency</span>
+                <span className="font-bold text-blue-500 text-lg">91%</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Tip Card */}
+          <div className="p-6 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-xl">
+            <h3 className="font-bold mb-2 flex items-center gap-2">
+              <Sparkles className="w-5 h-5" />
+              Pro Tip
+            </h3>
+            <p className="text-sm leading-relaxed opacity-90">
+              Your changes are automatically synced to our secure cloud database. No need to manual save for every minor tweak!
             </p>
           </div>
         </div>
+      </div>
+
+      {/* Export Section - Now at the end */}
+      <div className="mt-8 p-6 rounded-2xl shadow-xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-sm">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl shadow-lg">
+              <Download className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold">{t('common.export')}</h2>
+              <p className="text-sm text-[var(--text-muted)]">Get your task data in CSV format</p>
+            </div>
+          </div>
+          <button
+            onClick={handleExportCSV}
+            disabled={exporting}
+            className="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-xl font-bold shadow-lg transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2"
+          >
+            {exporting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+            {exporting ? t('common.exporting') : t('common.export_csv')}
+          </button>
         </div>
+      </div>
+    </div>
   );
 };
 export default Settings;

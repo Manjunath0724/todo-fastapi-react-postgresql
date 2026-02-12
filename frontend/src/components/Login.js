@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import api from '../services/api';
 
 const Login = ({ onLogin }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -27,6 +27,14 @@ const Login = ({ onLogin }) => {
       password: ''
     });
   }, []);
+
+  // ✅ Force English language on auth pages
+  useEffect(() => {
+    if (i18n.language !== 'en') {
+      i18n.changeLanguage('en');
+      localStorage.setItem('i18nextLng', 'en');
+    }
+  }, [i18n]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

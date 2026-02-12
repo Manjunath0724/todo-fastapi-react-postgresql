@@ -13,7 +13,8 @@
     "export": "Export",
     "exporting": "Exporting...",
     "export_csv": "Export CSV",
-    "tip": "Tip"
+    "tip": "Tip",
+    "add_task": "Add Task"
   },
   "auth": {
     "login_title": "Welcome back",
@@ -80,11 +81,8 @@
     "create_task": "Create First Task"
   },
   "themes": {
-    "modern_dark": "Modern Dark Pro",
-    "glassy_ocean": "Glassy Ocean",
-    "sunset_gradient": "Sunset Gradient",
-    "royal_purple": "Royal Purple",
-    "soft_minimal": "Soft Minimal Light"
+    "pro-dark": "Professional Dark",
+    "pro-light": "Professional Light"
   },
   "languages": {
     "en": "English",

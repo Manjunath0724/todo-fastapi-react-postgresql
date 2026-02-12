@@ -26,7 +26,7 @@ const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 const Signup = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -41,10 +41,11 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // ✅ Clear old data on signup load
+  // ✅ Force English and clear old data on signup load
   useEffect(() => {
+    i18n.changeLanguage('en');
     localStorage.clear();
-  }, []);
+  }, [i18n]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
