@@ -11,7 +11,6 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
   const [saved, setSaved] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [themeKey, setThemeKey] = useState(localStorage.getItem('colorTheme') || 'pro-dark');
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -20,18 +19,6 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
       email: user.email || ''
     });
   }, []);
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', themeKey);
-    localStorage.setItem('colorTheme', themeKey);
-    
-    // Sync with Tailwind dark mode class
-    if (themeKey === 'pro-dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [themeKey]);
 
   const handleSaveProfile = async (e) => {
     e.preventDefault();
@@ -91,11 +78,6 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
       setExporting(false);
     }
   };
-
-  const themeOptions = [
-    { id: 'pro-dark', label: 'Professional Dark' },
-    { id: 'pro-light', label: 'Professional Light' }
-  ];
 
   return (
     <div className="p-3 sm:p-4 lg:p-6 min-h-screen bg-[var(--bg-main)] text-[var(--text-main)]">
