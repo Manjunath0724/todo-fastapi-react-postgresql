@@ -47,12 +47,15 @@ function App() {
   const toggleTheme = () => {
     const newMode = !isDarkMode;
     setIsDarkMode(newMode);
-    localStorage.setItem('theme', newMode ? 'dark' : 'light');
+    const themeValue = newMode ? 'pro-dark' : 'pro-light';
+    localStorage.setItem('colorTheme', themeValue);
+    
     if (newMode) {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
+    document.documentElement.setAttribute('data-theme', themeValue);
   };
 
   const handleLogin = () => {
@@ -80,47 +83,37 @@ function App() {
   return (
     <Router>
       <div className={`min-h-screen ${isDarkMode ? 'dark bg-slate-900' : 'bg-gray-50'}`}>
+        <Navbar onLogout={handleLogout} onToggleMenu={() => setIsSidebarOpen(!isSidebarOpen)} />
         <div className="flex">
           <Sidebar 
             isOpen={isSidebarOpen} 
             setIsOpen={setIsSidebarOpen}
           />
           <main
-            className={`flex-1 transition-all duration-300 min-h-screen ${
+            className={`flex-1 transition-all duration-300 min-h-screen pt-4 sm:pt-6 ${
               isSidebarOpen 
                 ? 'lg:ml-60 ml-0' 
                 : 'lg:ml-20 ml-0'
             }`}
           >
-            {/* Mobile Menu Button */}
-            {!isSidebarOpen && (
-              <button
-                onClick={() => setIsSidebarOpen(true)}
-                className="fixed top-4 left-4 z-40 lg:hidden p-2 bg-white dark:bg-slate-800 rounded-lg shadow-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
-                aria-label="Open menu"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-            )}
-            <Navbar onLogout={handleLogout} />
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/tasks" element={<AllTasks />} />
-              <Route path="/analytics" element={<Analytics />} />
-              <Route 
-                path="/settings" 
-                element={
-                  <Settings 
-                    isDarkMode={isDarkMode} 
-                    toggleTheme={toggleTheme}
-                  />
-                } 
-              />
-              <Route path="*" element={<Navigate to="/dashboard" replace />} />
-            </Routes>
+            <div className="p-0">
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/tasks" element={<AllTasks />} />
+                <Route path="/analytics" element={<Analytics />} />
+                <Route 
+                  path="/settings" 
+                  element={
+                    <Settings 
+                      isDarkMode={isDarkMode} 
+                      toggleTheme={toggleTheme}
+                    />
+                  } 
+                />
+                <Route path="*" element={<Navigate to="/dashboard" replace />} />
+              </Routes>
+            </div>
           </main>
         </div>
       </div>

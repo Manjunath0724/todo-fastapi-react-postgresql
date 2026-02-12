@@ -173,7 +173,7 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
             </form>
           </div>
 
-          {/* Appearance & Theme Palette */}
+          {/* Appearance & Theme Toggle */}
           <div className="p-5 sm:p-6 rounded-2xl shadow-xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-sm">
             <div className="flex items-center gap-3 mb-6">
               <div className="p-3 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl shadow-lg">
@@ -197,26 +197,6 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
                 >
                   <span className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform mt-1 ${isDarkMode ? 'translate-x-7' : 'translate-x-1'}`} />
                 </button>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-semibold mb-3 text-[var(--text-muted)] uppercase tracking-wider">Color Palette</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {themeOptions.map((theme) => (
-                    <button
-                      key={theme.id}
-                      onClick={() => setThemeKey(theme.id)}
-                      className={`flex items-center justify-between p-4 rounded-xl border-2 transition-all ${
-                        themeKey === theme.id
-                          ? 'border-blue-500 bg-blue-500/10'
-                          : 'border-[var(--border-color)] bg-[var(--bg-main)] hover:border-gray-400'
-                      }`}
-                    >
-                      <span className="font-medium">{theme.label}</span>
-                      {themeKey === theme.id && <div className="w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]" />}
-                    </button>
-                  ))}
-                </div>
               </div>
             </div>
           </div>
@@ -268,40 +248,38 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
               </div>
             </div>
           </div>
-
-          {/* Tip Card */}
-          <div className="p-6 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-xl">
-            <h3 className="font-bold mb-2 flex items-center gap-2">
-              <Sparkles className="w-5 h-5" />
-              Pro Tip
-            </h3>
-            <p className="text-sm leading-relaxed opacity-90">
-              Your changes are automatically synced to our secure cloud database. No need to manual save for every minor tweak!
-            </p>
-          </div>
         </div>
       </div>
 
-      {/* Export Section - Now at the end */}
+      {/* Export Section - Re-aligned with Export CSV on the left */}
       <div className="mt-8 p-6 rounded-2xl shadow-xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-sm">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl shadow-lg">
-              <Download className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h2 className="text-xl font-bold">{t('common.export')}</h2>
-              <p className="text-sm text-[var(--text-muted)]">Get your task data in CSV format</p>
+          {/* Left side: Export button */}
+          <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
+            <button
+              onClick={handleExportCSV}
+              disabled={exporting}
+              className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-xl font-bold shadow-lg transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              {exporting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+              {exporting ? t('common.exporting') : t('common.export_csv')}
+            </button>
+            <div className="text-center sm:text-left">
+              <h2 className="text-lg font-bold leading-tight">{t('common.export')}</h2>
+              <p className="text-sm text-[var(--text-muted)]">Download CSV report</p>
             </div>
           </div>
-          <button
-            onClick={handleExportCSV}
-            disabled={exporting}
-            className="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-xl font-bold shadow-lg transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2"
-          >
-            {exporting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
-            {exporting ? t('common.exporting') : t('common.export_csv')}
-          </button>
+
+          {/* Right side: Pro Tip */}
+          <div className="flex-1 max-w-md w-full bg-gradient-to-br from-amber-400/10 to-orange-500/10 border border-orange-500/20 rounded-xl p-4">
+            <h3 className="font-bold text-orange-600 dark:text-orange-400 mb-1 flex items-center gap-2 text-sm">
+              <Sparkles className="w-4 h-4" />
+              Pro Tip
+            </h3>
+            <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+              Your changes are automatically synced to our secure cloud database. No need to manual save for every minor tweak!
+            </p>
+          </div>
         </div>
       </div>
     </div>

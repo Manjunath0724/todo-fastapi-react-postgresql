@@ -64,14 +64,14 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-screen bg-white dark:bg-slate-800 shadow-2xl z-50 transition-all duration-300 ease-in-out border-r border-gray-200 dark:border-slate-700 ${
+        className={`fixed top-0 left-0 h-screen bg-white dark:bg-slate-900 shadow-2xl z-50 transition-all duration-300 ease-in-out border-r border-gray-200 dark:border-slate-800 ${
           isOpen 
             ? 'w-64 sm:w-72 lg:w-60' 
             : 'w-0 lg:w-20'
         } ${!isOpen && 'lg:block hidden'}`}
       >
-        {/* Header */}
-        <div className={`p-4 h-20 flex items-center border-b border-gray-200 dark:border-slate-700 ${!isOpen ? 'justify-center' : 'px-6'}`}>
+        {/* Header - Hidden in Sidebar because it's in Navbar now */}
+        <div className={`p-4 h-20 flex items-center border-b border-gray-200 dark:border-slate-800 lg:hidden ${!isOpen ? 'justify-center' : 'px-6'}`}>
           <div className="flex items-center gap-3">
             <div className={`w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg transform transition-transform ${!isOpen ? 'scale-110' : ''}`}>
               <CheckSquare className="w-6 h-6 text-white" />

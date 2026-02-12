@@ -80,8 +80,19 @@ const Analytics = () => {
     return days;
   };
 
-  const chartTextColor = getComputedStyle(document.documentElement).getPropertyValue('--text-main').trim() || '#475569';
-  const gridColor = getComputedStyle(document.documentElement).getPropertyValue('--border-color').trim() || 'rgba(0,0,0,0.1)';
+  const isDarkMode = document.documentElement.classList.contains('dark');
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      // Force re-render when theme changes
+      setTasks(prev => [...prev]);
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, []);
+
+  const chartTextColor = isDarkMode ? '#e2e8f0' : '#475569';
+  const gridColor = isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
 
   const activityData = {
     labels: getLast7Days(),

@@ -6,6 +6,15 @@ import api from '../services/api';
 const Dashboard = () => {
   const { t } = useTranslation();
   const isDarkMode = document.documentElement.classList.contains('dark');
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      // Force re-render when theme changes
+      setTasks(prev => [...prev]);
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, []);
   const [tasks, setTasks] = useState([]);
   const [stats, setStats] = useState({  // ✅ Fixed: Now using setStats
     total: 0,
