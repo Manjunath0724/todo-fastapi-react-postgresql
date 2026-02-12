@@ -5,6 +5,7 @@ import api from '../services/api';
 
 const Dashboard = () => {
   const { t } = useTranslation();
+  const isDarkMode = document.documentElement.classList.contains('dark');
   const [tasks, setTasks] = useState([]);
   const [stats, setStats] = useState({  // ✅ Fixed: Now using setStats
     total: 0,
