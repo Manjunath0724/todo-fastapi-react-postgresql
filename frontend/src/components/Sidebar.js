@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import {
   LayoutDashboard,
   CheckSquare,
@@ -15,7 +15,6 @@ import api from '../services/api';
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const [username, setUsername] = useState('User');
 
   const navItems = [
