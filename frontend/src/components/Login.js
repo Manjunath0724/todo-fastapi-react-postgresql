@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, CheckSquare, Sparkles, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, CheckSquare, Sparkles, Eye, EyeOff, Sun, Moon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import api from '../services/api';
 
@@ -16,6 +16,7 @@ const Login = ({ onLogin }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isDarkMode, setIsDarkMode] = useState(document.documentElement.classList.contains('dark'));
 
   // ✅ CLEAR OLD DATA ON PAGE LOAD
   useEffect(() => {
@@ -35,6 +36,19 @@ const Login = ({ onLogin }) => {
       localStorage.setItem('i18nextLng', 'en');
     }
   }, [i18n]);
+
+  const toggleTheme = () => {
+    const newMode = !isDarkMode;
+    setIsDarkMode(newMode);
+    const themeValue = newMode ? 'pro-dark' : 'pro-light';
+    localStorage.setItem('colorTheme', themeValue);
+    if (newMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    document.documentElement.setAttribute('data-theme', themeValue);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,6 +72,13 @@ const Login = ({ onLogin }) => {
 
   return (
     <div className="min-h-screen bg-[var(--bg-main)] flex items-center justify-center p-4 sm:p-6">
+      <button
+        onClick={toggleTheme}
+        className="fixed top-4 right-4 px-3 py-2 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-main)] flex items-center gap-2 shadow"
+      >
+        {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+        <span className="text-sm">{isDarkMode ? 'Light' : 'Dark'}</span>
+      </button>
       <div className="max-w-md w-full">
 
         {/* Logo */}
@@ -78,7 +99,7 @@ const Login = ({ onLogin }) => {
 
         {/* Login Card */}
         <div className="bg-[var(--bg-card)] text-[var(--text-main)] rounded-2xl shadow-2xl p-6 sm:p-8 border border-[var(--border-color)]">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-main)] mb-4 sm:mb-6">
             {t('auth.login_title')}
           </h2>
 
@@ -95,7 +116,7 @@ const Login = ({ onLogin }) => {
           >
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-[var(--text-main)] mb-2">
                 {t('auth.email')}
               </label>
               <div className="relative">
@@ -108,7 +129,7 @@ const Login = ({ onLogin }) => {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none placeholder-gray-400 dark:placeholder-gray-400"
                   placeholder="Enter your email"
                 />
               </div>
@@ -116,7 +137,7 @@ const Login = ({ onLogin }) => {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-[var(--text-main)] mb-2">
                 {t('auth.password')}
               </label>
               <div className="relative">
@@ -129,13 +150,13 @@ const Login = ({ onLogin }) => {
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
                   }
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full pl-10 pr-12 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none placeholder-gray-400 dark:placeholder-gray-400"
                   placeholder="Enter your password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200"
                 >
                   {showPassword ? (
                     <EyeOff className="w-5 h-5" />
@@ -157,7 +178,7 @@ const Login = ({ onLogin }) => {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-gray-600">
+            <p className="text-[var(--text-muted)]">
               {t('auth.no_account')}{' '}
               <Link
                 to="/signup"

@@ -7,7 +7,9 @@ import {
   CheckSquare,
   Sparkles,
   Eye,
-  EyeOff
+  EyeOff,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import api from '../services/api';
@@ -40,12 +42,26 @@ const Signup = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isDarkMode, setIsDarkMode] = useState(document.documentElement.classList.contains('dark'));
 
   // ✅ Force English and clear old data on signup load
   useEffect(() => {
     i18n.changeLanguage('en');
     localStorage.clear();
   }, [i18n]);
+
+  const toggleTheme = () => {
+    const newMode = !isDarkMode;
+    setIsDarkMode(newMode);
+    const themeValue = newMode ? 'pro-dark' : 'pro-light';
+    localStorage.setItem('colorTheme', themeValue);
+    if (newMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    document.documentElement.setAttribute('data-theme', themeValue);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -95,6 +111,13 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen bg-[var(--bg-main)] flex items-center justify-center p-4 sm:p-6">
+      <button
+        onClick={toggleTheme}
+        className="fixed top-4 right-4 px-3 py-2 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-main)] flex items-center gap-2 shadow"
+      >
+        {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+        <span className="text-sm">{isDarkMode ? 'Light' : 'Dark'}</span>
+      </button>
       <div className="max-w-md w-full">
 
         {/* Logo */}
@@ -115,7 +138,7 @@ const Signup = () => {
 
         {/* Signup Card */}
         <div className="bg-[var(--bg-card)] text-[var(--text-main)] rounded-2xl shadow-2xl p-6 sm:p-8 border border-[var(--border-color)]">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-main)] mb-4 sm:mb-6">
             {t('auth.signup_title')}
           </h2>
 
@@ -129,7 +152,7 @@ const Signup = () => {
 
             {/* Full Name */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-[var(--text-main)] mb-2">
                 {t('settings.full_name')}
               </label>
               <div className="relative">
@@ -141,7 +164,7 @@ const Signup = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, fullName: e.target.value })
                   }
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none placeholder-gray-400 dark:placeholder-gray-400"
                   placeholder="Enter your full name"
                 />
               </div>
@@ -149,7 +172,7 @@ const Signup = () => {
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-[var(--text-main)] mb-2">
                 {t('auth.email')}
               </label>
               <div className="relative">
@@ -161,18 +184,18 @@ const Signup = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none placeholder-gray-400 dark:placeholder-gray-400"
                   placeholder="example@gmail.com"
                 />
               </div>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-[var(--text-muted)] mt-1">
                 {t('auth.email_hint')}
               </p>
             </div>
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-[var(--text-main)] mb-2">
                 {t('auth.password')}
               </label>
               <div className="relative">
@@ -184,13 +207,13 @@ const Signup = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
                   }
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full pl-10 pr-12 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none placeholder-gray-400 dark:placeholder-gray-400"
                   placeholder="Create a password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200"
                 >
                   {showPassword ? <EyeOff /> : <Eye />}
                 </button>
@@ -199,7 +222,7 @@ const Signup = () => {
 
             {/* Confirm Password */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-[var(--text-main)] mb-2">
                 {t('auth.confirm_password')}
               </label>
               <div className="relative">
@@ -214,7 +237,7 @@ const Signup = () => {
                       confirmPassword: e.target.value
                     })
                   }
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full pl-10 pr-12 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none placeholder-gray-400 dark:placeholder-gray-400"
                   placeholder="Confirm your password"
                 />
                 <button
@@ -222,7 +245,7 @@ const Signup = () => {
                   onClick={() =>
                     setShowConfirmPassword(!showConfirmPassword)
                   }
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200"
                 >
                   {showConfirmPassword ? <EyeOff /> : <Eye />}
                 </button>
@@ -240,7 +263,7 @@ const Signup = () => {
           </form>
 
           <div className="mt-6 text-center">
-              <p className="text-gray-600">
+              <p className="text-[var(--text-muted)]">
                 {t('auth.have_account')}{' '}
               <Link
                 to="/login"
