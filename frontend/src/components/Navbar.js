@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { PanelLeft, LogOut, Globe } from "lucide-react";
+import { PanelLeft, LogOut } from "lucide-react";
 
 const quotes = [
   "Do it now. Later becomes never.",

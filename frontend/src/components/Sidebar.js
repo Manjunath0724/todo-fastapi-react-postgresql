@@ -5,9 +5,6 @@ import {
   CheckSquare,
   BarChart3,
   Settings,
-  Menu,
-  X,
-  Sparkles,
   User
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
