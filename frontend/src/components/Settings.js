@@ -233,35 +233,32 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
         </div>
       </div>
 
-      {/* Export Section - Re-aligned with Export CSV on the left */}
-      <div className="mt-8 p-6 rounded-2xl shadow-xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-sm">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          {/* Left side: Export button */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
+      {/* Export + Pro Tip Row */}
+      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="p-6 rounded-2xl shadow-xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-sm">
+          <div className="flex items-center gap-4">
             <button
               onClick={handleExportCSV}
               disabled={exporting}
-              className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-xl font-bold shadow-lg transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2"
+              className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-xl font-bold shadow-lg transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {exporting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
               {exporting ? t('common.exporting') : t('common.export_csv')}
             </button>
-            <div className="text-center sm:text-left">
+            <div>
               <h2 className="text-lg font-bold leading-tight">{t('common.export')}</h2>
               <p className="text-sm text-[var(--text-muted)]">Download CSV report</p>
             </div>
           </div>
-
-          {/* Right side: Pro Tip */}
-          <div className="flex-1 max-w-md w-full bg-gradient-to-br from-amber-400/10 to-orange-500/10 border border-orange-500/20 rounded-xl p-4">
-            <h3 className="font-bold text-orange-600 dark:text-orange-400 mb-1 flex items-center gap-2 text-sm">
-              <Sparkles className="w-4 h-4" />
-              Pro Tip
-            </h3>
-            <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-              Your changes are automatically synced to our secure cloud database. No need to manual save for every minor tweak!
-            </p>
-          </div>
+        </div>
+        <div className="p-6 rounded-2xl shadow-xl border border-orange-500/20 bg-gradient-to-br from-amber-400/10 to-orange-500/10">
+          <h3 className="font-bold text-orange-600 dark:text-orange-400 mb-2 flex items-center gap-2 text-sm">
+            <Sparkles className="w-4 h-4" />
+            Pro Tip
+          </h3>
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            Your changes are automatically synced to our secure cloud database. No need to manual save for every minor tweak!
+          </p>
         </div>
       </div>
     </div>
