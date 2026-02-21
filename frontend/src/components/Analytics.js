@@ -1,3 +1,6 @@
+// Purpose: Visualize productivity metrics with charts based on user's tasks
+// Why: Gives users insight into activity trends and distribution by priority
+// How: Fetches tasks, computes aggregates, renders charts via chart.js wrapper
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -20,6 +23,7 @@ import {
 import { Line, Doughnut } from 'react-chartjs-2';
 import api from '../services/api';
 
+// Register chart.js features used by line and doughnut charts
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -34,6 +38,7 @@ ChartJS.register(
 
 const Analytics = () => {
   const { t, i18n } = useTranslation();
+  // Raw tasks and computed statistics for summary cards
   const [tasks, setTasks] = useState([]);
   const [stats, setStats] = useState({
     totalCreated: 0,
@@ -42,6 +47,7 @@ const Analytics = () => {
     avgCompletionTime: 0
   });
 
+  // Summarize totals and completion rate based on current tasks
   const calculateStats = useCallback((taskData) => {
     const totalCreated = taskData.length;
     const totalCompleted = taskData.filter(t => t.status === 'completed').length;
@@ -55,6 +61,7 @@ const Analytics = () => {
     });
   }, []);
 
+  // Load tasks for analytics on mount
   const fetchAnalytics = useCallback(async () => {
     try {
       const response = await api.get('/tasks');
@@ -70,6 +77,7 @@ const Analytics = () => {
     fetchAnalytics();
   }, [fetchAnalytics]);
 
+  // Build last 7 days label set honoring current language
   const getLast7Days = () => {
     const days = [];
     for (let i = 6; i >= 0; i--) {
@@ -80,6 +88,7 @@ const Analytics = () => {
     return days;
   };
 
+  // React to tailwind dark mode changes to adjust chart colors
   const isDarkMode = document.documentElement.classList.contains('dark');
 
   useEffect(() => {
@@ -91,9 +100,11 @@ const Analytics = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Shared chart color config for dark/light
   const chartTextColor = isDarkMode ? '#e2e8f0' : '#475569';
   const gridColor = isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
 
+  // Line chart showing created vs completed over last 7 days (sampled here)
   const activityData = {
     labels: getLast7Days(),
     datasets: [
@@ -128,6 +139,7 @@ const Analytics = () => {
     }
   };
 
+  // Doughnut chart showing distribution by priority
   const priorityData = {
     labels: ['High', 'Medium', 'Low'],
     datasets: [

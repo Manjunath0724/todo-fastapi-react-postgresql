@@ -1,7 +1,11 @@
+// Purpose: Top navigation bar with responsive menu toggle, i18n switcher, and sign-out
+// Why: Provides global controls and brand identity across all pages
+// How: Typewriter effect cycles motivational quotes; logout clears auth data
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PanelLeft, LogOut } from "lucide-react";
 
+// Quotes used by the typewriter animation to encourage productivity
 const quotes = [
   "Do it now. Later becomes never.",
   "Small steps every day lead to big results.",
@@ -12,16 +16,18 @@ const quotes = [
 
 const Navbar = ({ onLogout, onToggleMenu, isSidebarOpen }) => {
   const { t, i18n } = useTranslation();
+  // Track which quote and character position is currently displayed
   const [quoteIndex, setQuoteIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
 
+  // Typewriter animation: type, pause, delete, then proceed to next quote
   useEffect(() => {
     const currentQuote = quotes[quoteIndex];
     let timer;
 
-    // Typing letters
+    // Typing forward
     if (!isDeleting && charIndex < currentQuote.length) {
       timer = setTimeout(() => {
         setDisplayedText((prev) => prev + currentQuote[charIndex]);
@@ -29,14 +35,14 @@ const Navbar = ({ onLogout, onToggleMenu, isSidebarOpen }) => {
       }, 70);
     }
 
-    // Pause after typing full sentence
+    // Pause at end of quote before deleting
     if (!isDeleting && charIndex === currentQuote.length) {
       timer = setTimeout(() => {
         setIsDeleting(true);
       }, 1500);
     }
 
-    // Deleting letters
+    // Delete characters
     if (isDeleting && charIndex > 0) {
       timer = setTimeout(() => {
         setDisplayedText((prev) => prev.slice(0, -1));
@@ -44,7 +50,7 @@ const Navbar = ({ onLogout, onToggleMenu, isSidebarOpen }) => {
       }, 40);
     }
 
-    // Move to next quote
+    // After deletion completes, move to next quote
     if (isDeleting && charIndex === 0) {
       setIsDeleting(false);
       setQuoteIndex((prev) => (prev + 1) % quotes.length);
@@ -53,12 +59,14 @@ const Navbar = ({ onLogout, onToggleMenu, isSidebarOpen }) => {
     return () => clearTimeout(timer);
   }, [charIndex, isDeleting, quoteIndex]);
 
+  // Switch active language and persist choice
   const handleLanguageChange = (e) => {
     const lang = e.target.value;
     i18n.changeLanguage(lang);
     localStorage.setItem('i18nextLng', lang);
   };
 
+  // Normalize language code (e.g., en-US -> en)
   const currentLang = i18n.language?.split('-')[0] || 'en';
 
   return (
@@ -96,7 +104,7 @@ const Navbar = ({ onLogout, onToggleMenu, isSidebarOpen }) => {
               </span>
             </div>
 
-            {/* Language Selector */}
+            {/* Language Selector: feeds react-i18next to re-render content */}
             <select
               value={currentLang}
               onChange={handleLanguageChange}
@@ -107,7 +115,7 @@ const Navbar = ({ onLogout, onToggleMenu, isSidebarOpen }) => {
               <option value="mr">मराठी</option>
             </select>
 
-            {/* Logout Button */}
+            {/* Logout Button: delegates to parent to clear auth and route */}
             <button
               onClick={onLogout}
               className="flex items-center gap-2 bg-red-500/10 hover:bg-red-500 text-red-600 hover:text-white px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-bold transition-all active:scale-95 text-xs sm:text-sm group"

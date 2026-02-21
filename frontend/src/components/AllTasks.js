@@ -1,3 +1,6 @@
+// Purpose: Task management page with search, filter, CRUD, and status toggling
+// Why: Enables users to create, view, update, and delete tasks beyond dashboard
+// How: Fetches via API client; local search/filter; modal form for create/edit
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -14,14 +17,17 @@ import api from '../services/api';
 
 const AllTasks = () => {
   const { t } = useTranslation();
+  // Raw tasks from API and derived filtered list
   const [tasks, setTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
+  // UI state: loading indicator, search/filter controls, modal/selection
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [priorityFilter] = useState('all');
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
+  // Form state for create/edit operations
   const [taskForm, setTaskForm] = useState({
     title: '',
     description: '',
@@ -30,6 +36,7 @@ const AllTasks = () => {
     status: 'in_progress'
   });
 
+  // Load tasks for current user from backend
   const fetchTasks = useCallback(async () => {
     try {
       setLoading(true);
@@ -42,10 +49,12 @@ const AllTasks = () => {
     }
   }, []);
 
+  // Fetch on mount
   useEffect(() => {
     fetchTasks();
   }, [fetchTasks]);
 
+  // Compute visible tasks based on search/filters
   const filterTasks = useCallback(() => {
     let filtered = [...tasks];
     if (searchTerm) {
@@ -63,10 +72,12 @@ const AllTasks = () => {
     setFilteredTasks(filtered);
   }, [tasks, searchTerm, statusFilter, priorityFilter]);
 
+  // Re-run filtering when dependencies change
   useEffect(() => {
     filterTasks();
   }, [filterTasks]);
 
+  // Submit create or update, then refresh list and close modal
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -82,6 +93,7 @@ const AllTasks = () => {
     }
   };
 
+  // Initialize form for editing an existing task
   const handleEdit = (task) => {
     setEditingTask(task);
     setTaskForm({
@@ -94,6 +106,7 @@ const AllTasks = () => {
     setShowAddModal(true);
   };
 
+  // Delete a task after confirmation and refresh list
   const handleDelete = async (taskId) => {
     if (window.confirm('Are you sure?')) {
       try {
@@ -105,6 +118,7 @@ const AllTasks = () => {
     }
   };
 
+  // Toggle between in_progress and completed statuses
   const handleToggleStatus = async (task) => {
     try {
       const newStatus = task.status === 'completed' ? 'in_progress' : 'completed';
@@ -115,6 +129,7 @@ const AllTasks = () => {
     }
   };
 
+  // Reset modal and form state
   const closeModal = () => {
     setShowAddModal(false);
     setEditingTask(null);

@@ -1,14 +1,20 @@
+# Purpose: Centralized transactional email sending (SendGrid)
+# Why: Provides consistent user notifications across auth and task events
+# How: Exposed helper functions are called from FastAPI routes in main.py
+
 import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
-# Load environment variables
+# Load API credentials from env (.env during local dev)
 from dotenv import load_dotenv
 load_dotenv()
 
+# Required credentials: API key and from address
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 SMTP_FROM_EMAIL = os.getenv("SMTP_FROM_EMAIL")
 
+# Send a single HTML email via SendGrid Web API
 async def send_email(to_email: str, subject: str, html_content: str):
     """Send email to ANY user email address using SendGrid Web API"""
     if not all([SENDGRID_API_KEY, SMTP_FROM_EMAIL]):
@@ -38,6 +44,8 @@ async def send_email(to_email: str, subject: str, html_content: str):
 
 
 # 🔥 Notification functions
+# Purpose: event-specific templates for tasks/auth flows
+# How: each builds HTML and delegates to send_email()
 async def send_task_created_email(user_email: str, task_title: str, task_description: str = "", due_date: str = ""):
     html_content = f"""
     <html><body style="font-family: Arial, sans-serif;">
@@ -229,7 +237,7 @@ async def send_login_otp_email(user_email: str, code: str):
     return await send_email(user_email, "🔑 Your TaskFlow Pro login code", html_content)
 
 
-# 🔧 Test functiON
+# 🔧 Local utility: quick send test for templates (not used in production)
 async def test_email():
     print("🧪 Testing all email functions...")
     test_email = "abhidynamite6.gmail.com"

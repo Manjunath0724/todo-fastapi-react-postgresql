@@ -1,3 +1,6 @@
+// Purpose: Authenticate users and initialize session state (JWT + user cache)
+// Why: Restricts app routes to authenticated users and sets theme preferences
+// How: Submits credentials to FastAPI, stores token/user, and navigates to dashboard
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, CheckSquare, Sparkles, Eye, EyeOff, Sun, Moon } from 'lucide-react';
@@ -18,7 +21,7 @@ const Login = ({ onLogin }) => {
   const [error, setError] = useState('');
   const [isDarkMode, setIsDarkMode] = useState(document.documentElement.classList.contains('dark'));
 
-  // ✅ CLEAR OLD DATA ON PAGE LOAD
+  // ✅ Clear stale auth and reset form fields on page load
   useEffect(() => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -29,7 +32,7 @@ const Login = ({ onLogin }) => {
     });
   }, []);
 
-  // ✅ Force English language on auth pages
+  // ✅ Force English for predictable copy on auth pages
   useEffect(() => {
     if (i18n.language !== 'en') {
       i18n.changeLanguage('en');
@@ -37,6 +40,7 @@ const Login = ({ onLogin }) => {
     }
   }, [i18n]);
 
+  // Quick theme toggle for auth screen; persists to localStorage
   const toggleTheme = () => {
     const newMode = !isDarkMode;
     setIsDarkMode(newMode);
@@ -50,6 +54,7 @@ const Login = ({ onLogin }) => {
     document.documentElement.setAttribute('data-theme', themeValue);
   };
 
+  // Submit credentials; on success store token/user and notify parent
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);

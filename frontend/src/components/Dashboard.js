@@ -1,3 +1,6 @@
+// Purpose: Overview page showing stats, recent tasks, and quick task creation
+// Why: Gives users a fast snapshot of progress and shortcuts to common actions
+// How: Fetches tasks via API, computes metrics, updates with optimistic refresh
 import React, { useState, useEffect, useCallback } from 'react';
 import { CheckCircle2, Clock, AlertCircle, ListTodo, Plus, TrendingUp, Activity, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +10,7 @@ const Dashboard = () => {
   const { t } = useTranslation();
   const isDarkMode = document.documentElement.classList.contains('dark');
 
+  // Re-render UI when theme class toggles to keep colors in sync
   useEffect(() => {
     const observer = new MutationObserver(() => {
       // Force re-render when theme changes
@@ -16,7 +20,8 @@ const Dashboard = () => {
     return () => observer.disconnect();
   }, []);
   const [tasks, setTasks] = useState([]);
-  const [stats, setStats] = useState({  // ✅ Fixed: Now using setStats
+  // Aggregate dashboard KPIs derived from the current task list
+  const [stats, setStats] = useState({
     total: 0,
     inProgress: 0,
     completed: 0,
@@ -29,7 +34,7 @@ const Dashboard = () => {
   const [newTask, setNewTask] = useState({ title: '', description: '', priority: 'medium', due_date: '' });
   const [filter, setFilter] = useState('all');
 
-  // ✅ Line 34: Moved calculateStats ABOVE fetchTasks
+  // Compute totals, overdue count, average completion days, and completion rate
   const calculateStats = useCallback((taskList) => {
     const total = taskList.length;
     const inProgress = taskList.filter(task => task.status === 'in_progress').length;
@@ -57,23 +62,25 @@ const Dashboard = () => {
     });
   }, []);
 
+  // Centralized fetch to populate tasks and refresh KPIs after mutations
   const fetchTasks = useCallback(async () => {
     try {
       setLoading(true);
       const response = await api.get('/tasks');
       setTasks(response.data);
-      calculateStats(response.data);  // ✅ Now works correctly
+      calculateStats(response.data);
     } catch (error) {
       console.error('Error fetching tasks:', error);
     } finally {
       setLoading(false);
     }
-  }, [calculateStats]);  // ✅ Dependencies fixed
+  }, [calculateStats]);
 
   useEffect(() => {
     fetchTasks();
   }, [fetchTasks]);
 
+  // Create a new task from modal and refresh dashboard data
   const handleAddTask = async (e) => {
     e.preventDefault();
     try {
@@ -87,6 +94,7 @@ const Dashboard = () => {
     }
   };
 
+  // Delete task with user confirmation and refresh
   const handleDeleteTask = async (taskId) => {
     if (window.confirm('Are you sure you want to delete this task?')) {
       try {
@@ -99,6 +107,7 @@ const Dashboard = () => {
     }
   };
 
+  // Toggle between in_progress and completed and refresh KPIs
   const handleToggleStatus = async (task) => {
     try {
       const newStatus = task.status === 'completed' ? 'in_progress' : 'completed';
@@ -110,6 +119,7 @@ const Dashboard = () => {
     }
   };
 
+  // Apply current status filter to the task list
   const filteredTasks = tasks.filter(task => {
     if (filter === 'all') return true;
     return task.status === filter;

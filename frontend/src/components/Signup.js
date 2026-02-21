@@ -1,3 +1,6 @@
+// Purpose: Create new user accounts with client-side validation before API call
+// Why: Ensures better UX by catching common issues (email domain, password rules)
+// How: Validates inputs, calls FastAPI register, stores JWT/user, and redirects
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -23,7 +26,7 @@ const allowedDomains = [
   'live.com'
 ];
 
-// ✅ Password rules
+// ✅ Password strength rules (min length and char classes)
 const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
@@ -50,6 +53,7 @@ const Signup = () => {
     localStorage.clear();
   }, [i18n]);
 
+  // Toggle UI theme on the auth screen
   const toggleTheme = () => {
     const newMode = !isDarkMode;
     setIsDarkMode(newMode);
@@ -63,6 +67,7 @@ const Signup = () => {
     document.documentElement.setAttribute('data-theme', themeValue);
   };
 
+  // Validate inputs, then register account and initialize session
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');

@@ -1,3 +1,6 @@
+// Purpose: User settings page for profile updates, theme toggle, and data export
+// Why: Lets users personalize name and theme and take their data with them
+// How: Persists profile to backend, theme to localStorage, and exports CSV via Blob
 import React, { useState, useEffect } from 'react';
 import {
   User, Mail, Sun, Moon, Download, Save, Check, Loader2, Sparkles, BarChart3
@@ -7,11 +10,13 @@ import api from '../services/api';
 
 const Settings = ({ isDarkMode, toggleTheme }) => {
   const { t } = useTranslation();
+  // Profile form state and UI flags for save/export feedback
   const [profile, setProfile] = useState({ fullName: '', email: '' });
   const [saved, setSaved] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // Initialize fields from local user cache
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     setProfile({
@@ -20,6 +25,7 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
     });
   }, []);
 
+  // Save only full name to backend; email remains read-only/immutable
   const handleSaveProfile = async (e) => {
     e.preventDefault();
     try {
@@ -45,6 +51,7 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
     }
   };
 
+  // Download current tasks as CSV for offline analysis or backup
   const handleExportCSV = async () => {
     try {
       setExporting(true);

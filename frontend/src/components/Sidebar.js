@@ -1,3 +1,6 @@
+// Purpose: Responsive navigation rail with routes and compact tooltip mode
+// Why: Gives quick access to core pages and keeps context visible while working
+// How: Collapses on small screens; shows tooltips when collapsed on desktop
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
@@ -12,6 +15,7 @@ import api from '../services/api';
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const { t } = useTranslation();
+  // Show first name from cached user or fallback to generic
   const [username, setUsername] = useState('User');
 
   const navItems = [
@@ -36,7 +40,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       return;
     }
 
-    // Optional API fallback
+    // Optional API fallback if local cache incomplete
     const fetchProfile = async () => {
       try {
         const response = await api.get('/auth/profile');

@@ -1,3 +1,6 @@
+/* Purpose: Global Tailwind layers and design tokens for TaskFlow Pro
+   Why: Defines theme variables enabling instant light/dark palette switching
+   How: Uses CSS custom properties with [data-theme] and Tailwind utilities */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -1,4 +1,9 @@
-/** @type {import('tailwindcss').Config} */
+/** 
+ * Purpose: Tailwind configuration for class scanning and theme extensions
+ * Why: Ensures only used styles ship and defines the brand color palette/font
+ * How: Scans src for class names and extends theme with Inter and primary colors
+ * @type {import('tailwindcss').Config} 
+ */
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",

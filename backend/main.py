@@ -1,3 +1,19 @@
+"""
+TaskFlow Pro API
+
+Purpose:
+- Exposes authentication, profile, and task CRUD endpoints for the React frontend
+- Issues and validates JWTs, sends transactional emails, and schedules reminders
+
+Why:
+- Serves as the backend core integrating DB, auth, email notifications, and business logic
+
+How:
+- FastAPI app with CORS configured for local and Vercel domains
+- Uses psycopg2 for PostgreSQL access and jose/passlib for JWT + bcrypt
+- Schedules background task reminders with APScheduler
+- Organizes routes by sections: AUTH, PROFILE, TASKS, STARTUP (DB bootstrapping)
+"""
 from fastapi import FastAPI, Depends, HTTPException, status, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr
@@ -28,10 +44,14 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 load_dotenv()
 
 
+# App factory: exposes OpenAPI and route table used by the React client
 app = FastAPI(title="TaskFlow Pro API", version="1.0.0")
 
 
 # CORS configuration
+# Purpose: allow front-end origins during development/preview and production
+# Why: Browser requests require explicit origin permissions for API calls
+# How: Allow list + regex cover localhost and *.vercel.app previews
 cors_origins_env = os.getenv("CORS_ORIGINS", "").strip()
 allow_origins = (
     [o.strip() for o in cors_origins_env.split(",") if o.strip()]
@@ -55,15 +75,18 @@ app.add_middleware(
 
 
 # Scheduler for delayed emails
+# Purpose: schedule reminders or post-create notifications asynchronously
 scheduler = AsyncIOScheduler()
 scheduler.start()
 
 
 def get_db_connection():
+    """Open a psycopg2 connection using DATABASE_URL (sslmode preferred)."""
     return psycopg2.connect(os.getenv("DATABASE_URL"), sslmode="prefer")
 
 
 # ==================== MODELS ====================
+# Pydantic request/response models for payload validation and docs
 
 
 class UserCreate(BaseModel):
@@ -489,6 +512,7 @@ async def get_current_user_info(current_user: dict = Depends(get_current_user)):
 
 
 # 🔥 NEW: UPDATE PROFILE ENDPOINT
+# Purpose: Allow users to change name (and optionally email) from Settings page
 @app.put("/api/auth/profile", response_model=dict)
 async def update_profile(
     profile: UpdateProfileSchema,
@@ -565,6 +589,7 @@ async def get_profile(current_user: dict = Depends(get_current_user)):
         }
     }
 # ==================== TASK ENDPOINTS ====================
+# CRUD endpoints bound to authenticated user_id with notification hooks
 
 
 @app.get("/api/tasks", response_model=List[dict])
@@ -774,6 +799,7 @@ async def health_check():
 
 
 # ==================== STARTUP EVENT ====================
+# Purpose: Create tables idempotently to support local dev and ephemeral hosts
 
 
 @app.on_event("startup")

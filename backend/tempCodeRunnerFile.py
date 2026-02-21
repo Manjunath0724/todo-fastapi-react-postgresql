@@ -1,8 +1,25 @@
+"""
+Temporary code runner for local email testing
+
+Purpose:
+- Provide an isolated place to try out email notifications during development
+
+Why:
+- Keeps experimental code out of production modules like `email_service.py` and `main.py`
+
+How:
+- Loads credentials from environment (.env), uses SendGrid Web API to send emails
+- Functions mirror production notification shapes to validate HTML and delivery
+
+Note:
+- This file is not imported by the FastAPI app; treat as a sandbox
+- Never commit real secrets or hard-code addresses; rely on environment variables
+"""
 import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
-# Load environment variables
+# Load environment variables for API keys and sender address
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -37,7 +54,7 @@ async def send_email(to_email: str, subject: str, html_content: str):
         return False
 
 
-# 🔥 Notification functions
+# 🔥 Notification functions (parity with production for validation)
 async def send_task_created_email(user_email: str, task_title: str, task_description: str = "", due_date: str = ""):
     html_content = f"""
     <html><body style="font-family: Arial, sans-serif;">
@@ -132,7 +149,7 @@ async def send_task_reminder_email(user_email: str, task_title: str, task_descri
     return await send_email(user_email, f"⏰ Reminder: {task_title}", html_content)
 
 
-# 🔧 Test function
+# 🔧 Test function (manual runs only in local dev)
 async def test_email():
     print("🧪 Testing all email functions...")
     test_email = "abhidynamite6.gmail.com"
