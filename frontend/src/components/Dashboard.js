@@ -8,7 +8,6 @@ import api from '../services/api';
 
 const Dashboard = () => {
   const { t } = useTranslation();
-  const isDarkMode = document.documentElement.classList.contains('dark');
 
   // Re-render UI when theme class toggles to keep colors in sync
   useEffect(() => {
