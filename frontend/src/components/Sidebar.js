@@ -107,7 +107,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           {/* User Footer - Inside Nav to benefit from flex-col */}
           <div className={`pt-4 border-t border-[var(--border-color)] ${!isOpen ? 'flex justify-center' : ''}`}>
             {isOpen ? (
-              <div className="flex items-center gap-3 p-3 bg-[var(--bg-main)] rounded-2xl border border-[var(--border-color)]">
+              <div className="flex items-center gap-3 p-3 bg-[var(--bg-card)] rounded-2xl border border-[var(--border-color)]">
                 <div className="w-10 h-10 bg-[var(--accent-primary)] rounded-xl flex items-center justify-center flex-shrink-0 shadow-md">
                   <User className="w-5 h-5 text-white" />
                 </div>

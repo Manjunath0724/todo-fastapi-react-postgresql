@@ -45,7 +45,7 @@ function App() {
         setIsSidebarOpen(false);
       }
     };
-    
+
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -57,7 +57,7 @@ function App() {
     setIsDarkMode(newMode);
     const themeValue = newMode ? 'pro-dark' : 'pro-light';
     localStorage.setItem('colorTheme', themeValue);
-    
+
     if (newMode) {
       document.documentElement.classList.add('dark');
     } else {
@@ -94,23 +94,22 @@ function App() {
   // Private app: show Navbar + Sidebar + page routes
   return (
     <Router>
-      <div className={`min-h-screen ${isDarkMode ? 'dark bg-slate-900' : 'bg-gray-50'}`}>
-        <Navbar 
+      <div className="min-h-screen">
+        <Navbar
           isSidebarOpen={isSidebarOpen}
-          onLogout={handleLogout} 
-          onToggleMenu={() => setIsSidebarOpen(!isSidebarOpen)} 
+          onLogout={handleLogout}
+          onToggleMenu={() => setIsSidebarOpen(!isSidebarOpen)}
         />
         <div className="flex">
-          <Sidebar 
-            isOpen={isSidebarOpen} 
+          <Sidebar
+            isOpen={isSidebarOpen}
             setIsOpen={setIsSidebarOpen}
           />
           <main
-            className={`flex-1 transition-all duration-300 min-h-screen pt-4 sm:pt-6 ${
-              isSidebarOpen 
-                ? 'lg:ml-60 ml-0' 
+            className={`flex-1 transition-all duration-300 min-h-screen pt-4 sm:pt-6 ${isSidebarOpen
+                ? 'lg:ml-60 ml-0'
                 : 'lg:ml-20 ml-0'
-            }`}
+              }`}
           >
             <div className="p-0">
               <Routes>
@@ -118,14 +117,14 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/tasks" element={<AllTasks />} />
                 <Route path="/analytics" element={<Analytics />} />
-                <Route 
-                  path="/settings" 
+                <Route
+                  path="/settings"
                   element={
-                    <Settings 
-                      isDarkMode={isDarkMode} 
+                    <Settings
+                      isDarkMode={isDarkMode}
                       toggleTheme={toggleTheme}
                     />
-                  } 
+                  }
                 />
                 <Route path="*" element={<Navigate to="/dashboard" replace />} />
               </Routes>

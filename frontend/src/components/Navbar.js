@@ -108,7 +108,7 @@ const Navbar = ({ onLogout, onToggleMenu, isSidebarOpen }) => {
             <select
               value={currentLang}
               onChange={handleLanguageChange}
-              className="text-xs sm:text-sm bg-gray-50 dark:bg-slate-800 text-gray-900 dark:text-white px-2 py-1 sm:px-3 sm:py-2 rounded-lg sm:rounded-xl border border-gray-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+              className="text-xs sm:text-sm bg-[var(--bg-main)] text-[var(--text-main)] px-2 py-1 sm:px-3 sm:py-2 rounded-lg sm:rounded-xl border border-[var(--border-color)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/50 transition-all font-bold"
             >
               <option value="en">English</option>
               <option value="hi">हिंदी</option>

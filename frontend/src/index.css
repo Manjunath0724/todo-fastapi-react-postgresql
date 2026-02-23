@@ -1,17 +1,16 @@
-/* Purpose: Global Tailwind layers and design tokens for TaskFlow Pro
-   Why: Defines theme variables enabling instant light/dark palette switching
-   How: Uses CSS custom properties with [data-theme] and Tailwind utilities */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
-
 @layer base {
   body {
-    @apply font-sans antialiased overflow-x-hidden;
+    @apply antialiased overflow-x-hidden transition-colors duration-300;
     margin: 0;
-    font-family: 'Poppins', 'Inter', sans-serif;
+    font-family: 'Roboto Slab', serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
   }
 }
 
@@ -20,37 +19,29 @@
   --bg-card: #FFFFFF;
   --bg-sidebar: #FFFFFF;
   --accent-primary: #3B82F6;
-  /* Bright Blue for Light Mode */
-  --accent-secondary: #E5E7EB;
+  --accent-secondary: #F3F4F6;
   --text-main: #1F2937;
   --text-muted: #6B7280;
-  --border-color: #F3F4F6;
+  --border-color: #EEEEEE;
 }
 
 [data-theme='pro-dark'] {
   --bg-main: #080808;
-  /* Deep Black */
   --bg-card: #121212;
-  /* Slate Black for cards */
-  --bg-sidebar: #0C0C0C;
-  /* Very dark sidebar */
+  --bg-sidebar: #080808;
+  /* Perfectly unified with main background */
   --accent-primary: #FF5C35;
-  /* Vibrant Orange */
-  --accent-secondary: #262626;
+  --accent-secondary: #121212;
   --text-main: #FAFAFA;
   --text-muted: #A1A1AA;
-  --border-color: #1F1F1F;
+  --border-color: #1A1A1A;
 }
 
 [data-theme='pro-light'] {
   --bg-main: #FBFBFB;
-  /* Near White */
   --bg-card: #FFFFFF;
-  /* Pure White */
   --bg-sidebar: #FFFFFF;
-  /* White sidebar */
   --accent-primary: #3B82F6;
-  /* Blue Accent */
   --accent-secondary: #F3F4F6;
   --text-main: #1F2937;
   --text-muted: #6B7280;
