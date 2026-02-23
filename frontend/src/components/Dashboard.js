@@ -182,7 +182,7 @@ const Dashboard = () => {
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8">
           <div className="flex-1 min-w-0">
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-[var(--text-main)] mb-1 sm:mb-2 italic">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-[var(--text-main)] mb-1 sm:mb-2">
               {t('dashboard.title')}
             </h1>
             <p className="text-xs sm:text-sm md:text-base text-[var(--text-muted)]">
@@ -191,7 +191,7 @@ const Dashboard = () => {
           </div>
           <button
             onClick={() => setShowAddModal(true)}
-            className="w-full sm:w-auto bg-[var(--accent-primary)] text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2 text-sm sm:text-base shadow-sm"
+            className="w-full sm:w-auto bg-[#00ADC5] hover:bg-[#009fb5] text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-black uppercase tracking-widest shadow-[0_0_20px_rgba(0,173,197,0.3)] hover:shadow-[0_0_25px_rgba(0,173,197,0.5)] transition-all duration-200 flex items-center justify-center gap-2 text-sm sm:text-base"
           >
             <Plus size={18} className="sm:w-5 sm:h-5" />
             <span>{t('dashboard.add_task')}</span>
@@ -361,7 +361,7 @@ const Dashboard = () => {
         {showAddModal && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
             <div className="bg-[var(--bg-card)] rounded-2xl p-6 sm:p-8 max-w-sm sm:max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-[var(--border-color)]">
-              <div className="flex items-center justify-between mb-6 sm:mb-8 font-black uppercase tracking-tighter italic">
+              <div className="flex items-center justify-between mb-6 sm:mb-8 font-black uppercase tracking-tighter">
                 <h2 className="text-lg sm:text-xl text-[var(--text-main)]">Create New Task</h2>
                 <button
                   onClick={() => setShowAddModal(false)}
@@ -431,7 +431,7 @@ const Dashboard = () => {
                   </button>
                   <button
                     type="submit"
-                    className="flex-1 bg-[var(--accent-primary)] text-white p-3 sm:p-4 rounded-xl font-black uppercase tracking-widest hover:shadow-lg hover:scale-[1.02] transition-all duration-200 shadow-sm text-sm sm:text-base italic"
+                    className="flex-1 bg-[#00ADC5] hover:bg-[#009fb5] text-white p-3 sm:p-4 rounded-xl font-black uppercase tracking-widest hover:shadow-lg hover:scale-[1.02] transition-all duration-200 shadow-sm text-sm sm:text-base"
                   >
                     Create
                   </button>

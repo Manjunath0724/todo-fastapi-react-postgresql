@@ -155,7 +155,7 @@ const AllTasks = () => {
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="w-full md:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-navy-900 to-cyan-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg shadow-cyan-500/25 hover:scale-105 active:scale-95 transition-all"
+          className="w-full md:w-auto flex items-center justify-center gap-2 bg-[#00ADC5] hover:bg-[#009fb5] text-white px-6 py-3 rounded-xl font-black uppercase tracking-widest shadow-[0_0_20px_rgba(0,173,197,0.3)] hover:scale-105 active:scale-95 transition-all"
         >
           <Plus className="w-5 h-5" />
           {t('common.add_task')}
@@ -214,8 +214,8 @@ const AllTasks = () => {
               <button
                 onClick={() => handleToggleStatus(task)}
                 className={`w-12 h-12 rounded-xl border-2 flex items-center justify-center transition-all flex-shrink-0 ${task.status === 'completed'
-                    ? 'bg-emerald-500 border-emerald-500 text-white shadow-lg shadow-emerald-500/25'
-                    : 'border-[var(--border-color)] bg-[var(--bg-main)] text-transparent hover:border-emerald-500/50'
+                  ? 'bg-emerald-500 border-emerald-500 text-white shadow-lg shadow-emerald-500/25'
+                  : 'border-[var(--border-color)] bg-[var(--bg-main)] text-transparent hover:border-emerald-500/50'
                   }`}
               >
                 <CheckCircle2 className="w-6 h-6" />
@@ -227,8 +227,8 @@ const AllTasks = () => {
                     {task.title}
                   </h4>
                   <span className={`px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-tighter ${task.priority === 'high' ? 'bg-red-500/10 text-red-500' :
-                      task.priority === 'medium' ? 'bg-amber-500/10 text-amber-500' :
-                        'bg-emerald-500/10 text-emerald-500'
+                    task.priority === 'medium' ? 'bg-amber-500/10 text-amber-500' :
+                      'bg-emerald-500/10 text-emerald-500'
                     }`}>
                     {task.priority}
                   </span>
@@ -341,7 +341,7 @@ const AllTasks = () => {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-gradient-to-r from-navy-900 to-cyan-500 text-white p-4 rounded-2xl font-bold shadow-lg shadow-cyan-500/25 hover:scale-[1.02] active:scale-98 transition-all"
+                  className="flex-1 bg-[#00ADC5] hover:bg-[#009fb5] text-white p-4 rounded-2xl font-black uppercase tracking-widest shadow-[0_0_20px_rgba(0,173,197,0.3)] hover:scale-[1.02] active:scale-98 transition-all"
                 >
                   {editingTask ? 'Save Changes' : 'Create Task'}
                 </button>

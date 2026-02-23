@@ -130,7 +130,7 @@ const Signup = () => {
           <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-[var(--accent-primary)] rounded-2xl shadow-lg mb-3 sm:mb-4">
             <CheckSquare className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-[var(--text-main)] mb-2 italic uppercase tracking-tighter">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-[var(--text-main)] mb-2 uppercase tracking-tighter">
             TaskFlow <span className="text-[var(--accent-primary)]">Pro</span>
           </h1>
           <div className="flex items-center justify-center gap-2">
@@ -143,7 +143,7 @@ const Signup = () => {
 
         {/* Signup Card */}
         <div className="bg-[var(--bg-card)] text-[var(--text-main)] rounded-2xl shadow-xl p-6 sm:p-8 border border-[var(--border-color)]">
-          <h2 className="text-xl sm:text-2xl font-black text-[var(--text-main)] mb-4 sm:mb-6 uppercase italic tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-black text-[var(--text-main)] mb-4 sm:mb-6 uppercase tracking-tight">
             {t('auth.signup_title')}
           </h2>
 
@@ -193,7 +193,7 @@ const Signup = () => {
                   placeholder="example@gmail.com"
                 />
               </div>
-              <p className="text-[10px] text-[var(--text-muted)] mt-1 font-bold uppercase italic">
+              <p className="text-[10px] text-[var(--text-muted)] mt-1 font-bold uppercase">
                 {t('auth.email_hint')}
               </p>
             </div>
@@ -261,7 +261,7 @@ const Signup = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-4 bg-[var(--accent-primary)] text-white rounded-xl font-black uppercase tracking-widest italic shadow-lg shadow-[var(--accent-primary)]/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-50 mt-2"
+              className="w-full py-4 bg-[var(--accent-primary)] text-white rounded-xl font-black uppercase tracking-widest shadow-lg shadow-[var(--accent-primary)]/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-50 mt-2"
             >
               {loading ? t('auth.creating_account') : t('auth.signup')}
             </button>

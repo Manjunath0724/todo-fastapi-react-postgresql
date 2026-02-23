@@ -90,7 +90,7 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
     <div className="min-h-screen bg-[var(--bg-main)] text-[var(--text-main)]">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-6">
         <div className="mb-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-main)] italic uppercase tracking-tighter">{t('settings.title')}</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-main)] uppercase tracking-tighter">{t('settings.title')}</h1>
           <p className="text-sm sm:text-base text-[var(--text-muted)] font-medium">{t('settings.subtitle')}</p>
         </div>
 
@@ -137,7 +137,7 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
               <button
                 type="submit"
                 disabled={loading || saved}
-                className="px-6 py-3 h-11 bg-[var(--accent-primary)] text-white rounded-xl font-black uppercase tracking-widest italic flex items-center justify-center gap-2 shadow-md hover:scale-[1.02] transition-all"
+                className="px-6 py-3 h-11 bg-[var(--accent-primary)] text-white rounded-xl font-black uppercase tracking-widest flex items-center justify-center gap-2 shadow-md hover:scale-[1.02] transition-all"
               >
                 {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : saved ? <Check className="w-5 h-5" /> : <Save className="w-5 h-5" />}
                 {loading ? 'Saving...' : saved ? t('common.saved') : t('settings.save_to_db')}
@@ -183,15 +183,15 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
                 <User className="w-7 h-7 text-[var(--accent-primary)]" />
               </div>
               <div className="flex-1">
-                <div className="font-black text-[var(--text-main)] text-lg italic uppercase tracking-tighter">{profile.fullName || 'User'}</div>
+                <div className="font-black text-[var(--text-main)] text-lg uppercase tracking-tighter">{profile.fullName || 'User'}</div>
                 <div className="text-sm text-[var(--text-muted)] font-bold">{profile.email || 'user@example.com'}</div>
               </div>
-              <div className="px-3 py-1 rounded-lg bg-[var(--accent-primary)]/10 text-[var(--accent-primary)] font-black text-[10px] uppercase tracking-widest italic border border-[var(--accent-primary)]/20">PRO</div>
+              <div className="px-3 py-1 rounded-lg bg-[var(--accent-primary)]/10 text-[var(--accent-primary)] font-black text-[10px] uppercase tracking-widest border border-[var(--accent-primary)]/20">PRO</div>
             </div>
           </div>
 
           <div className="p-6 rounded-2xl shadow-sm border border-[var(--border-color)] bg-[var(--bg-card)]">
-            <h3 className="text-lg font-black uppercase tracking-tighter mb-4 flex items-center gap-2 italic text-[var(--text-main)]">
+            <h3 className="text-lg font-black uppercase tracking-tighter mb-4 flex items-center gap-2 text-[var(--text-main)]">
               <BarChart3 className="w-5 h-5 text-[var(--accent-primary)]" />
               Quick Stats
             </h3>
@@ -202,7 +202,7 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
               </div>
               <div className="flex justify-between items-center py-2 border-b border-[var(--border-color)]">
                 <span className="text-[var(--text-muted)] font-bold text-xs uppercase">Efficiency</span>
-                <span className="font-black text-[var(--accent-primary)] text-lg italic">94%</span>
+                <span className="font-black text-[var(--accent-primary)] text-lg">94%</span>
               </div>
             </div>
           </div>
@@ -222,7 +222,7 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
             <button
               onClick={handleExportCSV}
               disabled={exporting}
-              className="px-6 py-3 bg-emerald-500 text-white rounded-xl font-black uppercase tracking-widest italic flex items-center gap-2 text-sm shadow-md hover:scale-[1.02] transition-all"
+              className="px-6 py-3 bg-emerald-500 text-white rounded-xl font-black uppercase tracking-widest flex items-center gap-2 text-sm shadow-md hover:scale-[1.02] transition-all"
             >
               {exporting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-4 h-4" />}
               {exporting ? t('common.exporting') : t('common.export_csv')}
@@ -231,7 +231,7 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
         </div>
 
         <div className="p-6 rounded-2xl shadow-sm border border-[var(--accent-primary)]/20 bg-[var(--accent-primary)]/5 mt-6 border-dashed">
-          <h3 className="font-black uppercase tracking-widest text-[var(--accent-primary)] mb-2 flex items-center gap-2 text-xs italic">
+          <h3 className="font-black uppercase tracking-widest text-[var(--accent-primary)] mb-2 flex items-center gap-2 text-xs">
             <Sparkles className="w-4 h-4" />
             Pro Tip
           </h3>
