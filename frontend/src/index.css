@@ -18,49 +18,58 @@
 :root {
   --bg-main: #FFFFFF;
   --bg-card: #FFFFFF;
-  --bg-sidebar: #0A192F;
-  --accent-primary: #00ADB5;
-  --accent-secondary: #0A192F;
-  --text-main: #112D4E;
-  --text-muted: #9E9E9E;
-  --border-color: #F0F0F0;
+  --bg-sidebar: #FFFFFF;
+  --accent-primary: #3B82F6;
+  /* Bright Blue for Light Mode */
+  --accent-secondary: #E5E7EB;
+  --text-main: #1F2937;
+  --text-muted: #6B7280;
+  --border-color: #F3F4F6;
 }
 
 [data-theme='pro-dark'] {
-  --bg-main: #0A192F;       /* Navy background */
-  --bg-card: #112D4E;       /* Slightly lighter navy for cards */
-  --bg-sidebar: #0A192F;
-  --accent-primary: #00ADB5;/* Cyan */
-  --accent-secondary: #3FC1C9;
-  --text-main: #FFFFFF;
-  --text-muted: #9E9E9E;
-  --border-color: rgba(255, 255, 255, 0.05);
+  --bg-main: #080808;
+  /* Deep Black */
+  --bg-card: #121212;
+  /* Slate Black for cards */
+  --bg-sidebar: #0C0C0C;
+  /* Very dark sidebar */
+  --accent-primary: #FF5C35;
+  /* Vibrant Orange */
+  --accent-secondary: #262626;
+  --text-main: #FAFAFA;
+  --text-muted: #A1A1AA;
+  --border-color: #1F1F1F;
 }
 
 [data-theme='pro-light'] {
-  --bg-main: #FFFFFF;       /* Background Light */
-  --bg-card: #FFFFFF;       /* Card Light */
-  --bg-sidebar: #0A192F;    /* Sidebar stays Navy for contrast usually */
-  --accent-primary: #00ADB5;/* Cyan Blue */
-  --accent-secondary: #112D4E;/* Dark Navy */
-  --text-main: #112D4E;
-  --text-muted: #9E9E9E;
-  --border-color: #F0F0F0;
+  --bg-main: #FBFBFB;
+  /* Near White */
+  --bg-card: #FFFFFF;
+  /* Pure White */
+  --bg-sidebar: #FFFFFF;
+  /* White sidebar */
+  --accent-primary: #3B82F6;
+  /* Blue Accent */
+  --accent-secondary: #F3F4F6;
+  --text-main: #1F2937;
+  --text-muted: #6B7280;
+  --border-color: #EEEEEE;
 }
 
 @layer components {
   .gradient-primary {
     background: linear-gradient(135deg, #0A192F 0%, #00ADB5 100%);
   }
-  
+
   .card-shadow {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   }
-  
+
   .card-shadow-hover {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
-  
+
   .sidebar-transition {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -68,12 +77,15 @@
   .custom-scrollbar::-webkit-scrollbar {
     width: 4px;
   }
+
   .custom-scrollbar::-webkit-scrollbar-track {
     background: transparent;
   }
+
   .custom-scrollbar::-webkit-scrollbar-thumb {
     @apply bg-gray-200 dark:bg-slate-700 rounded-full;
   }
+
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     @apply bg-gray-300 dark:bg-slate-600;
   }

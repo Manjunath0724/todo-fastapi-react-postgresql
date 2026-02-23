@@ -65,9 +65,9 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-16 lg:top-20 left-0 h-[calc(100vh-4rem)] lg:h-[calc(100vh-5rem)] bg-navy-900 shadow-2xl z-40 transition-all duration-300 ease-in-out border-r border-navy-800 ${isOpen
-            ? 'w-64 sm:w-72 lg:w-60'
-            : 'w-0 lg:w-20'
+        className={`fixed top-16 lg:top-20 left-0 h-[calc(100vh-4rem)] lg:h-[calc(100vh-5rem)] bg-[var(--bg-sidebar)] shadow-2xl z-40 transition-all duration-300 ease-in-out border-r border-[var(--border-color)] ${isOpen
+          ? 'w-64 sm:w-72 lg:w-60'
+          : 'w-0 lg:w-20'
           } ${!isOpen && 'lg:block hidden'}`}
       >
         {/* Navigation */}
@@ -82,8 +82,8 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 }}
                 className={({ isActive }) =>
                   `group relative flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-200 ${isActive
-                    ? 'bg-gradient-to-r from-cyan-500 to-cyan-400 text-white shadow-lg shadow-cyan-500/25'
-                    : 'text-gray-400 hover:bg-navy-800 hover:text-white'
+                    ? 'bg-[var(--accent-primary)] text-white shadow-lg shadow-[var(--accent-primary)]/25'
+                    : 'text-[var(--text-muted)] hover:bg-[var(--accent-secondary)] hover:text-[var(--text-main)]'
                   } ${!isOpen ? 'w-12 h-12 justify-center p-0' : 'w-full'}`
                 }
               >
@@ -95,9 +95,9 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 )}
 
                 {!isOpen && (
-                  <div className="absolute left-full ml-4 px-3 py-2 bg-gray-900 text-white text-xs font-bold rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-[60] shadow-xl border border-white/10">
+                  <div className="absolute left-full ml-4 px-3 py-2 bg-[var(--bg-card)] text-[var(--text-main)] text-xs font-bold rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-[60] shadow-xl border border-[var(--border-color)]">
                     {t(item.labelKey)}
-                    <div className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 border-8 border-transparent border-r-gray-900" />
+                    <div className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 border-8 border-transparent border-r-[var(--bg-card)]" />
                   </div>
                 )}
               </NavLink>
@@ -105,29 +105,29 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           </div>
 
           {/* User Footer - Inside Nav to benefit from flex-col */}
-          <div className={`pt-4 border-t border-navy-800 ${!isOpen ? 'flex justify-center' : ''}`}>
+          <div className={`pt-4 border-t border-[var(--border-color)] ${!isOpen ? 'flex justify-center' : ''}`}>
             {isOpen ? (
-              <div className="flex items-center gap-3 p-3 bg-navy-800/50 rounded-2xl border border-navy-800/50">
-                <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-cyan-400 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md">
+              <div className="flex items-center gap-3 p-3 bg-[var(--bg-main)] rounded-2xl border border-[var(--border-color)]">
+                <div className="w-10 h-10 bg-[var(--accent-primary)] rounded-xl flex items-center justify-center flex-shrink-0 shadow-md">
                   <User className="w-5 h-5 text-white" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-sm font-bold text-white truncate">
+                  <p className="text-sm font-bold text-[var(--text-main)] truncate">
                     {username}
                   </p>
-                  <p className="text-[10px] font-black text-cyan-400 uppercase tracking-tighter">
+                  <p className="text-[10px] font-black text-[var(--accent-primary)] uppercase tracking-tighter">
                     {t('common.premium_member')}
                   </p>
                 </div>
               </div>
             ) : (
               <div className="group relative">
-                <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-cyan-400 rounded-xl flex items-center justify-center shadow-lg hover:scale-110 transition-transform cursor-pointer">
+                <div className="w-12 h-12 bg-[var(--accent-primary)] rounded-xl flex items-center justify-center shadow-lg hover:scale-110 transition-transform cursor-pointer">
                   <User className="w-6 h-6 text-white" />
                 </div>
-                <div className="absolute left-full ml-4 bottom-0 px-4 py-3 bg-navy-900 text-white rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-[60] shadow-2xl border border-white/10">
+                <div className="absolute left-full ml-4 bottom-0 px-4 py-3 bg-[var(--bg-card)] text-[var(--text-main)] rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-[60] shadow-2xl border border-[var(--border-color)]">
                   <p className="font-bold">{username}</p>
-                  <p className="text-[10px] text-cyan-400 font-black uppercase tracking-tighter">{t('common.premium_member')}</p>
+                  <p className="text-[10px] text-[var(--accent-primary)] font-black uppercase tracking-tighter">{t('common.premium_member')}</p>
                 </div>
               </div>
             )}

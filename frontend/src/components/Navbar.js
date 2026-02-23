@@ -85,11 +85,11 @@ const Navbar = ({ onLogout, onToggleMenu, isSidebarOpen }) => {
 
             {/* Logo */}
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-navy-900 to-cyan-500 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[var(--accent-primary)] rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg">
                 <span className="text-xl sm:text-2xl font-black text-white">T</span>
               </div>
               <h1 className="text-lg sm:text-xl md:text-2xl font-extrabold text-[var(--text-main)] tracking-tight">
-                TaskFlow <span className="text-cyan-500">Pro</span>
+                TaskFlow <span className="text-[var(--accent-primary)]">Pro</span>
               </h1>
             </div>
           </div>
@@ -100,7 +100,7 @@ const Navbar = ({ onLogout, onToggleMenu, isSidebarOpen }) => {
             <div className="hidden md:block overflow-hidden min-w-[200px] text-right">
               <span className="text-sm lg:text-base font-medium text-[var(--text-muted)]">
                 {displayedText}
-                <span className="inline-block ml-1 w-[2px] h-4 bg-cyan-500 animate-pulse align-middle" />
+                <span className="inline-block ml-1 w-[2px] h-4 bg-[var(--accent-primary)] animate-pulse align-middle" />
               </span>
             </div>
 

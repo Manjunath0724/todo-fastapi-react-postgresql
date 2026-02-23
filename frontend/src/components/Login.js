@@ -88,28 +88,28 @@ const Login = ({ onLogin }) => {
 
         {/* Logo */}
         <div className="text-center mb-6 sm:mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-2xl shadow-lg mb-3 sm:mb-4">
-            <CheckSquare className="w-8 h-8 sm:w-10 sm:h-10 text-cyan-500" />
+          <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-[var(--accent-primary)] rounded-2xl shadow-lg mb-3 sm:mb-4">
+            <CheckSquare className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[var(--text-main)] mb-2">
-            TaskFlow Pro
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-[var(--text-main)] mb-2 italic uppercase tracking-tighter">
+            TaskFlow <span className="text-[var(--accent-primary)]">Pro</span>
           </h1>
           <div className="flex items-center justify-center gap-2">
             <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-300" />
-            <p className="text-sm sm:text-base text-[var(--text-muted)]">
+            <p className="text-sm sm:text-base text-[var(--text-muted)] font-medium">
               {t('auth.login_subtitle')}
             </p>
           </div>
         </div>
 
         {/* Login Card */}
-        <div className="bg-[var(--bg-card)] text-[var(--text-main)] rounded-2xl shadow-2xl p-6 sm:p-8 border border-[var(--border-color)]">
-          <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-main)] mb-4 sm:mb-6">
+        <div className="bg-[var(--bg-card)] text-[var(--text-main)] rounded-2xl shadow-xl p-6 sm:p-8 border border-[var(--border-color)]">
+          <h2 className="text-xl sm:text-2xl font-black text-[var(--text-main)] mb-4 sm:mb-6 uppercase italic tracking-tight">
             {t('auth.login_title')}
           </h2>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
+            <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-500 text-sm font-bold">
               {error}
             </div>
           )}
@@ -121,11 +121,11 @@ const Login = ({ onLogin }) => {
           >
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-[var(--text-main)] mb-2">
+              <label className="block text-xs font-black uppercase text-[var(--text-muted)] mb-2">
                 {t('auth.email')}
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)]" />
                 <input
                   type="email"
                   required
@@ -134,7 +134,7 @@ const Login = ({ onLogin }) => {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full pl-10 pr-4 py-3 bg-white dark:bg-navy-900 text-gray-900 dark:text-white border border-gray-300 dark:border-navy-800 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none placeholder-gray-400 dark:placeholder-gray-400"
+                  className="w-full pl-10 pr-4 py-3 bg-[var(--bg-main)] text-[var(--text-main)] border border-[var(--border-color)] rounded-xl focus:ring-2 focus:ring-[var(--accent-primary)] outline-none placeholder-[var(--text-muted)] font-bold transition-all"
                   placeholder="Enter your email"
                 />
               </div>
@@ -142,11 +142,11 @@ const Login = ({ onLogin }) => {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-[var(--text-main)] mb-2">
+              <label className="block text-xs font-black uppercase text-[var(--text-muted)] mb-2">
                 {t('auth.password')}
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)]" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
@@ -155,13 +155,13 @@ const Login = ({ onLogin }) => {
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
                   }
-                  className="w-full pl-10 pr-12 py-3 bg-white dark:bg-navy-900 text-gray-900 dark:text-white border border-gray-300 dark:border-navy-800 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none placeholder-gray-400 dark:placeholder-gray-400"
+                  className="w-full pl-10 pr-12 py-3 bg-[var(--bg-main)] text-[var(--text-main)] border border-[var(--border-color)] rounded-xl focus:ring-2 focus:ring-[var(--accent-primary)] outline-none placeholder-[var(--text-muted)] font-bold transition-all"
                   placeholder="Enter your password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors"
                 >
                   {showPassword ? (
                     <EyeOff className="w-5 h-5" />
@@ -176,18 +176,18 @@ const Login = ({ onLogin }) => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-gradient-to-r from-navy-900 to-cyan-500 text-white rounded-lg font-medium hover:shadow-lg transition-all duration-200 disabled:opacity-50"
+              className="w-full py-4 bg-[var(--accent-primary)] text-white rounded-xl font-black uppercase tracking-widest italic shadow-lg shadow-[var(--accent-primary)]/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-50 mt-2"
             >
               {loading ? t('auth.signing_in') : t('auth.signin')}
             </button>
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-[var(--text-muted)]">
+            <p className="text-[var(--text-muted)] font-bold text-sm">
               {t('auth.no_account')}{' '}
               <Link
                 to="/signup"
-                className="text-cyan-500 hover:text-cyan-600 font-medium"
+                className="text-[var(--accent-primary)] hover:underline"
               >
                 {t('auth.signup')}
               </Link>

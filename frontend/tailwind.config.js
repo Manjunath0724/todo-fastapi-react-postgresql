@@ -15,34 +15,29 @@ module.exports = {
         sans: ['Poppins', 'Inter', 'system-ui', 'sans-serif'],
       },
       colors: {
+        brand: {
+          orange: '#FF5C35', // Vibrant orange from dark theme
+          blue: '#3B82F6',   // Bright blue from light theme
+          dark: '#080808',   // Deep black background
+          card: '#121212',   // Slightly lighter black for cards
+          gray: '#9E9E9E',   // Muted text
+        },
         navy: {
           900: '#0A192F',
           800: '#112D4E',
         },
-        cyan: {
-          500: '#00ADB5',
-          400: '#3FC1C9',
-        },
-        amber: {
-          500: '#FF5722',
-          600: '#F9A825',
-        },
-        emerald: {
-          500: '#4CAF50',
-          600: '#00C853',
-        },
         primary: {
-          DEFAULT: '#00ADB5',
-          50: '#F0FDFA',
-          100: '#CCFBF1',
-          200: '#99F6E4',
-          300: '#5EEAD4',
-          400: '#2DD4BF',
-          500: '#00ADB5',
-          600: '#0D9488',
-          700: '#0F766E',
-          800: '#115E59',
-          900: '#134E4A',
+          DEFAULT: '#FF5C35', // Defaulting to the vibrant orange
+          50: '#FFF5F2',
+          100: '#FFECE5',
+          200: '#FFD1C2',
+          300: '#FFB6A0',
+          400: '#FF9B7D',
+          500: '#FF5C35',
+          600: '#E55330',
+          700: '#CC4A2B',
+          800: '#B34125',
+          900: '#993720',
         },
       },
     },
