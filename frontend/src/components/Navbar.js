@@ -70,26 +70,26 @@ const Navbar = ({ onLogout, onToggleMenu, isSidebarOpen }) => {
   const currentLang = i18n.language?.split('-')[0] || 'en';
 
   return (
-    <nav className={`bg-white dark:bg-slate-900 shadow-md sticky top-0 z-50 border-b border-gray-200 dark:border-slate-800 transition-all duration-300 ${isSidebarOpen ? 'lg:ml-60' : 'lg:ml-20'} ml-0`}>
+    <nav className={`bg-[var(--bg-main)] shadow-md sticky top-0 z-50 border-b border-[var(--border-color)] transition-all duration-300 ${isSidebarOpen ? 'lg:ml-60' : 'lg:ml-20'} ml-0`}>
       <div className="max-w-full mx-auto px-3 sm:px-4">
         <div className="flex justify-between items-center h-14 sm:h-16 lg:h-20">
           <div className="flex items-center gap-2 sm:gap-4">
             {/* Menu Toggle Button */}
             <button
               onClick={onToggleMenu}
-              className="p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 transition-all active:scale-95 group"
+              className="p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl text-[var(--text-main)] hover:bg-[var(--border-color)] transition-all active:scale-95 group"
               aria-label="Toggle Menu"
             >
-              <PanelLeft className="w-5 h-5 sm:w-6 sm:h-6 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
+              <PanelLeft className="w-5 h-5 sm:w-6 sm:h-6 group-hover:text-[var(--accent-primary)]" />
             </button>
 
             {/* Logo */}
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-navy-900 to-cyan-500 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg">
                 <span className="text-xl sm:text-2xl font-black text-white">T</span>
               </div>
-              <h1 className="text-lg sm:text-xl md:text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">
-                TaskFlow <span className="text-blue-600 dark:text-blue-400">Pro</span>
+              <h1 className="text-lg sm:text-xl md:text-2xl font-extrabold text-[var(--text-main)] tracking-tight">
+                TaskFlow <span className="text-cyan-500">Pro</span>
               </h1>
             </div>
           </div>
@@ -98,9 +98,9 @@ const Navbar = ({ onLogout, onToggleMenu, isSidebarOpen }) => {
           <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4">
             {/* Animated Quote */}
             <div className="hidden md:block overflow-hidden min-w-[200px] text-right">
-              <span className="text-sm lg:text-base font-medium text-gray-600 dark:text-gray-400">
+              <span className="text-sm lg:text-base font-medium text-[var(--text-muted)]">
                 {displayedText}
-                <span className="inline-block ml-1 w-[2px] h-4 bg-blue-500 animate-pulse align-middle" />
+                <span className="inline-block ml-1 w-[2px] h-4 bg-cyan-500 animate-pulse align-middle" />
               </span>
             </div>
 

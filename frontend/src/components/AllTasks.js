@@ -155,7 +155,7 @@ const AllTasks = () => {
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="w-full md:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg shadow-blue-500/25 hover:scale-105 active:scale-95 transition-all"
+          className="w-full md:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-navy-900 to-cyan-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg shadow-cyan-500/25 hover:scale-105 active:scale-95 transition-all"
         >
           <Plus className="w-5 h-5" />
           {t('common.add_task')}
@@ -171,13 +171,13 @@ const AllTasks = () => {
               placeholder="Search tasks..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-xl text-[var(--text-main)] outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
+              className="w-full pl-12 pr-4 py-3 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-xl text-[var(--text-main)] outline-none focus:ring-2 focus:ring-cyan-500/50 transition-all"
             />
           </div>
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="w-full p-3 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-xl text-[var(--text-main)] outline-none focus:ring-2 focus:ring-blue-500/50 transition-all cursor-pointer"
+            className="w-full p-3 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-xl text-[var(--text-main)] outline-none focus:ring-2 focus:ring-cyan-500/50 transition-all cursor-pointer"
           >
             <option value="all">All Status</option>
             <option value="in_progress">In Progress</option>
@@ -193,7 +193,7 @@ const AllTasks = () => {
       <div className="grid grid-cols-1 gap-4">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 text-[var(--text-muted)]">
-            <div className="w-12 h-12 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mb-4" />
+            <div className="w-12 h-12 border-4 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin mb-4" />
             <p className="font-medium">Loading your tasks...</p>
           </div>
         ) : filteredTasks.length === 0 ? (
@@ -208,17 +208,15 @@ const AllTasks = () => {
           filteredTasks.map((task) => (
             <div
               key={task.id}
-              className={`group flex flex-col sm:flex-row items-start sm:items-center gap-4 p-5 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl hover:shadow-xl hover:border-blue-500/30 transition-all duration-300 ${
-                task.status === 'completed' ? 'opacity-75' : ''
-              }`}
+              className={`group flex flex-col sm:flex-row items-start sm:items-center gap-4 p-5 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl hover:shadow-xl hover:border-cyan-500/30 transition-all duration-300 ${task.status === 'completed' ? 'opacity-75' : ''
+                }`}
             >
               <button
                 onClick={() => handleToggleStatus(task)}
-                className={`w-12 h-12 rounded-xl border-2 flex items-center justify-center transition-all flex-shrink-0 ${
-                  task.status === 'completed'
-                    ? 'bg-green-500 border-green-500 text-white shadow-lg shadow-green-500/25'
-                    : 'border-[var(--border-color)] bg-[var(--bg-main)] text-transparent hover:border-green-500/50'
-                }`}
+                className={`w-12 h-12 rounded-xl border-2 flex items-center justify-center transition-all flex-shrink-0 ${task.status === 'completed'
+                    ? 'bg-emerald-500 border-emerald-500 text-white shadow-lg shadow-emerald-500/25'
+                    : 'border-[var(--border-color)] bg-[var(--bg-main)] text-transparent hover:border-emerald-500/50'
+                  }`}
               >
                 <CheckCircle2 className="w-6 h-6" />
               </button>
@@ -228,11 +226,10 @@ const AllTasks = () => {
                   <h4 className={`text-lg font-bold truncate ${task.status === 'completed' ? 'line-through text-[var(--text-muted)]' : ''}`}>
                     {task.title}
                   </h4>
-                  <span className={`px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-tighter ${
-                    task.priority === 'high' ? 'bg-red-500/10 text-red-500' :
-                    task.priority === 'medium' ? 'bg-yellow-500/10 text-yellow-500' :
-                    'bg-green-500/10 text-green-500'
-                  }`}>
+                  <span className={`px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-tighter ${task.priority === 'high' ? 'bg-red-500/10 text-red-500' :
+                      task.priority === 'medium' ? 'bg-amber-500/10 text-amber-500' :
+                        'bg-emerald-500/10 text-emerald-500'
+                    }`}>
                     {task.priority}
                   </span>
                 </div>
@@ -258,7 +255,7 @@ const AllTasks = () => {
               <div className="flex gap-2 w-full sm:w-auto justify-end sm:opacity-0 group-hover:opacity-100 transition-opacity">
                 <button
                   onClick={() => handleEdit(task)}
-                  className="p-3 text-blue-500 hover:bg-blue-500/10 rounded-xl transition-colors"
+                  className="p-3 text-cyan-500 hover:bg-cyan-500/10 rounded-xl transition-colors"
                   title="Edit task"
                 >
                   <Edit2 size={20} />
@@ -280,12 +277,12 @@ const AllTasks = () => {
         <div className="fixed inset-0 bg-gray-900/60 backdrop-blur-md flex items-center justify-center z-[100] p-4">
           <div className="bg-[var(--bg-card)] rounded-3xl p-6 sm:p-8 max-w-lg w-full border border-[var(--border-color)] shadow-2xl animate-in zoom-in-95 duration-200">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-3 bg-blue-500 rounded-2xl">
+              <div className="p-3 bg-cyan-500 rounded-2xl">
                 <Plus className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-2xl font-bold">{editingTask ? 'Edit Task' : 'New Task'}</h3>
             </div>
-            
+
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label className="block text-sm font-bold mb-2">Task Title</label>
@@ -294,7 +291,7 @@ const AllTasks = () => {
                   type="text"
                   value={taskForm.title}
                   onChange={(e) => setTaskForm({ ...taskForm, title: e.target.value })}
-                  className="w-full p-4 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-2xl text-[var(--text-main)] outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
+                  className="w-full p-4 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-2xl text-[var(--text-main)] outline-none focus:ring-2 focus:ring-cyan-500/50 transition-all"
                   placeholder="What needs to be done?"
                 />
               </div>
@@ -304,7 +301,7 @@ const AllTasks = () => {
                 <textarea
                   value={taskForm.description}
                   onChange={(e) => setTaskForm({ ...taskForm, description: e.target.value })}
-                  className="w-full p-4 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-2xl text-[var(--text-main)] outline-none focus:ring-2 focus:ring-blue-500/50 transition-all resize-none"
+                  className="w-full p-4 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-2xl text-[var(--text-main)] outline-none focus:ring-2 focus:ring-cyan-500/50 transition-all resize-none"
                   placeholder="Add more details..."
                   rows="3"
                 />
@@ -344,7 +341,7 @@ const AllTasks = () => {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4 rounded-2xl font-bold shadow-lg shadow-blue-500/25 hover:scale-[1.02] active:scale-98 transition-all"
+                  className="flex-1 bg-gradient-to-r from-navy-900 to-cyan-500 text-white p-4 rounded-2xl font-bold shadow-lg shadow-cyan-500/25 hover:scale-[1.02] active:scale-98 transition-all"
                 >
                   {editingTask ? 'Save Changes' : 'Create Task'}
                 </button>

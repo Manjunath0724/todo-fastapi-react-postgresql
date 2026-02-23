@@ -130,25 +130,25 @@ const Dashboard = () => {
       title: t('dashboard.total_tasks'),
       value: stats.total,
       icon: ListTodo,
-      color: 'from-blue-500 to-blue-600',
-      bgColor: 'bg-blue-50 dark:bg-blue-900/20',
-      textColor: 'text-blue-600 dark:text-blue-400'
+      color: 'from-navy-800 to-navy-900',
+      bgColor: 'bg-navy-800/10',
+      textColor: 'text-navy-900 dark:text-white'
     },
     {
       title: t('dashboard.in_progress'),
       value: stats.inProgress,
       icon: Clock,
-      color: 'from-yellow-500 to-yellow-600',
-      bgColor: 'bg-yellow-50 dark:bg-yellow-900/20',
-      textColor: 'text-yellow-600 dark:text-yellow-400'
+      color: 'from-amber-500 to-amber-600',
+      bgColor: 'bg-amber-50 dark:bg-amber-900/20',
+      textColor: 'text-amber-600 dark:text-amber-400'
     },
     {
       title: t('dashboard.completed'),
       value: stats.completed,
       icon: CheckCircle2,
-      color: 'from-green-500 to-green-600',
-      bgColor: 'bg-green-50 dark:bg-green-900/20',
-      textColor: 'text-green-600 dark:text-green-400'
+      color: 'from-emerald-500 to-emerald-600',
+      bgColor: 'bg-emerald-50 dark:bg-emerald-900/20',
+      textColor: 'text-emerald-600 dark:text-emerald-400'
     },
     {
       title: t('dashboard.overdue'),
@@ -166,14 +166,14 @@ const Dashboard = () => {
       value: `${stats.completionRate}%`,
       icon: TrendingUp,
       trend: stats.completionRate > 70 ? 'Excellent' : stats.completionRate > 50 ? 'Good' : 'Needs Improvement',
-      color: stats.completionRate > 70 ? 'from-emerald-500/20' : stats.completionRate > 50 ? 'from-yellow-500/20' : 'from-red-500/20'
+      color: stats.completionRate > 70 ? 'from-emerald-500/20' : stats.completionRate > 50 ? 'from-amber-500/20' : 'from-red-500/20'
     },
     {
       title: t('dashboard.avg_completion'),
       value: `${stats.avgCompletionDays} ${t('dashboard.days')}`,
       icon: Activity,
       trend: stats.avgCompletionDays < 3 ? 'Fast' : stats.avgCompletionDays < 7 ? 'Normal' : 'Slow',
-      color: stats.avgCompletionDays < 3 ? 'from-emerald-500/20' : stats.avgCompletionDays < 7 ? 'from-blue-500/20' : 'from-orange-500/20'
+      color: stats.avgCompletionDays < 3 ? 'from-emerald-500/20' : stats.avgCompletionDays < 7 ? 'from-cyan-500/20' : 'from-amber-500/20'
     }
   ];
 
@@ -192,7 +192,7 @@ const Dashboard = () => {
           </div>
           <button
             onClick={() => setShowAddModal(true)}
-            className="w-full sm:w-auto bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2 text-sm sm:text-base"
+            className="w-full sm:w-auto bg-gradient-to-r from-navy-900 to-cyan-500 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2 text-sm sm:text-base"
           >
             <Plus size={18} className="sm:w-5 sm:h-5" />
             <span>{t('dashboard.add_task')}</span>
@@ -202,10 +202,10 @@ const Dashboard = () => {
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
           {statCards.map((stat, index) => (
-            <div key={index} className={`p-4 sm:p-5 rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl hover:shadow-xl sm:hover:shadow-2xl transition-all duration-300 border ${stat.bgColor} ${stat.textColor} group hover:-translate-y-1 ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+            <div key={index} className={`p-4 sm:p-5 rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl hover:shadow-xl sm:hover:shadow-2xl transition-all duration-300 border ${stat.bgColor} ${stat.textColor} group hover:-translate-y-1 ${isDarkMode ? 'border-navy-800' : 'border-gray-100'}`}>
               <div className="flex items-center justify-between mb-3 sm:mb-4">
                 <stat.icon className="w-8 h-8 sm:w-10 sm:h-10 p-2 sm:p-3 rounded-lg sm:rounded-xl bg-white/20 group-hover:bg-white/30 transition-all duration-200" />
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse hidden lg:block" />
+                <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse hidden lg:block" />
               </div>
               <h3 className="text-sm sm:text-base font-semibold mb-2 opacity-90">{stat.title}</h3>
               <p className="text-2xl sm:text-3xl lg:text-4xl font-black">{stat.value}</p>
@@ -216,7 +216,7 @@ const Dashboard = () => {
         {/* Analytics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-12">
           {analyticsCards.map((card, index) => (
-            <div key={index} className={`p-5 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl border hover:shadow-2xl sm:hover:shadow-3xl transition-all duration-300 group ${card.color} border-opacity-50 backdrop-blur-sm ${isDarkMode ? 'border-gray-700 bg-gray-800/50' : 'bg-white/80'}`}>
+            <div key={index} className={`p-5 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl border hover:shadow-2xl sm:hover:shadow-3xl transition-all duration-300 group ${card.color} border-opacity-50 backdrop-blur-sm ${isDarkMode ? 'border-navy-800 bg-navy-800/20' : 'bg-white/80 border-gray-100'}`}>
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <card.icon className="w-10 h-10 sm:w-12 sm:h-12 p-2.5 sm:p-3 lg:p-4 rounded-xl sm:rounded-2xl bg-white/20 backdrop-blur-sm group-hover:bg-white/30 transition-all duration-200" />
                 <span className="px-2 sm:px-3 py-1 bg-white/10 rounded-full text-xs sm:text-sm font-medium text-white/80">
@@ -224,7 +224,7 @@ const Dashboard = () => {
                 </span>
               </div>
               <h3 className="text-base sm:text-lg font-bold mb-2 sm:mb-3">{card.title}</h3>
-              <p className="text-xl sm:text-2xl lg:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-1 sm:mb-2">
+              <p className="text-xl sm:text-2xl lg:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-600 mb-1 sm:mb-2">
                 {card.value}
               </p>
               <p className="text-base sm:text-lg font-semibold opacity-90">{card.trend}</p>
@@ -239,8 +239,8 @@ const Dashboard = () => {
               key={status}
               onClick={() => setFilter(status)}
               className={`px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 rounded-full font-medium text-xs sm:text-sm md:text-base transition-all duration-200 whitespace-nowrap ${filter === status
-                ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/25'
-                : 'bg-white/50 dark:bg-gray-800/50 hover:bg-white/70 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 hover:shadow-md'
+                ? 'bg-gradient-to-r from-navy-900 to-cyan-500 text-white shadow-lg shadow-cyan-500/25'
+                : 'bg-white/50 dark:bg-navy-800/50 hover:bg-white/70 dark:hover:bg-navy-700 border border-gray-200 dark:border-navy-700 hover:shadow-md'
                 }`}
             >
               {status === 'all' ? t('dashboard.all') : t(`dashboard.filter.${status}`)}
@@ -263,7 +263,7 @@ const Dashboard = () => {
 
           {loading ? (
             <div className="flex flex-col items-center justify-center py-12 sm:py-16 text-center">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 border-4 border-indigo-200 dark:border-indigo-800 border-t-indigo-500 rounded-full animate-spin mb-3 sm:mb-4" />
+              <div className="w-12 h-12 sm:w-14 sm:h-14 border-4 border-cyan-200 dark:border-navy-800 border-t-cyan-500 rounded-full animate-spin mb-3 sm:mb-4" />
               <p className="text-base sm:text-lg font-semibold text-gray-600 dark:text-gray-300">
                 {t('dashboard.loading')}
               </p>
@@ -281,7 +281,7 @@ const Dashboard = () => {
               </p>
               <button
                 onClick={() => setShowAddModal(true)}
-                className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg sm:rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-200 text-sm sm:text-base"
+                className="bg-gradient-to-r from-navy-900 to-cyan-500 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg sm:rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-200 text-sm sm:text-base"
               >
                 {t('dashboard.create_task')}
               </button>
@@ -294,8 +294,8 @@ const Dashboard = () => {
                     <button
                       onClick={() => handleToggleStatus(task)}
                       className={`w-10 h-10 sm:w-11 sm:h-11 rounded-lg flex items-center justify-center transition-all duration-200 ${task.status === 'completed'
-                        ? 'bg-green-500 text-white shadow-lg shadow-green-500/25'
-                        : 'bg-gray-200 dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-600 hover:border-indigo-400 group-hover:bg-indigo-500 group-hover:text-white'
+                        ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/25'
+                        : 'bg-gray-100 dark:bg-navy-800 border-2 border-gray-200 dark:border-navy-700 hover:border-cyan-400 group-hover:bg-cyan-500 group-hover:text-white'
                         }`}
                     >
                       {task.status === 'completed' ? (
@@ -312,8 +312,8 @@ const Dashboard = () => {
                       )}
                       <div className="flex items-center gap-2 mt-2 text-xs sm:text-sm">
                         <span className={`px-2 sm:px-2.5 py-1 rounded-full font-medium ${task.priority === 'high' ? 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300' :
-                          task.priority === 'medium' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300' :
-                            'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300'
+                          task.priority === 'medium' ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300' :
+                            'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300'
                           }`}>
                           {task.priority.toUpperCase()}
                         </span>
@@ -335,10 +335,10 @@ const Dashboard = () => {
                   <div className="flex items-center gap-1 sm:gap-2 opacity-0 group-hover:opacity-100 transition-all duration-200 ml-3 sm:ml-4">
                     <button
                       onClick={() => handleToggleStatus(task)}
-                      className="p-1.5 sm:p-2 hover:bg-indigo-500/20 rounded-lg sm:rounded-xl transition-colors"
+                      className="p-1.5 sm:p-2 hover:bg-cyan-500/20 rounded-lg sm:rounded-xl transition-colors"
                       title="Toggle Status"
                     >
-                      <CheckCircle2 size={16} className="sm:w-5 sm:h-5 text-indigo-600" />
+                      <CheckCircle2 size={16} className="sm:w-5 sm:h-5 text-cyan-600" />
                     </button>
                     <button
                       onClick={() => handleDeleteTask(task.id)}
@@ -392,8 +392,8 @@ const Dashboard = () => {
                     type="text"
                     value={newTask.title}
                     onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-                    className={`w-full p-3 sm:p-4 border rounded-xl focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all text-sm sm:text-base font-medium ${isDarkMode
-                      ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:bg-gray-600'
+                    className={`w-full p-3 sm:p-4 border rounded-xl focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 transition-all text-sm sm:text-base font-medium ${isDarkMode
+                      ? 'bg-navy-900 border-navy-800 text-white placeholder-gray-400 focus:bg-navy-800'
                       : 'bg-white border-gray-200 text-gray-900 placeholder-gray-500'
                       }`}
                     placeholder="What needs to be done?"
@@ -455,7 +455,7 @@ const Dashboard = () => {
                   </button>
                   <button
                     type="submit"
-                    className="flex-1 bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-3 sm:p-4 rounded-xl font-bold hover:shadow-lg hover:scale-105 hover:from-indigo-600 hover:to-purple-700 transition-all duration-200 shadow-md text-sm sm:text-base"
+                    className="flex-1 bg-gradient-to-r from-navy-900 to-cyan-500 text-white p-3 sm:p-4 rounded-xl font-bold hover:shadow-lg hover:scale-105 transition-all duration-200 shadow-md text-sm sm:text-base"
                   >
                     Create Task
                   </button>

@@ -1,0 +1,39 @@
+🎨 Primary Colors
+- Deep Blue / Navy (#0A192F – #112D4E range)
+Used for headers, navigation sidebar, and background accents. This gives a professional, trustworthy feel.
+- Bright Cyan / Teal (#00ADB5 – #3FC1C9 range)
+Commonly used for highlights, icons, and active states. It adds vibrancy and draws attention to interactive elements.
+- White (#FFFFFF)
+Dominates the background of content areas, ensuring readability and contrast against darker sidebar/nav sections.
+
+🌈 Secondary & Accent Colors
+- Orange / Amber (#FF5722 – #F9A825 range)
+Used sparingly for company tags (e.g., Amazon, Uber) and call-to-action highlights. It creates urgency and warmth.
+- Green (#4CAF50 – #00C853 range)
+Appears in success states or tags (e.g., Intel, Google relevance). It signals positivity and achievement.
+- Gray (#F0F0F0 – #9E9E9E range)
+Utilized for borders, dividers, and inactive states. Keeps the interface subtle and balanced.
+
+🌐 Gradients & Style
+- Sidebar Gradient:
+A dark-to-light blue gradient (navy → teal) is used in the left navigation panel, giving depth and modernity.
+- Button Styles:
+Rounded corners, flat design with hover effects (slight shadow or color shift). Primary buttons lean on cyan/teal backgrounds with white text.
+- Problem Cards:
+White background with subtle gray shadows, icons in teal/orange, and company tags in brand-specific accent colors.
+- Daily Topic Section:
+Alternating light backgrounds with teal highlights for active days, ensuring visual hierarchy.
+
+🖌️ Typography & Layout
+- Fonts: Clean sans-serif (likely Google Fonts like Poppins or Inter). Bold weights for headings, medium for problem titles, and regular for descriptions.
+- Spacing: Generous padding and margin, ensuring readability and a non-cluttered look.
+- Icons: Flat, minimal, and color-coded (video, editor, company tags).
+
+✨ Overall Design Language
+- Modern & Minimalist: Heavy reliance on whitespace and flat UI elements.
+- Student-Friendly: Bright accents (cyan, orange) keep the interface engaging.
+- Professional Touch: Dark blue/navy base conveys seriousness, while gradients add freshness.
+
+
+see this is the color palatte i have choosen so can you please fix all the old color palatee and use thhe new given color palatee effectively 
+and you can also take the reference fromthe dsa.apnacollege.in website becuase i have got that color pallatee from that website only and do check it how they are used how the colors are blend,graidented and for all the things like heading toypograhpy ect do check it

@@ -5,49 +5,52 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
 
 @layer base {
   body {
     @apply font-sans antialiased overflow-x-hidden;
     margin: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Poppins', 'Inter', sans-serif;
   }
 }
 
 :root {
-  --bg-main: #0F172A;
-  --bg-card: #1E293B;
-  --accent-primary: #3B82F6;
-  --accent-secondary: #1D4ED8;
-  --text-main: #F8FAFC;
-  --text-muted: #94A3B8;
-  --border-color: rgba(148, 163, 184, 0.12);
+  --bg-main: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-sidebar: #0A192F;
+  --accent-primary: #00ADB5;
+  --accent-secondary: #0A192F;
+  --text-main: #112D4E;
+  --text-muted: #9E9E9E;
+  --border-color: #F0F0F0;
 }
 
 [data-theme='pro-dark'] {
-  --bg-main: #0F172A;       /* Background Dark */
-  --bg-card: #1E293B;       /* Card Dark */
-  --accent-primary: #3B82F6;/* Primary Blue */
-  --accent-secondary: #1D4ED8;/* Primary Dark */
-  --text-main: #F8FAFC;
-  --text-muted: #94A3B8;
-  --border-color: rgba(148, 163, 184, 0.12);
+  --bg-main: #0A192F;       /* Navy background */
+  --bg-card: #112D4E;       /* Slightly lighter navy for cards */
+  --bg-sidebar: #0A192F;
+  --accent-primary: #00ADB5;/* Cyan */
+  --accent-secondary: #3FC1C9;
+  --text-main: #FFFFFF;
+  --text-muted: #9E9E9E;
+  --border-color: rgba(255, 255, 255, 0.05);
 }
 
 [data-theme='pro-light'] {
-  --bg-main: #F8FAFC;       /* Background Light */
+  --bg-main: #FFFFFF;       /* Background Light */
   --bg-card: #FFFFFF;       /* Card Light */
-  --accent-primary: #3B82F6;/* Primary Blue */
-  --accent-secondary: #1D4ED8;/* Primary Dark */
-  --text-main: #111827;
-  --text-muted: #6B7280;
-  --border-color: rgba(17, 24, 39, 0.08);
+  --bg-sidebar: #0A192F;    /* Sidebar stays Navy for contrast usually */
+  --accent-primary: #00ADB5;/* Cyan Blue */
+  --accent-secondary: #112D4E;/* Dark Navy */
+  --text-main: #112D4E;
+  --text-muted: #9E9E9E;
+  --border-color: #F0F0F0;
 }
 
 @layer components {
   .gradient-primary {
-    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+    background: linear-gradient(135deg, #0A192F 0%, #00ADB5 100%);
   }
   
   .card-shadow {

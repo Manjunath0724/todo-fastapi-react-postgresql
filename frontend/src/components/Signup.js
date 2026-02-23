@@ -128,7 +128,7 @@ const Signup = () => {
         {/* Logo */}
         <div className="text-center mb-6 sm:mb-8">
           <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-2xl shadow-lg mb-3 sm:mb-4">
-            <CheckSquare className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600" />
+            <CheckSquare className="w-8 h-8 sm:w-10 sm:h-10 text-cyan-500" />
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[var(--text-main)] mb-2">
             TaskFlow Pro
@@ -169,7 +169,7 @@ const Signup = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, fullName: e.target.value })
                   }
-                  className="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none placeholder-gray-400 dark:placeholder-gray-400"
+                  className="w-full pl-10 pr-4 py-3 bg-white dark:bg-navy-900 text-gray-900 dark:text-white border border-gray-300 dark:border-navy-800 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none placeholder-gray-400 dark:placeholder-gray-400"
                   placeholder="Enter your full name"
                 />
               </div>
@@ -189,7 +189,7 @@ const Signup = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none placeholder-gray-400 dark:placeholder-gray-400"
+                  className="w-full pl-10 pr-4 py-3 bg-white dark:bg-navy-900 text-gray-900 dark:text-white border border-gray-300 dark:border-navy-800 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none placeholder-gray-400 dark:placeholder-gray-400"
                   placeholder="example@gmail.com"
                 />
               </div>
@@ -212,7 +212,7 @@ const Signup = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
                   }
-                  className="w-full pl-10 pr-12 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none placeholder-gray-400 dark:placeholder-gray-400"
+                  className="w-full pl-10 pr-12 py-3 bg-white dark:bg-navy-900 text-gray-900 dark:text-white border border-gray-300 dark:border-navy-800 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none placeholder-gray-400 dark:placeholder-gray-400"
                   placeholder="Create a password"
                 />
                 <button
@@ -242,7 +242,7 @@ const Signup = () => {
                       confirmPassword: e.target.value
                     })
                   }
-                  className="w-full pl-10 pr-12 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none placeholder-gray-400 dark:placeholder-gray-400"
+                  className="w-full pl-10 pr-12 py-3 bg-white dark:bg-navy-900 text-gray-900 dark:text-white border border-gray-300 dark:border-navy-800 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none placeholder-gray-400 dark:placeholder-gray-400"
                   placeholder="Confirm your password"
                 />
                 <button
@@ -261,20 +261,20 @@ const Signup = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 gradient-primary text-white rounded-lg font-medium disabled:opacity-50"
+              className="w-full py-3 bg-gradient-to-r from-navy-900 to-cyan-500 text-white rounded-lg font-medium shadow-lg shadow-cyan-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-50"
             >
               {loading ? t('auth.creating_account') : t('auth.signup')}
             </button>
           </form>
 
           <div className="mt-6 text-center">
-              <p className="text-[var(--text-muted)]">
-                {t('auth.have_account')}{' '}
+            <p className="text-[var(--text-muted)]">
+              {t('auth.have_account')}{' '}
               <Link
                 to="/login"
-                className="text-blue-600 hover:text-blue-700 font-medium"
+                className="text-cyan-500 hover:text-cyan-600 font-medium"
               >
-                  {t('auth.signin')}
+                {t('auth.signin')}
               </Link>
             </p>
           </div>
