@@ -65,7 +65,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-16 lg:top-20 left-0 h-[calc(100vh-4rem)] lg:h-[calc(100vh-5rem)] bg-[var(--bg-sidebar)] border-r-4 border-[var(--text-main)] z-40 transition-all duration-300 ease-in-out ${isOpen
+        className={`fixed top-14 sm:top-16 lg:top-20 left-0 h-[calc(100vh-3.5rem)] sm:h-[calc(100vh-4rem)] lg:h-[calc(100vh-5rem)] bg-[var(--bg-sidebar)] border-r-4 border-[var(--text-main)] z-40 transition-all duration-300 ease-in-out ${isOpen
           ? 'w-64 sm:w-72 lg:w-60'
           : 'w-0 lg:w-20'
           } ${!isOpen && 'lg:block hidden'}`}

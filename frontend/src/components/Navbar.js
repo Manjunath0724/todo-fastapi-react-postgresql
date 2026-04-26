@@ -84,12 +84,12 @@ const Navbar = ({ onLogout, onToggleMenu, isSidebarOpen }) => {
             </button>
 
             {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[var(--accent-primary)] flex items-center justify-center neu-card p-0 rounded-md">
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[var(--accent-primary)] flex items-center justify-center neu-card p-0 rounded-md flex-shrink-0">
                 <span className="text-xl sm:text-2xl font-black text-white">T</span>
               </div>
-              <h1 className="text-lg sm:text-xl md:text-2xl font-extrabold text-[var(--text-main)] tracking-tight">
-                TaskFlow <span className="text-[var(--accent-primary)]">Pro</span>
+              <h1 className="text-lg sm:text-xl md:text-2xl font-extrabold text-[var(--text-main)] tracking-tight flex items-center gap-1.5 whitespace-nowrap">
+                TaskFlow <span className="bg-[var(--accent-primary)] text-white px-1.5 py-0.5 border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,1)] text-sm sm:text-lg rounded-sm mt-0.5">Pro</span>
               </h1>
             </div>
           </div>

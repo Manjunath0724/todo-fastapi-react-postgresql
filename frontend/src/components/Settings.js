@@ -1,7 +1,8 @@
 // Purpose: User settings page for profile updates, theme toggle, and data export
 // Why: Lets users personalize name and theme and take their data with them
 // How: Persists profile to backend, theme to localStorage, and exports CSV via Blob
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import html2canvas from 'html2canvas';
 import {
   User, Mail, Sun, Moon, Download, Save, Check, Loader2, Sparkles, BarChart3
 } from 'lucide-react';
@@ -15,6 +16,21 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
   const [saved, setSaved] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [loading, setLoading] = useState(false);
+  const userCardRef = useRef(null);
+
+  const handleExportCard = async () => {
+    if (userCardRef.current) {
+      try {
+        const canvas = await html2canvas(userCardRef.current);
+        const link = document.createElement('a');
+        link.download = `user_card_${profile.fullName || 'User'}.png`;
+        link.href = canvas.toDataURL();
+        link.click();
+      } catch (error) {
+        console.error("Error exporting card:", error);
+      }
+    }
+  };
 
   // Initialize fields from local user cache
   useEffect(() => {
@@ -172,21 +188,29 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div className="p-6 neu-card">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-3 bg-[var(--accent-secondary)] rounded-xl">
-                <User className="w-6 h-6 text-[var(--text-main)]" />
+            <div className="flex items-center justify-between gap-3 mb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-[var(--accent-secondary)] rounded-xl flex-shrink-0">
+                  <User className="w-6 h-6 text-[var(--text-main)]" />
+                </div>
+                <h2 className="text-xl font-bold text-[var(--text-main)] truncate">User Card</h2>
               </div>
-              <h2 className="text-xl font-bold text-[var(--text-main)]">User Card</h2>
+              <button 
+                onClick={handleExportCard} 
+                className="px-3 py-1.5 bg-[#00ADC5] text-white text-xs font-bold uppercase tracking-wider border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,1)] hover:translate-y-[2px] hover:shadow-[0px_0px_0px_rgba(0,0,0,1)] transition-all whitespace-nowrap"
+              >
+                Export
+              </button>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-xl bg-[var(--bg-main)] border border-[var(--border-color)] flex items-center justify-center shadow-inner">
+            <div ref={userCardRef} className="flex flex-col sm:flex-row sm:items-center gap-4 bg-[var(--bg-main)] p-4 border border-[var(--border-color)] rounded-xl relative overflow-hidden">
+              <div className="w-16 h-16 rounded-xl bg-[var(--bg-card)] border border-[var(--border-color)] flex items-center justify-center shadow-inner flex-shrink-0">
                 <User className="w-7 h-7 text-[var(--accent-primary)]" />
               </div>
-              <div className="flex-1">
-                <div className="font-black text-[var(--text-main)] text-lg uppercase tracking-tighter">{profile.fullName || 'User'}</div>
-                <div className="text-sm text-[var(--text-muted)] font-bold">{profile.email || 'user@example.com'}</div>
+              <div className="flex-1 min-w-0">
+                <div className="font-black text-[var(--text-main)] text-lg uppercase tracking-tighter truncate">{profile.fullName || 'User'}</div>
+                <div className="text-sm text-[var(--text-muted)] font-bold truncate">{profile.email || 'user@example.com'}</div>
               </div>
-              <div className="px-3 py-1 rounded-lg bg-[var(--accent-primary)]/10 text-[var(--accent-primary)] font-black text-[10px] uppercase tracking-widest border border-[var(--accent-primary)]/20">PRO</div>
+              <div className="self-start sm:self-auto px-3 py-1 rounded-none bg-[var(--accent-primary)] text-white font-black text-[10px] uppercase tracking-widest border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,1)] flex-shrink-0">PRO</div>
             </div>
           </div>
 

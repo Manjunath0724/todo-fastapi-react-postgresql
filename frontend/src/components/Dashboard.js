@@ -66,8 +66,9 @@ const Dashboard = () => {
     try {
       setLoading(true);
       const response = await api.get('/tasks');
-      setTasks(response.data);
-      calculateStats(response.data);
+      const sortedTasks = response.data.sort((a, b) => new Date(b.created_at || b.updated_at || 0) - new Date(a.created_at || a.updated_at || 0));
+      setTasks(sortedTasks);
+      calculateStats(sortedTasks);
     } catch (error) {
       console.error('Error fetching tasks:', error);
     } finally {
