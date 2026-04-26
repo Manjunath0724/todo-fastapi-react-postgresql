@@ -3,45 +3,37 @@
 # How: Exposed helper functions are called from FastAPI routes in main.py
 
 import os
-import aiosmtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+import asyncio
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 # Load API credentials from env (.env during local dev)
 from dotenv import load_dotenv
 load_dotenv()
 
-# Required credentials: SMTP configs
-SMTP_HOST = os.getenv("SMTP_HOST", "smtp.gmail.com")
-SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
-SMTP_USER = os.getenv("SMTP_USER")
-SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
-SMTP_FROM_EMAIL = os.getenv("SMTP_FROM_EMAIL")
+# Required credentials: SendGrid configs
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+SENDGRID_FROM_EMAIL = os.getenv("SENDGRID_FROM_EMAIL")
 
-# Send a single HTML email via SMTP
+# Send a single HTML email via SendGrid API
 async def send_email(to_email: str, subject: str, html_content: str):
-    """Send email to ANY user email address using SMTP"""
-    if not all([SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, SMTP_FROM_EMAIL]):
-        print("❌ SMTP credentials missing!")
+    """Send email to ANY user email address using SendGrid API"""
+    if not all([SENDGRID_API_KEY, SENDGRID_FROM_EMAIL]):
+        print("❌ SendGrid credentials missing!")
         return False
 
+    message = Mail(
+        from_email=SENDGRID_FROM_EMAIL,
+        to_emails=to_email,
+        subject=subject,
+        html_content=html_content
+    )
+
     try:
-        message = MIMEMultipart()
-        message["From"] = SMTP_FROM_EMAIL
-        message["To"] = to_email
-        message["Subject"] = subject
-        message.attach(MIMEText(html_content, "html"))
-
-        await aiosmtplib.send(
-            message,
-            hostname=SMTP_HOST,
-            port=SMTP_PORT,
-            username=SMTP_USER,
-            password=SMTP_PASSWORD,
-            use_tls=False,
-            start_tls=True,
-        )
-
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
+        # Run synchronous send in a thread to not block FastAPI async loop
+        await asyncio.to_thread(sg.send, message)
+        
         print(f"✅ Email sent to {to_email}: {subject}")
         return True
 
