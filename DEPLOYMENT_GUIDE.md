@@ -48,6 +48,7 @@ Both Netlify and Render deploy your code automatically when you push the code to
    - **Build Command**: `pip install -r requirements.txt`
    - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port 10000`
 4. Scroll down to **Environment Variables** and add the following:
+   - `PYTHON_VERSION`: `3.11.9` *(Crucial! Prevents psycopg2 deployment errors)*
    - `DATABASE_URL`: *(Paste the **Internal Database URL** generated in Part 2)*
    - `SECRET_KEY`: *(Generate one securely: run `python -c "import secrets; print(secrets.token_hex(32))"` in any terminal and paste the result here)*
    - `ALGORITHM`: `HS256`
