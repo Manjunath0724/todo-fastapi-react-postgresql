@@ -65,7 +65,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-16 lg:top-20 left-0 h-[calc(100vh-4rem)] lg:h-[calc(100vh-5rem)] bg-[var(--bg-sidebar)] shadow-2xl z-40 transition-all duration-300 ease-in-out border-r border-[var(--border-color)] ${isOpen
+        className={`fixed top-16 lg:top-20 left-0 h-[calc(100vh-4rem)] lg:h-[calc(100vh-5rem)] bg-[var(--bg-sidebar)] border-r-4 border-[var(--text-main)] z-40 transition-all duration-300 ease-in-out ${isOpen
           ? 'w-64 sm:w-72 lg:w-60'
           : 'w-0 lg:w-20'
           } ${!isOpen && 'lg:block hidden'}`}
@@ -81,9 +81,9 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                   if (window.innerWidth < 1024) setIsOpen(false);
                 }}
                 className={({ isActive }) =>
-                  `group relative flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-200 ${isActive
-                    ? 'bg-[var(--accent-primary)] text-white shadow-lg shadow-[var(--accent-primary)]/25'
-                    : 'text-[var(--text-muted)] hover:bg-[var(--accent-secondary)] hover:text-[var(--text-main)]'
+                  `group relative flex items-center gap-4 px-4 py-3.5 transition-all duration-200 ${isActive
+                    ? 'bg-[var(--accent-primary)] text-white neu-button'
+                    : 'text-[var(--text-muted)] hover:bg-[var(--accent-secondary)] hover:text-[var(--text-main)] rounded-xl border-2 border-transparent hover:border-[var(--text-main)]'
                   } ${!isOpen ? 'w-12 h-12 justify-center p-0' : 'w-full'}`
                 }
               >
@@ -95,7 +95,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 )}
 
                 {!isOpen && (
-                  <div className="absolute left-full ml-4 px-3 py-2 bg-[var(--bg-card)] text-[var(--text-main)] text-xs font-bold rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-[60] shadow-xl border border-[var(--border-color)]">
+                  <div className="absolute left-full ml-4 px-3 py-2 text-xs font-bold opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-[60] neu-card">
                     {t(item.labelKey)}
                     <div className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 border-8 border-transparent border-r-[var(--bg-card)]" />
                   </div>
@@ -122,10 +122,10 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               </div>
             ) : (
               <div className="group relative">
-                <div className="w-12 h-12 bg-[var(--accent-primary)] rounded-xl flex items-center justify-center shadow-lg hover:scale-110 transition-transform cursor-pointer">
+                <div className="w-12 h-12 bg-[var(--accent-primary)] flex items-center justify-center cursor-pointer p-0 neu-button">
                   <User className="w-6 h-6 text-white" />
                 </div>
-                <div className="absolute left-full ml-4 bottom-0 px-4 py-3 bg-[var(--bg-card)] text-[var(--text-main)] rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-[60] shadow-2xl border border-[var(--border-color)]">
+                <div className="absolute left-full ml-4 bottom-0 px-4 py-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-[60] neu-card">
                   <p className="font-bold">{username}</p>
                   <p className="text-[10px] text-[var(--accent-primary)] font-black uppercase tracking-tighter">{t('common.premium_member')}</p>
                 </div>
