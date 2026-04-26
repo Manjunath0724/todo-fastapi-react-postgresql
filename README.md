@@ -259,3 +259,4 @@ Built with ❤️ using React, Tailwind CSS, and FastAPI
 - Lucide React for beautiful icons
 - Chart.js for interactive charts
 - FastAPI for the modern Python web framework
+

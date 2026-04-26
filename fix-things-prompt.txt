@@ -87,7 +87,8 @@ and the theme of the login and the signup page should be constant which was earl
 5.main thing you have totaly disturbed is the setting page all the things in that are very undefined means all the things boxes are not aligned goof like the export earlier was at end it has been shifted to the side the pro tip and stats abd the   profile logo and card was side it is shifted to down make it look a like best one 
 
 
-
+------------------------------------------
+use react query library instead of the react useEffect for api calling
 
 
 
