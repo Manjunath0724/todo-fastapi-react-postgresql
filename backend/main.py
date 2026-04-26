@@ -850,4 +850,4 @@ async def startup_event():
     conn.commit()
     cur.close()
     conn.close()
-    print("✅ Database tables initialized")
+    print("[Success] Database tables initialized")

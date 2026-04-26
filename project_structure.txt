@@ -1,0 +1,71 @@
+C:\Users\asus\Desktop\Final TTL Projecet
+|   .gitignore
+|   database.sql
+|   netlify.toml
+|   README.md
+|   run.txt
+|   run_project.ps1
+|   SETUP_GUIDE.md
+|   
++---backend
+|       .env
+|       .env.example
+|       auth.py
+|       database.py
+|       email_service.py
+|       jwt.py
+|       main.py
+|       models.py
+|       requirements.txt
+|       runtime.txt
+|       tempCodeRunnerFile.py
+|       test_db.py
+|       
++---frontend
+    |   .env
+    |   .env.example
+    |   .gitignore
+    |   package-lock.json
+    |   package.json
+    |   postcss.config.js
+    |   README.md
+    |   tailwind.config.js
+    |   vercel.json
+    |   _redirects
+    |   
+    +---public
+    |       favicon.ico
+    |       index.html
+    |       logo192.png
+    |       logo512.png
+    |       manifest.json
+    |       robots.txt
+    |       
+    +---src
+        |   App.js
+        |   i18n.js
+        |   index.css
+        |   index.js
+        |   
+        +---components
+        |       AllTasks.js
+        |       Analytics.js
+        |       Dashboard.js
+        |       Login.js
+        |       Navbar.js
+        |       Settings.js
+        |       Sidebar.js
+        |       Signup.js
+        |       
+        +---locales
+        |   +---en
+        |   |       translation.json
+        |   |       
+        |   +---hi
+        |   |       translation.json
+        |   |       
+        |   +---mr
+        |           translation.json
+        |           
+        +---services
+                api.js

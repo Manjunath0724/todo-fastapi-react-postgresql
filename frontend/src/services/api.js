@@ -6,7 +6,7 @@ import axios from 'axios';
 // Resolve API base (prefer env override). Must include `/api` to match FastAPI routes.
 const API_URL =
   process.env.REACT_APP_API_URL ||
-  'https://todo-fastapi-react-postgresql.onrender.com/api';
+  'http://localhost:8000/api';
 
 // Create a preconfigured Axios client used across the app (services/components)
 const api = axios.create({

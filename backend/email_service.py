@@ -3,40 +3,47 @@
 # How: Exposed helper functions are called from FastAPI routes in main.py
 
 import os
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+import aiosmtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 # Load API credentials from env (.env during local dev)
 from dotenv import load_dotenv
 load_dotenv()
 
-# Required credentials: API key and from address
-SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+# Required credentials: SMTP configs
+SMTP_HOST = os.getenv("SMTP_HOST", "smtp.gmail.com")
+SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
+SMTP_USER = os.getenv("SMTP_USER")
+SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 SMTP_FROM_EMAIL = os.getenv("SMTP_FROM_EMAIL")
 
-# Send a single HTML email via SendGrid Web API
+# Send a single HTML email via SMTP
 async def send_email(to_email: str, subject: str, html_content: str):
-    """Send email to ANY user email address using SendGrid Web API"""
-    if not all([SENDGRID_API_KEY, SMTP_FROM_EMAIL]):
-        print("❌ SendGrid credentials missing!")
+    """Send email to ANY user email address using SMTP"""
+    if not all([SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, SMTP_FROM_EMAIL]):
+        print("❌ SMTP credentials missing!")
         return False
 
     try:
-        message = Mail(
-            from_email=SMTP_FROM_EMAIL,
-            to_emails=to_email,
-            subject=subject,
-            html_content=html_content
-        )
-        sg = SendGridAPIClient(SENDGRID_API_KEY)
-        response = sg.send(message)
+        message = MIMEMultipart()
+        message["From"] = SMTP_FROM_EMAIL
+        message["To"] = to_email
+        message["Subject"] = subject
+        message.attach(MIMEText(html_content, "html"))
 
-        if response.status_code in [200, 202]:
-            print(f"✅ Email sent to {to_email}: {subject}")
-            return True
-        else:
-            print(f"❌ Email failed to {to_email}: {response.status_code}")
-            return False
+        await aiosmtplib.send(
+            message,
+            hostname=SMTP_HOST,
+            port=SMTP_PORT,
+            username=SMTP_USER,
+            password=SMTP_PASSWORD,
+            use_tls=False,
+            start_tls=True,
+        )
+
+        print(f"✅ Email sent to {to_email}: {subject}")
+        return True
 
     except Exception as e:
         print(f"❌ Email failed to {to_email}: {str(e)}")
