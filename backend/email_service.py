@@ -14,6 +14,7 @@ load_dotenv()
 # Required credentials: SendGrid configs
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 SENDGRID_FROM_EMAIL = os.getenv("SENDGRID_FROM_EMAIL")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "https://dyp-ttl-project.netlify.app").rstrip("/")
 
 # Send a single HTML email via SendGrid API
 async def send_email(to_email: str, subject: str, html_content: str):
@@ -58,7 +59,7 @@ async def send_task_created_email(user_email: str, task_title: str, task_descrip
                 {task_description and f'<p style="color: #64748B;">{task_description}</p>' or ''}
                 {due_date and f'<p style="color: #64748B;"><strong>📅 Due:</strong> {due_date}</p>' or ''}
                 <div style="text-align: center; margin-top: 30px;">
-                    <a href="http://localhost:3000/tasks" style="background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%); color: white; padding: 15px 35px; text-decoration: none; border-radius: 8px; font-weight: bold;">
+                    <a href="{FRONTEND_URL}/tasks" style="background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%); color: white; padding: 15px 35px; text-decoration: none; border-radius: 8px; font-weight: bold;">
                         View All Tasks →
                     </a>
                 </div>
@@ -81,7 +82,7 @@ async def send_task_completed_email(user_email: str, task_title: str):
                 <h2 style="color: #1E293B;">{task_title}</h2>
                 <p style="color: #10B981;">Great job! Keep it up! 💪</p>
                 <div style="text-align: center; margin-top: 30px;">
-                    <a href="http://localhost:3000/analytics" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); color: white; padding: 15px 35px; text-decoration: none; border-radius: 8px; font-weight: bold;">
+                    <a href="{FRONTEND_URL}/analytics" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); color: white; padding: 15px 35px; text-decoration: none; border-radius: 8px; font-weight: bold;">
                         View Analytics →
                     </a>
                 </div>
@@ -104,7 +105,7 @@ async def send_task_deleted_email(user_email: str, task_title: str):
                 <h2 style="color: #1E293B;">{task_title}</h2>
                 <p style="color: #64748B;">This task has been removed from your list.</p>
                 <div style="text-align: center; margin-top: 30px;">
-                    <a href="http://localhost:3000/tasks" style="background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%); color: white; padding: 15px 35px; text-decoration: none; border-radius: 8px; font-weight: bold;">
+                    <a href="{FRONTEND_URL}/tasks" style="background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%); color: white; padding: 15px 35px; text-decoration: none; border-radius: 8px; font-weight: bold;">
                         View All Tasks →
                     </a>
                 </div>
@@ -128,7 +129,7 @@ async def send_task_reminder_email(user_email: str, task_title: str, task_descri
                 {task_description and f'<p style="color: #64748B;">{task_description}</p>' or ''}
                 <p style="color: #F59E0B;">Don't forget to complete this task! 🚀</p>
                 <div style="text-align: center; margin-top: 30px;">
-                    <a href="http://localhost:3000/tasks" style="background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); color: white; padding: 15px 35px; text-decoration: none; border-radius: 8px; font-weight: bold;">
+                    <a href="{FRONTEND_URL}/tasks" style="background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); color: white; padding: 15px 35px; text-decoration: none; border-radius: 8px; font-weight: bold;">
                         View Task →
                     </a>
                 </div>
@@ -157,7 +158,7 @@ async def send_account_created_email(user_email: str, full_name: str):
                     you can start creating tasks, tracking progress, and staying organized.
                 </p>
                 <div style="text-align: center; margin-top: 30px;">
-                    <a href="http://localhost:3000/dashboard" style="background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%); color: white; padding: 15px 35px; text-decoration: none; border-radius: 8px; font-weight: bold;">
+                    <a href="{FRONTEND_URL}/dashboard" style="background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%); color: white; padding: 15px 35px; text-decoration: none; border-radius: 8px; font-weight: bold;">
                         Open Dashboard →
                     </a>
                 </div>
