@@ -118,7 +118,7 @@ const Signup = () => {
     <div className="min-h-screen bg-[var(--bg-main)] flex items-center justify-center p-4 sm:p-6">
       <button
         onClick={toggleTheme}
-        className="fixed top-4 right-4 px-3 py-2 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] text-[var(--text-main)] flex items-center gap-2 shadow"
+        className="fixed top-4 right-4 px-3 py-2 bg-[var(--bg-card)] text-[var(--text-main)] flex items-center gap-2 neu-button"
       >
         {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
         <span className="text-sm">{isDarkMode ? 'Light' : 'Dark'}</span>
@@ -142,7 +142,7 @@ const Signup = () => {
         </div>
 
         {/* Signup Card */}
-        <div className="bg-[var(--bg-card)] text-[var(--text-main)] rounded-2xl shadow-xl p-6 sm:p-8 border border-[var(--border-color)]">
+        <div className="text-[var(--text-main)] p-6 sm:p-8 neu-card">
           <h2 className="text-xl sm:text-2xl font-black text-[var(--text-main)] mb-4 sm:mb-6 uppercase tracking-tight">
             {t('auth.signup_title')}
           </h2>
@@ -169,7 +169,7 @@ const Signup = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, fullName: e.target.value })
                   }
-                  className="w-full pl-10 pr-4 py-3 bg-[var(--bg-main)] text-[var(--text-main)] border border-[var(--border-color)] rounded-xl focus:ring-2 focus:ring-[var(--accent-primary)] outline-none placeholder-[var(--text-muted)] font-bold transition-all"
+                  className="w-full pl-10 pr-4 py-3 text-[var(--text-main)] placeholder-[var(--text-muted)] font-bold transition-all neu-input"
                   placeholder="Enter your full name"
                 />
               </div>
@@ -189,7 +189,7 @@ const Signup = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full pl-10 pr-4 py-3 bg-[var(--bg-main)] text-[var(--text-main)] border border-[var(--border-color)] rounded-xl focus:ring-2 focus:ring-[var(--accent-primary)] outline-none placeholder-[var(--text-muted)] font-bold transition-all"
+                  className="w-full pl-10 pr-4 py-3 text-[var(--text-main)] placeholder-[var(--text-muted)] font-bold transition-all neu-input"
                   placeholder="example@gmail.com"
                 />
               </div>
@@ -212,7 +212,7 @@ const Signup = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
                   }
-                  className="w-full pl-10 pr-12 py-3 bg-[var(--bg-main)] text-[var(--text-main)] border border-[var(--border-color)] rounded-xl focus:ring-2 focus:ring-[var(--accent-primary)] outline-none placeholder-[var(--text-muted)] font-bold transition-all"
+                  className="w-full pl-10 pr-12 py-3 text-[var(--text-main)] placeholder-[var(--text-muted)] font-bold transition-all neu-input"
                   placeholder="Create a password"
                 />
                 <button
@@ -242,7 +242,7 @@ const Signup = () => {
                       confirmPassword: e.target.value
                     })
                   }
-                  className="w-full pl-10 pr-12 py-3 bg-[var(--bg-main)] text-[var(--text-main)] border border-[var(--border-color)] rounded-xl focus:ring-2 focus:ring-[var(--accent-primary)] outline-none placeholder-[var(--text-muted)] font-bold transition-all"
+                  className="w-full pl-10 pr-12 py-3 text-[var(--text-main)] placeholder-[var(--text-muted)] font-bold transition-all neu-input"
                   placeholder="Confirm your password"
                 />
                 <button
@@ -261,7 +261,7 @@ const Signup = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-4 bg-[var(--accent-primary)] text-white rounded-xl font-black uppercase tracking-widest shadow-lg shadow-[var(--accent-primary)]/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-50 mt-2"
+              className="w-full py-4 bg-[var(--accent-primary)] text-white uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-50 mt-2 neu-button"
             >
               {loading ? t('auth.creating_account') : t('auth.signup')}
             </button>

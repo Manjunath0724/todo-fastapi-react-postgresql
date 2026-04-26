@@ -155,14 +155,14 @@ const AllTasks = () => {
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="w-full md:w-auto flex items-center justify-center gap-2 bg-[#00ADC5] hover:bg-[#009fb5] text-white px-6 py-3 rounded-xl font-black uppercase tracking-widest shadow-[0_0_20px_rgba(0,173,197,0.3)] hover:scale-105 active:scale-95 transition-all"
+          className="w-full md:w-auto flex items-center justify-center gap-2 bg-[#00ADC5] text-white px-6 py-3 uppercase tracking-widest neu-button"
         >
           <Plus className="w-5 h-5" />
           {t('common.add_task')}
         </button>
       </div>
 
-      <div className="bg-[var(--bg-card)] rounded-2xl p-4 sm:p-6 mb-8 border border-[var(--border-color)] shadow-xl backdrop-blur-sm">
+      <div className="p-4 sm:p-6 mb-8 neu-card">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="sm:col-span-2 relative">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)]" />
@@ -171,19 +171,19 @@ const AllTasks = () => {
               placeholder="Search tasks..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-xl text-[var(--text-main)] outline-none focus:ring-2 focus:ring-cyan-500/50 transition-all"
+              className="w-full pl-12 pr-4 py-3 text-[var(--text-main)] outline-none transition-all neu-input"
             />
           </div>
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="w-full p-3 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-xl text-[var(--text-main)] outline-none focus:ring-2 focus:ring-cyan-500/50 transition-all cursor-pointer"
+            className="w-full p-3 text-[var(--text-main)] outline-none transition-all cursor-pointer neu-input"
           >
             <option value="all">All Status</option>
             <option value="in_progress">In Progress</option>
             <option value="completed">Completed</option>
           </select>
-          <div className="flex items-center gap-2 px-4 py-3 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-xl text-[var(--text-muted)] text-sm font-medium">
+          <div className="flex items-center gap-2 px-4 py-3 text-[var(--text-muted)] text-sm font-medium neu-input">
             <ListTodo className="w-4 h-4" />
             {filteredTasks.length} Tasks
           </div>
@@ -208,7 +208,7 @@ const AllTasks = () => {
           filteredTasks.map((task) => (
             <div
               key={task.id}
-              className={`group flex flex-col sm:flex-row items-start sm:items-center gap-4 p-5 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl hover:shadow-xl hover:border-cyan-500/30 transition-all duration-300 ${task.status === 'completed' ? 'opacity-75' : ''
+              className={`group flex flex-col sm:flex-row items-start sm:items-center gap-4 p-5 neu-card ${task.status === 'completed' ? 'opacity-75' : ''
                 }`}
             >
               <button
@@ -291,7 +291,7 @@ const AllTasks = () => {
                   type="text"
                   value={taskForm.title}
                   onChange={(e) => setTaskForm({ ...taskForm, title: e.target.value })}
-                  className="w-full p-4 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-2xl text-[var(--text-main)] outline-none focus:ring-2 focus:ring-cyan-500/50 transition-all"
+                  className="w-full p-4 text-[var(--text-main)] outline-none transition-all neu-input"
                   placeholder="What needs to be done?"
                 />
               </div>
@@ -301,7 +301,7 @@ const AllTasks = () => {
                 <textarea
                   value={taskForm.description}
                   onChange={(e) => setTaskForm({ ...taskForm, description: e.target.value })}
-                  className="w-full p-4 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-2xl text-[var(--text-main)] outline-none focus:ring-2 focus:ring-cyan-500/50 transition-all resize-none"
+                  className="w-full p-4 text-[var(--text-main)] outline-none transition-all resize-none neu-input"
                   placeholder="Add more details..."
                   rows="3"
                 />
@@ -313,7 +313,7 @@ const AllTasks = () => {
                   <select
                     value={taskForm.priority}
                     onChange={(e) => setTaskForm({ ...taskForm, priority: e.target.value })}
-                    className="w-full p-4 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-2xl text-[var(--text-main)] outline-none cursor-pointer"
+                    className="w-full p-4 text-[var(--text-main)] outline-none cursor-pointer neu-input"
                   >
                     <option value="low">Low Priority</option>
                     <option value="medium">Medium Priority</option>
@@ -326,7 +326,7 @@ const AllTasks = () => {
                     type="date"
                     value={taskForm.due_date}
                     onChange={(e) => setTaskForm({ ...taskForm, due_date: e.target.value })}
-                    className="w-full p-4 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-2xl text-[var(--text-main)] outline-none"
+                    className="w-full p-4 text-[var(--text-main)] outline-none neu-input"
                   />
                 </div>
               </div>
@@ -335,13 +335,13 @@ const AllTasks = () => {
                 <button
                   type="button"
                   onClick={closeModal}
-                  className="flex-1 p-4 border border-[var(--border-color)] rounded-2xl font-bold hover:bg-[var(--bg-main)] transition-colors"
+                  className="flex-1 p-4 hover:bg-[var(--bg-main)] transition-colors neu-button"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-[#00ADC5] hover:bg-[#009fb5] text-white p-4 rounded-2xl font-black uppercase tracking-widest shadow-[0_0_20px_rgba(0,173,197,0.3)] hover:scale-[1.02] active:scale-98 transition-all"
+                  className="flex-1 bg-[#00ADC5] text-white p-4 uppercase tracking-widest transition-all neu-button"
                 >
                   {editingTask ? 'Save Changes' : 'Create Task'}
                 </button>

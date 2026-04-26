@@ -191,7 +191,7 @@ const Dashboard = () => {
           </div>
           <button
             onClick={() => setShowAddModal(true)}
-            className="w-full sm:w-auto bg-[#00ADC5] hover:bg-[#009fb5] text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-black uppercase tracking-widest shadow-[0_0_20px_rgba(0,173,197,0.3)] hover:shadow-[0_0_25px_rgba(0,173,197,0.5)] transition-all duration-200 flex items-center justify-center gap-2 text-sm sm:text-base"
+            className="w-full sm:w-auto bg-[#00ADC5] text-white px-4 sm:px-6 py-2.5 sm:py-3 uppercase tracking-widest flex items-center justify-center gap-2 text-sm sm:text-base neu-button"
           >
             <Plus size={18} className="sm:w-5 sm:h-5" />
             <span>{t('dashboard.add_task')}</span>
@@ -201,7 +201,7 @@ const Dashboard = () => {
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
           {statCards.map((stat, index) => (
-            <div key={index} className={`p-4 sm:p-5 rounded-xl sm:rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border ${stat.bgColor} ${stat.textColor} group hover:-translate-y-1 border-[var(--border-color)] bg-[var(--bg-card)]`}>
+            <div key={index} className={`p-4 sm:p-5 ${stat.bgColor} ${stat.textColor} group neu-card`}>
               <div className="flex items-center justify-between mb-3 sm:mb-4">
                 <stat.icon className="w-8 h-8 sm:w-10 sm:h-10 p-2 sm:p-3 rounded-lg sm:rounded-xl bg-[var(--accent-primary)]/10 group-hover:bg-[var(--accent-primary)]/20 transition-all duration-200 text-[var(--accent-primary)]" />
                 <div className="w-2 h-2 bg-[var(--accent-primary)] rounded-full animate-pulse hidden lg:block" />
@@ -215,7 +215,7 @@ const Dashboard = () => {
         {/* Analytics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-12">
           {analyticsCards.map((card, index) => (
-            <div key={index} className={`p-5 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl shadow-sm border hover:shadow-md transition-all duration-300 group ${card.color} border-[var(--border-color)] bg-[var(--bg-card)]`}>
+            <div key={index} className={`p-5 sm:p-6 lg:p-8 group ${card.color} neu-card`}>
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <card.icon className="w-10 h-10 sm:w-12 sm:h-12 p-2.5 sm:p-3 lg:p-4 rounded-xl sm:rounded-2xl bg-[var(--accent-primary)]/10 group-hover:bg-[var(--accent-primary)]/20 transition-all duration-200 text-[var(--accent-primary)]" />
                 <span className="px-2 sm:px-3 py-1 bg-[var(--accent-primary)]/10 rounded-full text-xs sm:text-sm font-medium text-[var(--accent-primary)]">
@@ -237,9 +237,9 @@ const Dashboard = () => {
             <button
               key={status}
               onClick={() => setFilter(status)}
-              className={`px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 rounded-full font-medium text-xs sm:text-sm md:text-base transition-all duration-200 whitespace-nowrap border ${filter === status
-                ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-md shadow-[var(--accent-primary)]/20'
-                : 'bg-[var(--bg-card)] text-[var(--text-muted)] hover:bg-[var(--accent-secondary)] border-[var(--border-color)]'
+              className={`px-3 sm:px-4 md:px-5 py-1.5 sm:py-2 font-medium text-xs sm:text-sm md:text-base whitespace-nowrap neu-button ${filter === status
+                ? 'bg-[var(--accent-primary)] text-white'
+                : 'bg-[var(--bg-card)] text-[var(--text-muted)] hover:bg-[var(--accent-secondary)]'
                 }`}
             >
               {status === 'all' ? t('dashboard.all') : t(`dashboard.filter.${status}`)}
@@ -249,7 +249,7 @@ const Dashboard = () => {
         </div>
 
         {/* Tasks List */}
-        <div className="bg-[var(--bg-card)] rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-8 border border-[var(--border-color)] shadow-sm">
+        <div className="p-5 sm:p-6 lg:p-8 neu-card">
           <div className="flex items-center justify-between mb-4 sm:mb-6">
             <h2 className="text-lg sm:text-xl font-bold text-[var(--text-main)]">
               {t('dashboard.recent_tasks')} ({filteredTasks.length})
@@ -280,7 +280,7 @@ const Dashboard = () => {
               </p>
               <button
                 onClick={() => setShowAddModal(true)}
-                className="bg-[var(--accent-primary)] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg sm:rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-200 text-sm sm:text-base shadow-sm"
+                className="bg-[var(--accent-primary)] text-white px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base neu-button"
               >
                 {t('dashboard.create_task')}
               </button>
@@ -288,7 +288,7 @@ const Dashboard = () => {
           ) : (
             <div className="space-y-3 sm:space-y-4">
               {filteredTasks.slice(0, 8).map(task => (
-                <div key={task.id} className="group flex items-center justify-between p-4 sm:p-5 lg:p-6 rounded-xl sm:rounded-2xl bg-[var(--bg-main)] hover:shadow-md hover:-translate-y-0.5 border border-[var(--border-color)] transition-all duration-300">
+                <div key={task.id} className="group flex items-center justify-between p-4 sm:p-5 lg:p-6 bg-[var(--bg-main)] neu-card">
                   <div className="flex items-center gap-3 sm:gap-4 flex-1">
                     <button
                       onClick={() => handleToggleStatus(task)}
@@ -381,7 +381,7 @@ const Dashboard = () => {
                     type="text"
                     value={newTask.title}
                     onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-                    className="w-full p-3 sm:p-4 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-xl focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] transition-all text-sm sm:text-base font-bold text-[var(--text-main)] placeholder-[var(--text-muted)]"
+                    className="w-full p-3 sm:p-4 text-sm sm:text-base font-bold text-[var(--text-main)] placeholder-[var(--text-muted)] neu-input"
                     placeholder="What needs to be done?"
                   />
                 </div>
@@ -392,7 +392,7 @@ const Dashboard = () => {
                     rows={3}
                     value={newTask.description}
                     onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
-                    className="w-full p-3 sm:p-4 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-xl focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] transition-all text-sm sm:text-base font-medium text-[var(--text-main)] placeholder-[var(--text-muted)] resize-none"
+                    className="w-full p-3 sm:p-4 text-sm sm:text-base font-medium text-[var(--text-main)] placeholder-[var(--text-muted)] resize-none neu-input"
                     placeholder="Add more details..."
                   />
                 </div>
@@ -403,7 +403,7 @@ const Dashboard = () => {
                     <select
                       value={newTask.priority}
                       onChange={(e) => setNewTask({ ...newTask, priority: e.target.value })}
-                      className="w-full p-3 sm:p-4 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-xl focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] transition-all text-sm sm:text-base font-bold text-[var(--text-main)]"
+                      className="w-full p-3 sm:p-4 text-sm sm:text-base font-bold text-[var(--text-main)] neu-input"
                     >
                       <option value="low">Low</option>
                       <option value="medium">Medium</option>
@@ -416,7 +416,7 @@ const Dashboard = () => {
                       type="date"
                       value={newTask.due_date}
                       onChange={(e) => setNewTask({ ...newTask, due_date: e.target.value })}
-                      className="w-full p-3 sm:p-4 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-xl focus:ring-2 focus:ring-[var(--accent-primary)]/50 focus:border-[var(--accent-primary)] transition-all text-sm sm:text-base font-bold text-[var(--text-main)]"
+                      className="w-full p-3 sm:p-4 text-sm sm:text-base font-bold text-[var(--text-main)] neu-input"
                     />
                   </div>
                 </div>
@@ -425,13 +425,13 @@ const Dashboard = () => {
                   <button
                     type="button"
                     onClick={() => setShowAddModal(false)}
-                    className="flex-1 p-3 sm:p-4 border border-[var(--border-color)] text-[var(--text-muted)] rounded-xl hover:bg-[var(--bg-main)] transition-colors font-bold text-sm sm:text-base"
+                    className="flex-1 p-3 sm:p-4 text-[var(--text-muted)] hover:bg-[var(--bg-main)] text-sm sm:text-base neu-button"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="flex-1 bg-[#00ADC5] hover:bg-[#009fb5] text-white p-3 sm:p-4 rounded-xl font-black uppercase tracking-widest hover:shadow-lg hover:scale-[1.02] transition-all duration-200 shadow-sm text-sm sm:text-base"
+                    className="flex-1 bg-[#00ADC5] text-white p-3 sm:p-4 uppercase tracking-widest text-sm sm:text-base neu-button"
                   >
                     Create
                   </button>

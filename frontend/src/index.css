@@ -80,4 +80,43 @@
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     @apply bg-gray-300 dark:bg-slate-600;
   }
+
+  /* Core Neubrutalist Utilities */
+  .neu-border {
+    border: 3px solid var(--text-main);
+    border-radius: 8px;
+  }
+
+  .neu-shadow {
+    box-shadow: 4px 4px 0px 0px var(--text-main);
+    transition: all 0.15s ease-in-out;
+  }
+
+  .neu-shadow:hover {
+    box-shadow: 6px 6px 0px 0px var(--text-main);
+    transform: translate(-2px, -2px);
+  }
+
+  .neu-shadow:active {
+    box-shadow: 0px 0px 0px 0px var(--text-main);
+    transform: translate(4px, 4px);
+  }
+
+  /* Specific Elements */
+  .neu-button {
+    @apply neu-border neu-shadow font-bold transition-transform;
+  }
+
+  .neu-card {
+    @apply neu-border neu-shadow transition-transform;
+  }
+
+  .neu-input {
+    @apply neu-border focus:outline-none transition-shadow;
+    box-shadow: 2px 2px 0px 0px var(--text-main);
+  }
+
+  .neu-input:focus {
+    box-shadow: 4px 4px 0px 0px var(--text-main);
+  }
 }
