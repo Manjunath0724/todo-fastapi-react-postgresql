@@ -169,7 +169,7 @@ const Analytics = () => {
           { title: 'Done', value: stats.totalCompleted, icon: CheckCircle2, color: 'text-green-500' },
           { title: 'Completion Rate', value: `${stats.completionRate}%`, icon: TrendingUp, color: 'text-purple-500' }
         ].map((stat, i) => (
-          <div key={i} className="p-6 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl shadow-sm">
+          <div key={i} className="p-6 neu-card">
             <div className="flex items-center justify-between mb-4">
               <stat.icon className={`w-8 h-8 ${stat.color}`} />
             </div>
@@ -180,11 +180,11 @@ const Analytics = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="p-6 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl h-80">
+        <div className="p-6 h-80 neu-card">
           <h3 className="font-bold mb-4">Activity Overview</h3>
           <div className="h-60"><Line data={activityData} options={activityOptions} /></div>
         </div>
-        <div className="p-6 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl h-80">
+        <div className="p-6 h-80 neu-card">
           <h3 className="font-bold mb-4">Priority Distribution</h3>
           <div className="h-60 flex items-center justify-center"><Doughnut data={priorityData} options={{ responsive: true, maintainAspectRatio: false }} /></div>
         </div>

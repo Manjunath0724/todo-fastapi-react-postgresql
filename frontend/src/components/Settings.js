@@ -95,7 +95,7 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
         </div>
 
         <div className="space-y-6">
-          <div className="p-6 rounded-2xl shadow-sm border border-[var(--border-color)] bg-[var(--bg-card)]">
+          <div className="p-6 neu-card">
             <div className="flex items-center gap-3 mb-6">
               <div className="p-3 bg-[var(--accent-primary)] rounded-xl shadow-lg shadow-[var(--accent-primary)]/20">
                 <User className="w-6 h-6 text-white" />
@@ -117,7 +117,7 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
                       value={profile.fullName}
                       onChange={(e) => setProfile({ ...profile, fullName: e.target.value })}
                       disabled={loading}
-                      className="w-full pl-10 pr-4 py-3 bg-[var(--bg-main)] border border-[var(--border-color)] rounded-xl text-[var(--text-main)] font-bold outline-none focus:ring-2 focus:ring-[var(--accent-primary)] transition-all"
+                      className="w-full pl-10 pr-4 py-3 text-[var(--text-main)] font-bold outline-none transition-all neu-input"
                     />
                   </div>
                 </div>
@@ -129,7 +129,7 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
                       type="email"
                       value={profile.email}
                       readOnly
-                      className="w-full pl-10 pr-4 py-3 bg-[var(--bg-main)]/50 border border-[var(--border-color)] rounded-xl text-[var(--text-main)] font-medium opacity-50 cursor-not-allowed"
+                      className="w-full pl-10 pr-4 py-3 text-[var(--text-main)] font-medium opacity-50 cursor-not-allowed neu-input"
                     />
                   </div>
                 </div>
@@ -137,7 +137,7 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
               <button
                 type="submit"
                 disabled={loading || saved}
-                className="px-6 py-3 h-11 bg-[var(--accent-primary)] text-white rounded-xl font-black uppercase tracking-widest flex items-center justify-center gap-2 shadow-md hover:scale-[1.02] transition-all"
+                className="px-6 py-3 h-11 bg-[var(--accent-primary)] text-white uppercase tracking-widest flex items-center justify-center gap-2 hover:scale-[1.02] transition-all neu-button"
               >
                 {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : saved ? <Check className="w-5 h-5" /> : <Save className="w-5 h-5" />}
                 {loading ? 'Saving...' : saved ? t('common.saved') : t('settings.save_to_db')}
@@ -145,7 +145,7 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
             </form>
           </div>
 
-          <div className="p-6 rounded-2xl shadow-sm border border-[var(--border-color)] bg-[var(--bg-card)]">
+          <div className="p-6 neu-card">
             <div className="flex items-center gap-3 mb-6">
               <div className="p-3 bg-[var(--accent-primary)] rounded-xl shadow-lg shadow-[var(--accent-primary)]/20">
                 {isDarkMode ? <Moon className="w-6 h-6 text-white" /> : <Sun className="w-6 h-6 text-white" />}
@@ -171,7 +171,7 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-          <div className="p-6 rounded-2xl shadow-sm border border-[var(--border-color)] bg-[var(--bg-card)]">
+          <div className="p-6 neu-card">
             <div className="flex items-center gap-3 mb-6">
               <div className="p-3 bg-[var(--accent-secondary)] rounded-xl">
                 <User className="w-6 h-6 text-[var(--text-main)]" />
@@ -190,7 +190,7 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
             </div>
           </div>
 
-          <div className="p-6 rounded-2xl shadow-sm border border-[var(--border-color)] bg-[var(--bg-card)]">
+          <div className="p-6 neu-card">
             <h3 className="text-lg font-black uppercase tracking-tighter mb-4 flex items-center gap-2 text-[var(--text-main)]">
               <BarChart3 className="w-5 h-5 text-[var(--accent-primary)]" />
               Quick Stats
@@ -208,7 +208,7 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
           </div>
         </div>
 
-        <div className="p-6 rounded-2xl shadow-sm border border-[var(--border-color)] bg-[var(--bg-card)] mt-6">
+        <div className="p-6 mt-6 neu-card">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-emerald-500/10 rounded-xl text-emerald-500">
@@ -222,7 +222,7 @@ const Settings = ({ isDarkMode, toggleTheme }) => {
             <button
               onClick={handleExportCSV}
               disabled={exporting}
-              className="px-6 py-3 bg-emerald-500 text-white rounded-xl font-black uppercase tracking-widest flex items-center gap-2 text-sm shadow-md hover:scale-[1.02] transition-all"
+              className="px-6 py-3 bg-emerald-500 text-white uppercase tracking-widest flex items-center gap-2 text-sm hover:scale-[1.02] transition-all neu-button"
             >
               {exporting ? <Loader2 className="w-5 h-5 animate-spin" /> : <Download className="w-4 h-4" />}
               {exporting ? t('common.exporting') : t('common.export_csv')}

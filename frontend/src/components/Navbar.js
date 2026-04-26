@@ -70,7 +70,7 @@ const Navbar = ({ onLogout, onToggleMenu, isSidebarOpen }) => {
   const currentLang = i18n.language?.split('-')[0] || 'en';
 
   return (
-    <nav className={`bg-[var(--bg-main)] shadow-md sticky top-0 z-50 border-b border-[var(--border-color)] transition-all duration-300 ${isSidebarOpen ? 'lg:ml-60' : 'lg:ml-20'} ml-0`}>
+    <nav className={`bg-[var(--bg-main)] border-b-4 border-[var(--text-main)] sticky top-0 z-50 transition-all duration-300 ${isSidebarOpen ? 'lg:ml-60' : 'lg:ml-20'} ml-0`}>
       <div className="max-w-full mx-auto px-3 sm:px-4">
         <div className="flex justify-between items-center h-14 sm:h-16 lg:h-20">
           <div className="flex items-center gap-2 sm:gap-4">
@@ -85,7 +85,7 @@ const Navbar = ({ onLogout, onToggleMenu, isSidebarOpen }) => {
 
             {/* Logo */}
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[var(--accent-primary)] rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[var(--accent-primary)] flex items-center justify-center neu-card p-0 rounded-md">
                 <span className="text-xl sm:text-2xl font-black text-white">T</span>
               </div>
               <h1 className="text-lg sm:text-xl md:text-2xl font-extrabold text-[var(--text-main)] tracking-tight">
@@ -108,7 +108,7 @@ const Navbar = ({ onLogout, onToggleMenu, isSidebarOpen }) => {
             <select
               value={currentLang}
               onChange={handleLanguageChange}
-              className="text-xs sm:text-sm bg-[var(--bg-main)] text-[var(--text-main)] px-2 py-1 sm:px-3 sm:py-2 rounded-lg sm:rounded-xl border border-[var(--border-color)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/50 transition-all font-bold"
+              className="text-xs sm:text-sm text-[var(--text-main)] px-2 py-1 sm:px-3 sm:py-2 font-bold neu-input"
             >
               <option value="en">English</option>
               <option value="hi">हिंदी</option>
@@ -118,7 +118,7 @@ const Navbar = ({ onLogout, onToggleMenu, isSidebarOpen }) => {
             {/* Logout Button: delegates to parent to clear auth and route */}
             <button
               onClick={onLogout}
-              className="flex items-center gap-2 bg-red-500/10 hover:bg-red-500 text-red-600 hover:text-white px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl font-bold transition-all active:scale-95 text-xs sm:text-sm group"
+              className="flex items-center gap-2 bg-red-500 text-white px-3 py-1.5 sm:px-4 sm:py-2.5 font-bold text-xs sm:text-sm group neu-button"
             >
               <LogOut className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
               <span className="hidden sm:inline">{t('common.logout')}</span>

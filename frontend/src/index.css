@@ -108,11 +108,11 @@
   }
 
   .neu-card {
-    @apply neu-border neu-shadow transition-transform;
+    @apply neu-border neu-shadow transition-transform bg-[var(--bg-card)] text-[var(--text-main)];
   }
 
   .neu-input {
-    @apply neu-border focus:outline-none transition-shadow;
+    @apply neu-border focus:outline-none transition-shadow bg-[var(--bg-main)] text-[var(--text-main)];
     box-shadow: 2px 2px 0px 0px var(--text-main);
   }
 
