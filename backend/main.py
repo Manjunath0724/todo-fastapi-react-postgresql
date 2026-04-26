@@ -59,9 +59,9 @@ allow_origins = (
     else ["http://localhost:3000", "http://127.0.0.1:3000"]
 )
 
-# Allow all Vercel preview + production domains by default.
+# Allow all Vercel/Netlify preview + production domains by default.
 # You can override with CORS_ORIGIN_REGEX (e.g. https://(www\\.)?yourdomain\\.com)
-allow_origin_regex = os.getenv("CORS_ORIGIN_REGEX", r"https://.*\.vercel\.app")
+allow_origin_regex = os.getenv("CORS_ORIGIN_REGEX", r"https://.*\.(vercel\.app|netlify\.app)")
 
 app.add_middleware(
     CORSMiddleware,
